@@ -242,7 +242,7 @@ export default function AboutPage() {
       degree: "Cycle Ingénieur - Ingénierie Digitale pour la Finance",
       period: "Depuis sept. 2024",
       location: "Rabat, Maroc",
-      logoSrc: "public/logos/ensias.png",
+      logoSrc: "/logos/ensias.png",
       logoAlt: "Logo ENSIAS",
     },
     {
@@ -250,7 +250,7 @@ export default function AboutPage() {
       degree: "Licence SMI - Sciences Mathématiques & Informatique",
       period: "Oct. 2021 - Juin 2024",
       location: "Fès, Maroc",
-      logoSrc: "public/logos/usmba.png",
+      logoSrc: "/logos/usmba.png",
       logoAlt: "Logo USMBA",
     },
   ];

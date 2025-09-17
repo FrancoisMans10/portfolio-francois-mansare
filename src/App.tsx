@@ -401,7 +401,7 @@ export default function App() {
               </a>
 
               <a
-                href="public/cv/CV_FRANCOIS_MANSARE.pdf"
+                href="/cv/CV_FRANCOIS_MANSARE.pdf"
                 download
                 className="group inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-8 py-4 font-semibold backdrop-blur-sm transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
                 aria-label="Télécharger mon CV"
@@ -427,7 +427,7 @@ export default function App() {
               {/* Image principale */}
               <div className="relative overflow-hidden rounded-3xl border border-white/20 bg-gradient-to-br from-white/10 to-transparent backdrop-blur-sm">
                 <img
-                  src="public/frank.jpg"
+                  src="/frank.jpg"
                   alt="François Mansaré — Étudiant ingénieur et orateur"
                   className="relative z-10 h-auto w-full object-cover transition-transform duration-700 group-hover:scale-110"
                   width={400}
