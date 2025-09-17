@@ -3,6 +3,7 @@ import { ChevronDown } from "lucide-react";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import "./styles/tailwind.css";
+import { Link } from "react-router-dom";
 
 type Mouse = { x: number; y: number };
 
@@ -391,14 +392,14 @@ export default function App() {
 
             {/* Boutons avec effets avancés */}
             <div className="mt-10 flex flex-wrap gap-4">
-              <a
-                href="/projects"
+              <Link
+                to="/projects"
                 className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl border border-cyan-400/50 bg-gradient-to-r from-cyan-400 to-blue-500 px-8 py-4 font-bold text-black shadow-lg shadow-cyan-400/25 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-cyan-400/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60"
                 aria-label="Voir mes projets"
               >
                 <span className="relative z-10">Voir mes projets</span>
                 <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-              </a>
+              </Link>
 
               <a
                 href="/cv/CV_FRANCOIS_MANSARE.pdf"

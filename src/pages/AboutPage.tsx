@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import { Link } from "react-router-dom";
 
 type Edu = {
   school: string;
@@ -628,16 +629,19 @@ export default function AboutPage() {
                 Collaborons sur votre prochain projet
               </h2>
               <p className="text-gray-300 mb-6 max-w-md mx-auto">
-                Expert FinTech, IA et Data - prêt à transformer vos idées en
-                solutions innovantes
+                Passionné par la FinTech, IA et Data , prêt à transformer vos
+                idées en solutions innovantes
               </p>
-              <button className="group px-8 py-3 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg font-semibold text-white hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 relative overflow-hidden">
+              <Link
+                to="/contact"
+                className="group inline-block px-8 py-3 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg font-semibold text-white hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 relative overflow-hidden"
+              >
                 <span className="relative z-10 flex items-center space-x-2">
                   <span>Discutons ensemble</span>
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-              </button>
+              </Link>
             </div>
           </div>
         </div>

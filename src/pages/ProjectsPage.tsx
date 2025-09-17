@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import { Link } from "react-router-dom";
 
 type Project = {
   title: string;
@@ -148,9 +149,9 @@ const ProjectCard = ({
         {project.links && project.links.length > 0 && (
           <div className="flex flex-wrap gap-3">
             {project.links.map((link, linkIndex) => (
-              <a
+              <Link
                 key={link.label}
-                href={link.href}
+                to={link.href}
                 target={link.href.startsWith("http") ? "_blank" : undefined}
                 rel={
                   link.href.startsWith("http")
@@ -165,7 +166,7 @@ const ProjectCard = ({
                 <Eye className="w-4 h-4 group-hover/link:rotate-12 transition-transform duration-300" />
                 <span className="text-sm font-medium">{link.label}</span>
                 <ExternalLink className="w-3 h-3 group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform duration-300" />
-              </a>
+              </Link>
             ))}
           </div>
         )}
@@ -435,13 +436,13 @@ export default function ProjectsPage() {
               <p className="text-gray-300 mb-6 max-w-md mx-auto">
                 Collaborons ensemble sur votre prochain projet innovant
               </p>
-              <a
-                href="/contact"
+              <Link
+                to="/contact"
                 className="group px-8 py-3 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg font-semibold text-white hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 relative overflow-hidden inline-block"
               >
                 <span className="relative z-10">Me contacter</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-              </a>
+              </Link>
             </div>
           </div>
         </div>

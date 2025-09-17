@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { NAV_LINKS, SOCIALS } from "../config/site";
 import NavLink from "./NavLink";
 import { getIcon } from "./icons";
+import { Link } from "react-router-dom";
 
 const AnimatedCard = ({
   children,
@@ -212,9 +213,9 @@ export default function Footer() {
               {SOCIALS.map(({ label, href, icon }, index) => {
                 const Icon = getIcon(icon);
                 return (
-                  <a
+                  <Link
                     key={label}
-                    href={href}
+                    to={href}
                     target={href.startsWith("http") ? "_blank" : undefined}
                     rel={
                       href.startsWith("http")
@@ -230,7 +231,7 @@ export default function Footer() {
 
                     <Icon className="relative z-10 h-4 w-4 opacity-80 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110" />
                     <span className="relative z-10 font-medium">{label}</span>
-                  </a>
+                  </Link>
                 );
               })}
             </div>
@@ -240,9 +241,9 @@ export default function Footer() {
               <p className="text-sm text-gray-400 mb-2 font-medium">
                 Contact direct :
               </p>
-              <a
+              <Link
                 className="inline-flex items-center gap-2 text-sm text-cyan-300 hover:text-white underline decoration-cyan-400/40 underline-offset-4 hover:decoration-cyan-400/80 transition-all duration-300"
-                href={
+                to={
                   SOCIALS.find((s) => s.icon === "mail")?.href ||
                   "mailto:francoismansare@gmail.com"
                 }
@@ -264,7 +265,7 @@ export default function Footer() {
                   "mailto:",
                   ""
                 ) || "francoismansare@gmail.com"}
-              </a>
+              </Link>
             </div>
           </AnimatedCard>
         </div>

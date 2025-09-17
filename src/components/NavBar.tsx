@@ -167,8 +167,8 @@ export default function NavBar() {
 
           {/* Bouton LinkedIn premium */}
           {linkedIn && LinkedInIcon && (
-            <a
-              href={linkedIn.href}
+            <Link
+              to={linkedIn.href}
               target="_blank"
               rel="noopener noreferrer"
               className="group relative flex items-center gap-3 rounded-xl border border-blue-500/20 bg-gradient-to-r from-blue-600/10 via-blue-700/5 to-purple-600/10 px-5 py-2.5 text-white backdrop-blur-sm transition-all duration-300 hover:border-blue-400/40 hover:from-blue-500/20 hover:to-purple-500/20 hover:shadow-xl hover:shadow-blue-500/20 hover:scale-105 overflow-hidden"
@@ -212,7 +212,7 @@ export default function NavBar() {
                   />
                 </svg>
               </span>
-            </a>
+            </Link>
           )}
         </nav>
       </div>
