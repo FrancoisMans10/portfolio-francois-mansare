@@ -212,6 +212,25 @@ export default function Footer() {
             <div className="grid grid-cols-2 gap-2">
               {SOCIALS.map(({ label, href, icon }, index) => {
                 const Icon = getIcon(icon);
+
+                if (label === "LinkedIn") {
+                  return (
+                    <a
+                      key={label}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={label}
+                      className="group relative overflow-hidden inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-gray-300 transition-all duration-300 hover:border-cyan-400/30 hover:bg-cyan-400/10 hover:text-white hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60"
+                      style={{ animationDelay: `${index * 100}ms` }}
+                    >
+                      <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-500 group-hover:translate-x-full" />
+                      <Icon className="relative z-10 h-4 w-4 opacity-80 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110" />
+                      <span className="relative z-10 font-medium">{label}</span>
+                    </a>
+                  );
+                }
+
                 return (
                   <Link
                     key={label}
@@ -226,9 +245,7 @@ export default function Footer() {
                     className="group relative overflow-hidden inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-gray-300 transition-all duration-300 hover:border-cyan-400/30 hover:bg-cyan-400/10 hover:text-white hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60"
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
-                    {/* Effet de brillance */}
                     <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-500 group-hover:translate-x-full" />
-
                     <Icon className="relative z-10 h-4 w-4 opacity-80 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110" />
                     <span className="relative z-10 font-medium">{label}</span>
                   </Link>
@@ -272,9 +289,7 @@ export default function Footer() {
 
         {/* Subfooter amélioré */}
         <div className="mt-12 relative">
-          {/* Séparateur avec gradient */}
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-
           <div className="pt-6 flex flex-col items-center justify-between gap-4 md:flex-row">
             <div className="flex items-center gap-3">
               <div className="flex space-x-1">
@@ -312,10 +327,7 @@ export default function Footer() {
             opacity: 1;
           }
         }
-
-        .animate-float {
-          animation: float 3s ease-in-out infinite;
-        }
+        .animate-float { animation: float 3s ease-in-out infinite; }
       `}</style>
     </footer>
   );
