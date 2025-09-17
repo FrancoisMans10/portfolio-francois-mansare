@@ -105,9 +105,9 @@ export default function App() {
 
   // Petits chiffres clés (modifiables)
   const highlights = [
-    { value: "+8", label: "Projets" },
-    { value: "5", label: "Leadership & entrepreneuriat" }, // ENSIAS • YIRI TECH AFRICA
-    { value: "+30", label: "Interventions & panels" }, // orateur / hackathons
+    { value: "+5", label: "Projets" },
+    { value: "3", label: "Leadership & entrepreneuriat" }, // ENSIAS • YIRI TECH AFRICA
+    { value: "+20", label: "Interventions & panels" }, // orateur / hackathons
   ];
 
   // Stack / Outils (modifiables)
