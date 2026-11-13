@@ -1,13 +1,799 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<html lang="fr" data-lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>François Mansare</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="François Mansare, élève ingénieur en double diplôme Mines Saint-Étienne × ENSIAS. Finance quantitative, gestion des risques, data science et machine learning appliqué à la finance.">
+<meta property="og:title" content="François Mansare · Finance quantitative & data science">
+<meta property="og:description" content="De la Guinée à l'École des Mines de Saint-Étienne. Risque, portefeuilles, NLP financier.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a one-asset "prospectus". The hero plots François's path as the one realised trajectory among simulated ones; the rest reads like a quant document. */
+:root {
+  --bg: #0A0F17;
+  --surface: #101723;
+  --line: #1F2A3B;
+  --fg: #E7EBF1;
+  --muted: #8A96A8;
+  --accent: #E3AE4A;      /* realised path: gold */
+  --accent-2: #5DAFAE;    /* simulated paths: muted teal */
+  --on-accent: #0A0F17;
+  --f-display: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #F3F4F6; --surface: #FFFFFF; --line: #D6DCE4; --fg: #0D1522; --muted: #5A6577;
+    --accent: #A8730E; --accent-2: #2C7A7B; --on-accent: #FFFFFF; color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #F3F4F6; --surface: #FFFFFF; --line: #D6DCE4; --fg: #0D1522; --muted: #5A6577;
+  --accent: #A8730E; --accent-2: #2C7A7B; --on-accent: #FFFFFF; color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font-family: var(--f-body); font-size: 16px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+img { max-width: 100%; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+[hidden] { display: none !important; }
+
+:root[data-lang="en"] .fr { display: none !important; }
+:root:not([data-lang="en"]) .en { display: none !important; }
+
+.wrap {
+  max-width: 1160px; margin: 0 auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+.mono { font-family: var(--f-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.num { font-variant-numeric: tabular-nums; }
+
+/* nav */
+.nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; }
+.brand { font-family: var(--f-display); font-size: 26px; text-decoration: none; line-height: 1; }
+.brand i { color: var(--accent); }
+.nav ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; }
+.nav ul a { text-decoration: none; font-size: 14px; color: var(--muted); }
+.nav ul a:hover { color: var(--fg); }
+.lang { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--surface); }
+.lang button { font: 500 12px/1 var(--f-mono); letter-spacing: .08em; color: var(--muted); background: none; border: 0; padding: 7px 11px; border-radius: 999px; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+@media (max-width: 820px) { .nav ul { display: none; } }
+
+/* hero */
+.hero { padding-block: clamp(40px, 7vw, 88px) clamp(48px, 7vw, 80px); }
+.hero-top { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: end; }
+h1 { font-family: var(--f-display); font-weight: 400; font-size: clamp(56px, 10.5vw, 148px); line-height: .9; letter-spacing: -.01em; margin: 14px 0 0; }
+h1 span { display: block; }
+h1 em { color: var(--accent); }
+.thesis { font-family: var(--f-display); font-style: italic; font-size: clamp(24px, 2.6vw, 32px); line-height: 1.2; margin: 0 0 16px; text-wrap: balance; }
+.lede { color: var(--muted); max-width: 46ch; margin: 0 0 24px; }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font: 500 14px/1 var(--f-body); padding: 13px 18px; border-radius: 999px; border: 1px solid var(--line); background: none; color: var(--fg); cursor: pointer; transition: border-color .2s, background .2s; }
+.btn:hover { border-color: var(--fg); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.btn.primary:hover { background: color-mix(in srgb, var(--accent) 85%, var(--fg)); }
+
+.chart { margin: clamp(36px, 5vw, 56px) 0 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.chart-head { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-block: 12px; }
+.chart-box { position: relative; height: clamp(260px, 34vw, 400px); }
+#path { display: block; width: 100%; height: 100%; }
+.legend { display: flex; gap: 18px; align-items: center; }
+.legend > span::before { content: ""; display: inline-block; width: 18px; height: 2px; vertical-align: middle; margin-right: 8px; background: var(--accent); }
+.legend > span.sim::before { background: var(--accent-2); opacity: .6; }
+.milestones { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); list-style: none; margin: 0; padding: 0; }
+.milestones li { padding: 16px 16px 14px 0; border-right: 1px solid var(--line); min-width: 0; }
+.milestones li + li { padding-left: 16px; }
+.milestones li:last-child { border-right: 0; }
+.milestones .yr { font-family: var(--f-mono); font-size: 13px; color: var(--accent); }
+.milestones b { display: block; font-weight: 600; font-size: 15px; margin-top: 4px; }
+.milestones small { color: var(--muted); font-size: 13.5px; line-height: 1.45; display: block; }
+
+/* sections */
+section.block { border-top: 1px solid var(--line); padding-block: clamp(64px, 9vw, 112px); }
+.sec-head { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 24px 40px; margin-bottom: clamp(32px, 5vw, 56px); align-items: baseline; }
+h2 { font-family: var(--f-display); font-weight: 400; font-size: clamp(36px, 5vw, 60px); line-height: 1.02; margin: 0; text-wrap: balance; }
+h2 em { color: var(--accent); }
+
+/* profile */
+.profile { display: grid; grid-template-columns: 220px minmax(0, 1.4fr) minmax(0, 1fr); gap: 24px 40px; }
+.portrait { display: flex; flex-direction: column; gap: 16px; }
+.portrait img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); }
+.profile .text p { margin: 0 0 18px; max-width: 62ch; font-size: 17.5px; }
+.profile .text p:first-child { font-size: 20px; }
+.facts { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); align-self: start; }
+.facts li { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 12px; padding-block: 14px; border-bottom: 1px solid var(--line); font-size: 15px; }
+.facts li .mono { padding-top: 3px; }
+
+/* timeline */
+.timeline { list-style: none; margin: 0; padding: 0; }
+.timeline li { display: grid; grid-template-columns: 220px minmax(0, 1fr) auto; gap: 8px 40px; padding-block: 24px; border-top: 1px solid var(--line); align-items: baseline; }
+.timeline li:last-child { border-bottom: 1px solid var(--line); }
+.timeline .when { font-family: var(--f-mono); font-size: 14px; color: var(--muted); }
+.timeline h3 { font-family: var(--f-display); font-weight: 400; font-size: clamp(26px, 3vw, 34px); line-height: 1.1; margin: 0 0 6px; }
+.timeline p { margin: 0; color: var(--muted); max-width: 60ch; }
+.timeline .where { font-family: var(--f-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.badge { display: inline-block; margin-top: 10px; font: 500 12px/1 var(--f-mono); letter-spacing: .05em; color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 50%, transparent); padding: 6px 9px; border-radius: 999px; }
+
+/* projects */
+.proj-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.proj-grid.small { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 20px; }
+.proj { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; transition: border-color .25s, transform .25s; }
+.proj:hover { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); transform: translateY(-2px); }
+@media (prefers-reduced-motion: reduce) { .proj:hover { transform: none; } }
+.viz { display: block; width: 100%; aspect-ratio: 16 / 8; max-width: 100%; border-bottom: 1px solid var(--line); }
+.small .viz { aspect-ratio: 16 / 9; }
+.proj-body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.small .proj-body { padding: 16px 18px 18px; }
+.proj .meta { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 0; }
+.proj .tag { color: var(--accent-2); }
+.proj h3 { font-family: var(--f-display); font-weight: 400; font-size: 28px; line-height: 1.1; margin: 0; }
+.small .proj h3 { font-size: 23px; }
+.proj p.desc { margin: 0; color: var(--muted); font-size: 15px; }
+.stats { display: flex; gap: 24px; margin: 4px 0 0; }
+.stats div { display: flex; flex-direction: column; }
+.stats b { font-family: var(--f-display); font-weight: 400; font-size: 34px; line-height: 1; }
+.proj-foot { margin-top: auto; padding-top: 8px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.chips li { font: 400 12px/1 var(--f-mono); padding: 6px 8px; border-radius: 6px; background: color-mix(in srgb, var(--fg) 6%, transparent); }
+.plinks { display: flex; gap: 14px; }
+.plinks a { font: 500 12px/1 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; padding-bottom: 2px; }
+.plinks a:hover { border-color: var(--accent); }
+.note { margin-top: 20px; }
+
+/* skills */
+.skills { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+.skill { padding: 22px 20px 22px 0; border-bottom: 1px solid var(--line); min-width: 0; }
+.skill + .skill { padding-left: 20px; border-left: 1px solid var(--line); }
+.skill:nth-child(4n+1) { padding-left: 0; border-left: 0; }
+.skill h3 { font-size: 15px; font-weight: 600; margin: 8px 0 10px; }
+.skill p { margin: 0; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
+
+/* roles */
+.roles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 40px; }
+.roles li { padding-block: 24px; border-top: 1px solid var(--line); display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 16px; }
+.roles h3 { font-weight: 600; font-size: 17px; margin: 0 0 2px; }
+.roles .org { color: var(--accent-2); font-size: 14px; margin: 0 0 8px; }
+.roles p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* speaking */
+.speak { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 24px 40px; }
+.speak blockquote { margin: 0 0 40px; font-family: var(--f-display); font-style: italic; font-size: clamp(28px, 3.6vw, 44px); line-height: 1.15; max-width: 24ch; text-wrap: balance; }
+.speak blockquote::before { content: "«\00a0"; color: var(--accent); }
+.speak blockquote::after { content: "\00a0»"; color: var(--accent); }
+:root[data-lang="en"] .speak blockquote::before { content: "“"; }
+:root[data-lang="en"] .speak blockquote::after { content: "”"; }
+.awards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+.awards li { padding: 20px 20px 20px 0; min-width: 0; }
+.awards li + li { padding-left: 20px; border-left: 1px solid var(--line); }
+.awards .yr { font-family: var(--f-display); font-size: 48px; line-height: 1; color: var(--accent); }
+.awards b { display: block; font-weight: 600; margin-top: 10px; font-size: 15.5px; }
+.awards small { display: block; color: var(--muted); font-size: 14px; }
+.speak .mod { margin: 28px 0 0; color: var(--muted); max-width: 62ch; }
+.speak .mod b { color: var(--fg); font-weight: 600; }
+
+/* contact */
+.contact { padding-block: clamp(72px, 11vw, 140px); border-top: 1px solid var(--line); }
+.contact h2 { font-size: clamp(44px, 8vw, 104px); line-height: .95; max-width: 14ch; margin-top: 10px; }
+.contact .lede { margin-top: 24px; max-width: 60ch; }
+.links { list-style: none; margin: 32px 0 0; padding: 0; border-top: 1px solid var(--line); }
+.links li { border-bottom: 1px solid var(--line); }
+.links a, .links .row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-block: 20px; text-decoration: none; flex-wrap: wrap; }
+.links .l { font-family: var(--f-display); font-size: clamp(26px, 3.4vw, 40px); line-height: 1; }
+.links .row .arr { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 8px 0; }
+.links .arr { font-family: var(--f-mono); font-size: 14px; color: var(--muted); transition: transform .2s, color .2s; overflow-wrap: anywhere; }
+.links a:hover .arr { color: var(--accent); transform: translate(4px, -4px); }
+.copy { font: 500 12px/1 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); background: none; border: 1px solid color-mix(in srgb, var(--accent) 50%, transparent); border-radius: 999px; padding: 7px 10px; cursor: pointer; margin-left: 12px; }
+footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-block: 28px; border-top: 1px solid var(--line); }
+
+/* responsive */
+@media (max-width: 960px) {
+  .hero-top, .profile, .speak, .sec-head { grid-template-columns: minmax(0, 1fr); }
+  .sec-head { gap: 10px; }
+  .portrait img { width: 160px; }
+  .proj-grid.small { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .skill:nth-child(4n+1) { padding-left: 20px; border-left: 1px solid var(--line); }
+  .skill:nth-child(2n+1) { padding-left: 0; border-left: 0; }
+  .awards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .awards li:nth-child(3) { padding-left: 0; border-left: 0; }
+  .timeline li { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+}
+@media (max-width: 680px) {
+  .milestones { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .milestones li:nth-child(2) { border-right: 0; }
+  .milestones li:nth-child(3) { padding-left: 0; }
+  .proj-grid, .proj-grid.small { grid-template-columns: minmax(0, 1fr); }
+  .skills { grid-template-columns: minmax(0, 1fr); }
+  .skill, .skill + .skill, .skill:nth-child(4n+1), .skill:nth-child(4n+1) { padding-left: 0; border-left: 0; }
+  .roles { grid-template-columns: minmax(0, 1fr); }
+  .roles li, .facts li { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .portrait img { width: 132px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Navigation">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="François Mansare">F<i>.</i>M</a>
+    <ul>
+      <li><a href="#profil"><span class="fr">Profil</span><span class="en">About</span></a></li>
+      <li><a href="#parcours"><span class="fr">Parcours</span><span class="en">Education</span></a></li>
+      <li><a href="#projets"><span class="fr">Projets</span><span class="en">Projects</span></a></li>
+      <li><a href="#experiences"><span class="fr">Expériences</span><span class="en">Experience</span></a></li>
+      <li><a href="#parole"><span class="fr">Prise de parole</span><span class="en">Speaking</span></a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="lang" role="group" aria-label="Langue / Language">
+      <button type="button" id="lang-fr" data-l="fr" aria-pressed="true">FR</button>
+      <button type="button" id="lang-en" data-l="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-top">
+      <div>
+        <p class="mono">Mines Saint-Étienne × ENSIAS · <span class="fr">Finance quantitative</span><span class="en">Quantitative finance</span></p>
+        <h1><span>François</span><span>Mansare<em>.</em></span></h1>
+      </div>
+      <div>
+        <p class="thesis"><span class="fr">Des trajectoires possibles, il y en a des milliers. Voici la mienne.</span><span class="en">There are thousands of possible paths. This one is mine.</span></p>
+        <p class="lede"><span class="fr">De la Guinée à l'École des Mines de Saint-Étienne, en passant par Fès et Rabat. J'utilise les mathématiques et le code pour mesurer le risque, construire des portefeuilles et lire les marchés.</span><span class="en">From Guinea to Mines Saint-Étienne, by way of Fès and Rabat. I use mathematics and code to measure risk, build portfolios and read markets.</span></p>
+        <div class="ctas">
+          <a class="btn primary" href="#projets"><span class="fr">Voir les projets</span><span class="en">See the projects</span> →</a>
+          <a class="btn" href="#contact"><span class="fr">Me contacter</span><span class="en">Get in touch</span></a>
+        </div>
+      </div>
+    </div>
+
+    <figure class="chart">
+      <div class="chart-head">
+        <span class="mono"><span class="fr">120 trajectoires simulées · GBM, μ = 8 %, σ = 22 %</span><span class="en">120 simulated paths · GBM, μ = 8%, σ = 22%</span></span>
+        <span class="legend mono"><span class="sim"><span class="fr">Simulées</span><span class="en">Simulated</span></span><span><span class="fr">Réalisée</span><span class="en">Realised</span></span></span>
+      </div>
+      <div class="chart-box"><canvas id="path" role="img" aria-label="Parcours de François tracé comme la trajectoire réalisée parmi 120 trajectoires simulées, de 2020 à 2026, avec un cône ouvert vers 2027."></canvas></div>
+      <ol class="milestones">
+        <li><span class="yr num">2020</span><b><span class="fr">Guinée</span><span class="en">Guinea</span></b><small><span class="fr">Bac scientifique, mention Bien</span><span class="en">Science baccalaureate, with honours</span></small></li>
+        <li><span class="yr num">2021</span><b>Fès</b><small><span class="fr">Licence Maths-Info, major de promotion</span><span class="en">BSc Maths &amp; CS, top of the class</span></small></li>
+        <li><span class="yr num">2024</span><b>Rabat</b><small><span class="fr">ENSIAS, Ingénierie Digitale pour la Finance</span><span class="en">ENSIAS, Digital Engineering for Finance</span></small></li>
+        <li><span class="yr num">2026</span><b>Saint-Étienne</b><small><span class="fr">Mines, double diplôme ingénieur</span><span class="en">Mines, engineering double degree</span></small></li>
+      </ol>
+    </figure>
+  </div>
+</header>
+
+<section class="block" id="profil">
+  <div class="wrap profile">
+    <div class="portrait">
+      <p class="mono" style="margin:0"><span class="fr">Profil</span><span class="en">About</span></p>
+      <img src="photo.jpg" alt="Portrait de François Mansare" width="440" height="550" loading="lazy" onerror="this.hidden=true">
+    </div>
+    <div class="text">
+      <p><span class="fr">Je suis élève ingénieur à l'École des Mines de Saint-Étienne (cycle ICM), en double diplôme avec l'ENSIAS de Rabat, où j'ai suivi la filière Ingénierie Digitale pour la Finance.</span><span class="en">I'm an engineering student at Mines Saint-Étienne (ICM programme), on a double degree with ENSIAS in Rabat, where I studied Digital Engineering for Finance.</span></p>
+      <p><span class="fr">Ce qui me plaît, c'est de prendre une question de marché encore floue (combien peut-on perdre, à qui prêter, comment répartir un portefeuille, ce que dit l'actualité d'un titre) et d'en faire un modèle qu'on peut tester, chiffrer et expliquer.</span><span class="en">What I enjoy is taking a vague market question (how much could we lose, who should get a loan, how should a portfolio be split, what does the news say about a stock) and turning it into a model that can be tested, measured and explained.</span></p>
+      <p><span class="fr">Expliquer compte autant que calculer : j'ai remporté plusieurs concours d'éloquence et j'anime des conférences. Et mon parcours m'a appris à m'adapter vite, trois pays, trois systèmes académiques, toujours la même méthode.</span><span class="en">Explaining matters as much as computing: I've won several public-speaking contests and I moderate conferences. My path also taught me to adapt fast: three countries, three academic systems, the same method each time.</span></p>
+    </div>
+    <ul class="facts">
+      <li><span class="mono"><span class="fr">Base</span><span class="en">Based in</span></span><span>Saint-Étienne, France</span></li>
+      <li><span class="mono"><span class="fr">Distinction</span><span class="en">Award</span></span><span><span class="fr">Major de promotion, Licence SMI</span><span class="en">Top of the class, BSc Maths &amp; CS</span></span></li>
+      <li><span class="mono"><span class="fr">Langues</span><span class="en">Languages</span></span><span><span class="fr">Français C1/C2 · Anglais B2 · Espagnol, débutant</span><span class="en">French C1/C2 · English B2 · Spanish, beginner</span></span></li>
+      <li><span class="mono"><span class="fr">Cible</span><span class="en">Looking for</span></span><span><span class="fr">Stage en finance quantitative, data science ou ML appliqué à la finance</span><span class="en">Internship in quantitative finance, data science or ML for finance</span></span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="block" id="parcours">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="mono"><span class="fr">Parcours</span><span class="en">Education</span></p>
+      <h2><span class="fr">Quatre étapes, <em>trois pays</em>.</span><span class="en">Four stages, <em>three countries</em>.</span></h2>
+    </div>
+    <ol class="timeline">
+      <li>
+        <span class="when num"><span class="fr">2026 – aujourd'hui</span><span class="en">2026 – present</span></span>
+        <div>
+          <h3>École des Mines de Saint-Étienne</h3>
+          <p><span class="fr">Diplôme d'ingénieur civil des mines (ICM), en double diplôme. Data science, modélisation mathématique et aide à la décision.</span><span class="en">Civil engineering degree (ICM), double-degree track. Data science, mathematical modelling and decision support.</span></p>
+        </div>
+        <span class="where">Saint-Étienne, FR</span>
+      </li>
+      <li>
+        <span class="when num">2024 – 2026</span>
+        <div>
+          <h3>ENSIAS</h3>
+          <p><span class="fr">Cycle ingénieur, filière Ingénierie Digitale pour la Finance (IDF) : mathématiques financières, statistiques, machine learning et finance de marché.</span><span class="en">Engineering programme, Digital Engineering for Finance (IDF): financial mathematics, statistics, machine learning and market finance.</span></p>
+        </div>
+        <span class="where">Rabat, MA</span>
+      </li>
+      <li>
+        <span class="when num">2021 – 2024</span>
+        <div>
+          <h3>Université Sidi Mohamed Ben Abdellah</h3>
+          <p><span class="fr">Licence fondamentale en Sciences Mathématiques et Informatique.</span><span class="en">Bachelor's in Mathematical Sciences and Computer Science.</span></p>
+          <span class="badge num"><span class="fr">Major de promotion · 15,01/20</span><span class="en">Top of the class · 15.01/20</span></span>
+        </div>
+        <span class="where">Fès, MA</span>
+      </li>
+      <li>
+        <span class="when num">2020</span>
+        <div>
+          <h3><span class="fr">Baccalauréat scientifique</span><span class="en">Science baccalaureate</span></h3>
+          <p><span class="fr">Mention Bien.</span><span class="en">With honours.</span></p>
+          <span class="badge num"><span class="fr">15,98/20</span><span class="en">15.98/20</span></span>
+        </div>
+        <span class="where"><span class="fr">Guinée</span><span class="en">Guinea</span></span>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="block" id="projets">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="mono"><span class="fr">Projets</span><span class="en">Projects</span></p>
+      <h2><span class="fr">Du risque au signal, <em>en code</em>.</span><span class="en">From risk to signal, <em>in code</em>.</span></h2>
+    </div>
+
+    <div class="proj-grid">
+      <article class="proj">
+        <canvas class="viz" data-viz="credit" aria-hidden="true"></canvas>
+        <div class="proj-body">
+          <p class="meta mono"><span class="tag"><span class="fr">Risque de crédit</span><span class="en">Credit risk</span></span><span class="num">ENSIAS · 2025–2026</span></p>
+          <h3><span class="fr">Scoring crédit par mélanges gaussiens</span><span class="en">Credit scoring with Gaussian mixtures</span></h3>
+          <p class="desc"><span class="fr">Un GMM par classe pour estimer la probabilité d'accorder un prêt, classification par vraisemblance, comparée à six modèles supervisés (précision, rappel, F1, AUC). Application de scoring en temps réel, avec Marcellin Soukroumde.</span><span class="en">One GMM per class to estimate loan approval probability, likelihood-based classification, benchmarked against six supervised models (precision, recall, F1, AUC). Real-time scoring app, built with Marcellin Soukroumde.</span></p>
+          <div class="proj-foot">
+            <ul class="chips"><li>scikit-learn</li><li>Flask</li><li>React</li><li>Docker</li></ul>
+            <span class="plinks"><a href="https://github.com/FrancoisMans10/Risk-Credit" target="_blank" rel="noopener">Code ↗</a></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="proj">
+        <canvas class="viz" data-viz="sentiment" aria-hidden="true"></canvas>
+        <div class="proj-body">
+          <p class="meta mono"><span class="tag">NLP</span><span>ENSIAS</span></p>
+          <h3>FinSent</h3>
+          <p class="desc"><span class="fr">FinBERT fine-tuné pour classer le sentiment des actualités financières, avec un pipeline automatisé (titres du S&amp;P 500 → actualités → analyse) et un tableau de bord web.</span><span class="en">Fine-tuned FinBERT to classify financial news sentiment, with an automated pipeline (S&amp;P 500 tickers → news → analysis) and a web dashboard.</span></p>
+          <div class="stats num">
+            <div><b>≈ 91 %</b><span class="mono">Accuracy</span></div>
+            <div><b><span class="fr">≈ 0,85</span><span class="en">≈ 0.85</span></b><span class="mono">F1-score</span></div>
+          </div>
+          <div class="proj-foot">
+            <ul class="chips"><li>FinBERT</li><li>Django</li><li>PostgreSQL</li></ul>
+            <span class="plinks"><a href="https://github.com/FrancoisMans10/Natural-Language-Processing-project-applied-to-financiel-text-analysis." target="_blank" rel="noopener">Code ↗</a></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="proj">
+        <canvas class="viz" data-viz="var" aria-hidden="true"></canvas>
+        <div class="proj-body">
+          <p class="meta mono"><span class="tag"><span class="fr">Gestion des risques</span><span class="en">Risk management</span></span><span>ENSIAS</span></p>
+          <h3>VaR &amp; TVaR</h3>
+          <p class="desc"><span class="fr">Perte potentielle annuelle d'un portefeuille de 1 M MAD (actions, ETF) pour un comité de risque : VaR paramétrique et TVaR, rendements arithmétiques contre logarithmiques.</span><span class="en">Annual potential loss on a 1M MAD portfolio (equities, ETF) for a risk committee: parametric VaR and TVaR, arithmetic versus log returns.</span></p>
+          <div class="proj-foot">
+            <ul class="chips"><li>Python</li><li>NumPy</li><li>Pandas</li></ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="proj">
+        <canvas class="viz" data-viz="frontier" aria-hidden="true"></canvas>
+        <div class="proj-body">
+          <p class="meta mono"><span class="tag"><span class="fr">Allocation</span><span class="en">Allocation</span></span><span>ENSIAS</span></p>
+          <h3>Markowitz vs HRP</h3>
+          <p class="desc"><span class="fr">Optimisation moyenne-variance (max Sharpe) face au Hierarchical Risk Parity, qui regroupe les actifs par clustering avant de répartir le risque. Huit grandes capitalisations US, 2020-2023.</span><span class="en">Mean-variance optimisation (max Sharpe) against Hierarchical Risk Parity, which clusters assets before splitting risk. Eight US large caps, 2020-2023.</span></p>
+          <div class="proj-foot">
+            <ul class="chips"><li>PyPortfolioOpt</li><li>yfinance</li></ul>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="proj-grid small">
+      <article class="proj">
+        <canvas class="viz" data-viz="masi" aria-hidden="true"></canvas>
+        <div class="proj-body">
+          <p class="meta mono"><span class="tag"><span class="fr">Prédiction de marché</span><span class="en">Market prediction</span></span></p>
+          <h3><span class="fr">Direction du MASI</span><span class="en">MASI direction</span></h3>
+          <p class="desc"><span class="fr">Prédire le sens quotidien de la Bourse de Casablanca à partir d'indicateurs techniques et macro.</span><span class="en">Predicting the daily direction of the Casablanca exchange from technical and macro features.</span></p>
+          <div class="proj-foot"><ul class="chips"><li>Random Forest</li><li>XGBoost</li></ul></div>
+        </div>
+      </article>
+      <article class="proj">
+        <canvas class="viz" data-viz="fraud" aria-hidden="true"></canvas>
+        <div class="proj-body">
+          <p class="meta mono"><span class="tag">Machine learning</span><span class="num">2025</span></p>
+          <h3><span class="fr">Fraude bancaire</span><span class="en">Bank fraud</span></h3>
+          <p class="desc"><span class="fr">Détection de transactions frauduleuses : KNN, régression logistique, Random Forest et XGBoost comparés.</span><span class="en">Fraudulent transaction detection: KNN, logistic regression, Random Forest and XGBoost compared.</span></p>
+          <div class="proj-foot"><ul class="chips"><li>XGBoost</li><li>Streamlit</li></ul></div>
+        </div>
+      </article>
+      <article class="proj">
+        <canvas class="viz" data-viz="dashboard" aria-hidden="true"></canvas>
+        <div class="proj-body">
+          <p class="meta mono"><span class="tag">Data</span><span class="num">2024–2025</span></p>
+          <h3><span class="fr">Dashboard boursier</span><span class="en">Stock dashboard</span></h3>
+          <p class="desc"><span class="fr">Cours en direct via Yahoo Finance, moyenne mobile et période au choix, pour n'importe quel symbole.</span><span class="en">Live prices from Yahoo Finance, moving average and custom period, for any ticker.</span></p>
+          <div class="proj-foot">
+            <ul class="chips"><li>Streamlit</li><li>yfinance</li></ul>
+            <span class="plinks"><a href="https://dashbordfinancierdefrancoismans.streamlit.app" target="_blank" rel="noopener">Demo ↗</a><a href="https://github.com/FrancoisMans10/DASHBORD_FINANCIER" target="_blank" rel="noopener">Code ↗</a></span>
+          </div>
+        </div>
+      </article>
+      <article class="proj">
+        <canvas class="viz" data-viz="backtest" aria-hidden="true"></canvas>
+        <div class="proj-body">
+          <p class="meta mono"><span class="tag"><span class="fr">Trading algorithmique</span><span class="en">Algo trading</span></span></p>
+          <h3><span class="fr">Backtesting Forex</span><span class="en">Forex backtesting</span></h3>
+          <p class="desc"><span class="fr">Test de stratégies sur le marché des changes, avec suivi de la performance et du drawdown.</span><span class="en">Strategy testing on FX markets, tracking performance and drawdown.</span></p>
+          <div class="proj-foot"><ul class="chips"><li>Python</li><li>Pandas</li></ul></div>
+        </div>
+      </article>
+      <article class="proj">
+        <canvas class="viz" data-viz="tweets" aria-hidden="true"></canvas>
+        <div class="proj-body">
+          <p class="meta mono"><span class="tag"><span class="fr">PFE Licence</span><span class="en">BSc thesis</span></span><span class="num">2024</span></p>
+          <h3><span class="fr">Analyse de tweets par IA</span><span class="en">AI tweet analysis</span></h3>
+          <p class="desc"><span class="fr">Analyse de sentiment de tweets avec un modèle de langage, et stockage de gros volumes dans MongoDB.</span><span class="en">Tweet sentiment analysis with a language model, and large-volume storage in MongoDB.</span></p>
+          <div class="proj-foot"><ul class="chips"><li>NLP</li><li>MongoDB</li></ul></div>
+        </div>
+      </article>
+      <article class="proj">
+        <canvas class="viz" data-viz="dash" aria-hidden="true"></canvas>
+        <div class="proj-body">
+          <p class="meta mono"><span class="tag">Visualisation</span><span class="num">2026</span></p>
+          <h3><span class="fr">Plateforme de résultats</span><span class="en">Results platform</span></h3>
+          <p class="desc"><span class="fr">Interface web pour présenter des résultats d'analyse quantitative en soutenance : indicateurs et graphiques interactifs.</span><span class="en">Web interface to present quantitative results in a defence: indicators and interactive charts.</span></p>
+          <div class="proj-foot"><ul class="chips"><li>HTML</li><li>JavaScript</li></ul></div>
+        </div>
+      </article>
+    </div>
+    <p class="mono note"><span class="fr">Visuels illustratifs dessinés pour ce site · plus de code sur</span><span class="en">Illustrative visuals drawn for this site · more code on</span> <a href="https://github.com/FrancoisMans10" target="_blank" rel="noopener" style="color:var(--accent)">GitHub ↗</a></p>
+  </div>
+</section>
+
+<section class="block" id="outils">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="mono"><span class="fr">Outils</span><span class="en">Skills</span></p>
+      <h2><span class="fr">Ce que j'utilise <em>au quotidien</em>.</span><span class="en">What I <em>work with</em>.</span></h2>
+    </div>
+    <div class="skills">
+      <div class="skill"><p class="mono"><span class="fr">Mathématiques</span><span class="en">Mathematics</span></p><h3><span class="fr">Probabilités &amp; statistiques</span><span class="en">Probability &amp; statistics</span></h3><p><span class="fr">Optimisation, modélisation, processus aléatoires, inférence.</span><span class="en">Optimisation, modelling, stochastic processes, inference.</span></p></div>
+      <div class="skill"><p class="mono"><span class="fr">Finance quant</span><span class="en">Quant finance</span></p><h3><span class="fr">Risque &amp; allocation</span><span class="en">Risk &amp; allocation</span></h3><p><span class="fr">VaR, TVaR, risque de crédit, Markowitz, HRP, backtesting.</span><span class="en">VaR, TVaR, credit risk, Markowitz, HRP, backtesting.</span></p></div>
+      <div class="skill"><p class="mono">Machine learning</p><h3><span class="fr">Supervisé &amp; non supervisé</span><span class="en">Supervised &amp; unsupervised</span></h3><p>scikit-learn, XGBoost, GMM, PyTorch, feature engineering.</p></div>
+      <div class="skill"><p class="mono">NLP</p><h3><span class="fr">Texte financier</span><span class="en">Financial text</span></h3><p><span class="fr">Fine-tuning de FinBERT, classification de sentiment.</span><span class="en">FinBERT fine-tuning, sentiment classification.</span></p></div>
+      <div class="skill"><p class="mono"><span class="fr">Langages</span><span class="en">Languages</span></p><h3>Python · SQL · C</h3><p><span class="fr">C++ en cours d'apprentissage.</span><span class="en">Currently learning C++.</span></p></div>
+      <div class="skill"><p class="mono">Data</p><h3>Pandas · NumPy</h3><p>PostgreSQL, MongoDB, yfinance, Jupyter.</p></div>
+      <div class="skill"><p class="mono"><span class="fr">Applications</span><span class="en">Apps</span></p><h3>Django · Flask · Streamlit</h3><p>React, Supabase, Docker, Git.</p></div>
+      <div class="skill"><p class="mono">Blockchain</p><h3>Solidity · Hardhat</h3><p><span class="fr">Smart contracts, monnaie locale numérique.</span><span class="en">Smart contracts, digital local currency.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="experiences">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="mono"><span class="fr">Expériences</span><span class="en">Experience</span></p>
+      <h2><span class="fr">Hors des <em>notebooks</em>.</span><span class="en">Beyond the <em>notebooks</em>.</span></h2>
+    </div>
+    <ul class="roles">
+      <li><span class="mono num">2025</span><div><h3><span class="fr">Stagiaire développeur</span><span class="en">Developer intern</span></h3><p class="org">3D Smart Factory · GuiTroc</p><p><span class="fr">Développement de GuiTroc, une place de marché d'économie circulaire avec sa monnaie locale (GuiCoins) : backend, intégration blockchain et assistant IA (RAG).</span><span class="en">Built GuiTroc, a circular-economy marketplace with its own local currency (GuiCoins): backend, blockchain integration and an AI assistant (RAG).</span></p></div></li>
+      <li><span class="mono num"><span class="fr">2025 – auj.</span><span class="en">2025 – now</span></span><div><h3><span class="fr">Co-fondateur</span><span class="en">Co-founder</span></h3><p class="org">YIRI TECH AFRICA</p><p><span class="fr">Solutions numériques pour des organisations africaines, autour de l'IA et de l'éducation.</span><span class="en">Digital solutions for African organisations, focused on AI and education.</span></p></div></li>
+      <li><span class="mono num">2024 – 2025</span><div><h3><span class="fr">Président</span><span class="en">President</span></h3><p class="org">ASEGUIM Fès</p><p><span class="fr">Association des étudiants guinéens au Maroc : événements culturels et scientifiques jusqu'à 400 participants, relations avec les partenaires.</span><span class="en">Guinean students' association in Morocco: cultural and scientific events of up to 400 people, partner relations.</span></p></div></li>
+      <li><span class="mono num">2026</span><div><h3><span class="fr">Membre du jury</span><span class="en">Judge</span></h3><p class="org">YIRIHACK 2026</p><p><span class="fr">Évaluation de projets innovants en IA et éducation.</span><span class="en">Evaluated innovative projects in AI and education.</span></p></div></li>
+      <li><span class="mono num"><span class="fr">Depuis 2023</span><span class="en">Since 2023</span></span><div><h3><span class="fr">Tuteur</span><span class="en">Tutor</span></h3><p class="org"><span class="fr">Mathématiques &amp; français</span><span class="en">Maths &amp; French</span></p><p><span class="fr">Accompagnement d'élèves pour consolider les bases.</span><span class="en">Helping students build solid foundations.</span></p></div></li>
+    </ul>
+  </div>
+</section>
+
+<section class="block" id="parole">
+  <div class="wrap speak">
+    <p class="mono"><span class="fr">Prise de parole</span><span class="en">Public speaking</span></p>
+    <div>
+      <blockquote><span class="fr">Un modèle ne vaut que si l'on sait l'expliquer.</span><span class="en">A model is only worth what you can explain about it.</span></blockquote>
+      <ol class="awards">
+        <li><span class="yr num">2024</span><b><span class="fr">Concours d'éloquence</span><span class="en">Eloquence contest</span></b><small>CESAM</small></li>
+        <li><span class="yr num">2024</span><b><span class="fr">Débat &amp; art oratoire</span><span class="en">Debate &amp; oratory</span></b><small>CESAM Fès</small></li>
+        <li><span class="yr num">2023</span><b><span class="fr">Éloquence, concours national</span><span class="en">National eloquence contest</span></b><small>ASEGUIM</small></li>
+        <li><span class="yr num">2022</span><b><span class="fr">Culture générale</span><span class="en">General knowledge</span></b><small>ASEGUIM Fès</small></li>
+      </ol>
+      <p class="mod"><span class="fr">Je suis aussi <b>modérateur</b> de conférences et de débats depuis 2023, dont le <b>Hackathon Fintech ENSIAS 2025</b> : gestion du temps, des interventions et des échanges entre experts et public.</span><span class="en">I've also <b>moderated</b> conferences and debates since 2023, including the <b>ENSIAS Fintech Hackathon 2025</b>: managing time, speakers and the exchange between experts and the audience.</span></p>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <p class="mono"><span class="fr">Prochaine étape · 2027 → ?</span><span class="en">Next step · 2027 → ?</span></p>
+    <h2><span class="fr">Écrivons <em>la suite</em> de la trajectoire.</span><span class="en">Let's write <em>the next part</em> of the path.</span></h2>
+    <p class="lede"><span class="fr">Je cherche un stage en finance quantitative (recherche ou trading), en data science ou en machine learning appliqué à la finance. Parlons-en.</span><span class="en">I'm looking for an internship in quantitative finance (research or trading), data science or machine learning applied to finance. Let's talk.</span></p>
+    <ul class="links">
+      <li><div class="row"><span class="l">E-mail</span><span class="arr"><a href="mailto:francoismansare@gmail.com" style="text-decoration:none">francoismansare@gmail.com</a><button type="button" class="copy" id="copy-mail" data-mail="francoismansare@gmail.com"><span class="fr">Copier</span><span class="en">Copy</span></button></span></div></li>
+      <li><a href="https://www.linkedin.com/in/francois-mansare/" target="_blank" rel="noopener"><span class="l">LinkedIn</span><span class="arr">francois-mansare ↗</span></a></li>
+      <li><a href="https://github.com/FrancoisMans10" target="_blank" rel="noopener"><span class="l">GitHub</span><span class="arr">FrancoisMans10 ↗</span></a></li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="mono">François Mansare · Saint-Étienne, France</span>
+    <span class="mono num">© 2026</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const root = document.documentElement;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* old deep links (#/projects …) from the previous site */
+  const legacy = { '#/projects': '#projets', '#/about': '#profil', '#/contact': '#contact' };
+  if (legacy[location.hash]) location.replace(legacy[location.hash]);
+
+  /* ---------- language ---------- */
+  function setLang(l) {
+    root.dataset.lang = l; root.lang = l;
+    document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.l === l)));
+    try { localStorage.setItem('fm-lang', l); } catch (e) {}
+  }
+  let start = 'fr';
+  try { start = localStorage.getItem('fm-lang') || ((navigator.language || 'fr').toLowerCase().startsWith('fr') ? 'fr' : 'en'); } catch (e) {}
+  setLang(start);
+  document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => setLang(b.dataset.l)));
+
+  /* ---------- copy e-mail ---------- */
+  const cp = document.getElementById('copy-mail');
+  if (cp) cp.addEventListener('click', () => {
+    const done = () => { const s = cp.innerHTML; cp.textContent = '✓'; setTimeout(() => { cp.innerHTML = s; }, 1400); };
+    try { navigator.clipboard.writeText(cp.dataset.mail).then(done, () => {}); } catch (e) {}
+  });
+
+  /* ---------- helpers ---------- */
+  function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function gauss(r) { let u = 0, v = 0; while (u === 0) u = r(); while (v === 0) v = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+  function colors() {
+    const s = getComputedStyle(root), g = n => s.getPropertyValue(n).trim();
+    return { fg: g('--fg'), muted: g('--muted'), line: g('--line'), accent: g('--accent'), a2: g('--accent-2'), bg: g('--bg'), surface: g('--surface') };
+  }
+  function fit(cv) {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2), w = cv.clientWidth, h = cv.clientHeight;
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+    const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
+    return { ctx, w, h };
+  }
+  function alpha(ctx, a, fn) { ctx.save(); ctx.globalAlpha = a; fn(); ctx.restore(); }
+  const MONO = '11px "IBM Plex Mono", ui-monospace, monospace';
+
+  /* ---------- hero: simulated paths + the realised one ---------- */
+  const T0 = 2020.3, T1 = 2028.0, S = 0.22, MU = 0.08, dt = 1 / 12;
+  const miles = [{ t: 2020.5, v: 1.0, fr: 'Guinée', en: 'Guinea' }, { t: 2021.7, v: 1.25, fr: 'Fès', en: 'Fès' }, { t: 2024.6, v: 1.8, fr: 'Rabat', en: 'Rabat' }, { t: 2026.7, v: 2.45, fr: 'Saint-Étienne', en: 'Saint-Étienne' }];
+  const r = rng(20201126);
+  const sims = [];
+  for (let k = 0; k < 120; k++) {
+    let x = 0; const p = [{ t: miles[0].t, y: 0 }];
+    for (let t = miles[0].t + dt; t <= miles[3].t + 1e-9; t += dt) { x += (MU - S * S / 2) * dt + S * Math.sqrt(dt) * gauss(r); p.push({ t, y: x }); }
+    sims.push(p);
+  }
+  const real = [{ t: miles[0].t, y: 0 }];
+  for (let i = 0; i < 3; i++) {
+    const a = miles[i], b = miles[i + 1], n = Math.round((b.t - a.t) / dt), ya = Math.log(a.v), yb = Math.log(b.v);
+    const W = [0]; for (let j = 1; j <= n; j++) W.push(W[j - 1] + S * 0.8 * Math.sqrt(dt) * gauss(r));
+    for (let j = 1; j <= n; j++) { const f = j / n; real.push({ t: a.t + j * dt, y: ya + (yb - ya) * f + (W[j] - f * W[n]) }); }
+  }
+  const cone = [];
+  for (let k = 0; k < 16; k++) {
+    let x = Math.log(miles[3].v); const p = [{ t: miles[3].t, y: x }];
+    for (let t = miles[3].t + dt; t <= T1 - 0.15; t += dt) { x += (MU + 0.06) * dt + S * Math.sqrt(dt) * gauss(r); p.push({ t, y: x }); }
+    cone.push(p);
+  }
+  const Y0 = Math.log(0.42), Y1 = Math.log(3.6);
+  const hero = document.getElementById('path');
+  let prog = reduce ? 1 : 0;
+
+  function drawHero() {
+    const { ctx, w, h } = fit(hero), c = colors();
+    const padT = 26, padB = 26, padX = 4;
+    const X = t => padX + (t - T0) / (T1 - T0) * (w - 2 * padX);
+    const Y = y => padT + (1 - (y - Y0) / (Y1 - Y0)) * (h - padT - padB);
+    const tMax = T0 + (T1 - T0) * prog;
+    ctx.font = MONO; ctx.textAlign = 'center';
+    for (let yr = 2021; yr <= 2027; yr++) {
+      const x = X(yr);
+      ctx.strokeStyle = c.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(Math.round(x) + .5, padT - 10); ctx.lineTo(Math.round(x) + .5, h - padB); ctx.stroke();
+      ctx.fillStyle = c.muted; ctx.fillText(String(yr), x, h - 8);
+    }
+    ctx.save(); ctx.beginPath(); ctx.rect(0, padT - 12, w, h - padT - padB + 12); ctx.clip();
+    ctx.strokeStyle = c.a2; ctx.lineWidth = 1;
+    alpha(ctx, 0.16, () => sims.forEach(p => {
+      ctx.beginPath(); let st = false;
+      for (const q of p) { if (q.t > tMax) break; const x = X(q.t), y = Y(q.y); st ? ctx.lineTo(x, y) : (ctx.moveTo(x, y), st = true); }
+      ctx.stroke();
+    }));
+    if (prog > 0.82) {
+      const a = Math.min(1, (prog - 0.82) / 0.18);
+      ctx.setLineDash([3, 4]); ctx.strokeStyle = c.accent; ctx.lineWidth = 1;
+      alpha(ctx, 0.35 * a, () => cone.forEach(p => { ctx.beginPath(); p.forEach((q, i) => { if (q.t > tMax) return; const x = X(q.t), y = Y(q.y); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }); ctx.stroke(); }));
+      ctx.setLineDash([]);
+    }
+    ctx.strokeStyle = c.accent; ctx.lineWidth = 2.2; ctx.lineJoin = 'round';
+    ctx.beginPath(); let st = false;
+    for (const q of real) { if (q.t > tMax) break; const x = X(q.t), y = Y(q.y); st ? ctx.lineTo(x, y) : (ctx.moveTo(x, y), st = true); }
+    ctx.stroke();
+    ctx.restore();
+    const wide = w > 640, lang = root.dataset.lang === 'en' ? 'en' : 'fr';
+    miles.forEach((m, i) => {
+      if (m.t > tMax + 0.01) return;
+      const x = X(m.t), y = Y(Math.log(m.v));
+      ctx.fillStyle = c.bg; ctx.beginPath(); ctx.arc(x, y, 6.5, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = c.accent; ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2); ctx.fill();
+      if (wide) { ctx.font = MONO; ctx.fillStyle = c.fg; ctx.textAlign = i === 0 ? 'left' : 'center'; ctx.fillText(m[lang].toUpperCase(), i === 0 ? x - 4 : x, y - 14); }
+    });
+    if (prog >= 1) { ctx.font = MONO; ctx.fillStyle = c.accent; ctx.textAlign = 'right'; ctx.fillText('2027 → ?', X(T1) - 4, padT - 6); }
+  }
+  function animate() {
+    if (reduce || document.hidden) { prog = 1; drawHero(); return; }
+    const t0 = performance.now(), D = 2400;
+    (function step(now) { const x = Math.min(1, (now - t0) / D); prog = 1 - Math.pow(1 - x, 3); drawHero(); if (x < 1) requestAnimationFrame(step); })(t0);
+  }
+
+  /* ---------- project visuals (illustrative, seeded) ---------- */
+  const line = (ctx, pts, col, lw) => { ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.beginPath(); pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.stroke(); };
+  const walk = (seed, n, drift, vol) => { const r = rng(seed); let v = 0; const P = []; for (let i = 0; i < n; i++) { v += drift + gauss(r) * vol; P.push(v); } return P; };
+  const viz = {
+    credit(ctx, w, h, c) {
+      const r = rng(41);
+      const comps = [{ x: .36, y: .62, sx: .11, sy: .13, rot: -.5, col: c.a2, n: 150 }, { x: .58, y: .42, sx: .08, sy: .1, rot: .3, col: c.a2, n: 90 }, { x: .77, y: .26, sx: .07, sy: .07, rot: 0, col: c.accent, n: 40 }];
+      comps.forEach(k => {
+        for (let i = 0; i < k.n; i++) {
+          const a = gauss(r) * k.sx, b = gauss(r) * k.sy, x = (k.x + a * Math.cos(k.rot) - b * Math.sin(k.rot)) * w, y = (k.y + a * Math.sin(k.rot) + b * Math.cos(k.rot)) * h;
+          ctx.fillStyle = k.col; alpha(ctx, k.col === c.accent ? .85 : .4, () => { ctx.beginPath(); ctx.arc(x, y, 1.8, 0, 7); ctx.fill(); });
+        }
+        ctx.strokeStyle = k.col; ctx.lineWidth = 1.2;
+        [1, 2].forEach(s => alpha(ctx, s === 1 ? .9 : .45, () => { ctx.beginPath(); ctx.ellipse(k.x * w, k.y * h, k.sx * w * s, k.sy * h * s, k.rot, 0, 7); ctx.stroke(); }));
+      });
+      ctx.font = MONO; ctx.textAlign = 'left'; ctx.fillStyle = c.muted; ctx.fillText('GMM · k = 3', 14, h - 12);
+      ctx.fillStyle = c.accent; ctx.textAlign = 'right'; ctx.fillText('P(default) ↑', w - 14, 20);
+    },
+    var(ctx, w, h, c) {
+      const pdf = x => 0.9 * Math.exp(-((x - 0.25) ** 2) / 2) + 0.12 * Math.exp(-((x + 2.6) ** 2) / (2 * 1.3 ** 2));
+      const lo = -5, hi = 4, n = 46, bw = (w - 32) / n, cut = -1.75;
+      let mx = 0; for (let i = 0; i < n; i++) mx = Math.max(mx, pdf(lo + (i + .5) * (hi - lo) / n));
+      for (let i = 0; i < n; i++) {
+        const x = lo + (i + .5) * (hi - lo) / n, bh = pdf(x) / mx * (h - 54);
+        ctx.fillStyle = x < cut ? c.accent : c.a2;
+        alpha(ctx, x < cut ? 0.9 : 0.35, () => ctx.fillRect(16 + i * bw + 1, h - 22 - bh, bw - 2, bh));
+      }
+      const xc = 16 + (cut - lo) / (hi - lo) * n * bw;
+      ctx.strokeStyle = c.fg; ctx.lineWidth = 1; ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.moveTo(xc, 18); ctx.lineTo(xc, h - 22); ctx.stroke(); ctx.setLineDash([]);
+      ctx.font = MONO; ctx.fillStyle = c.fg; ctx.textAlign = 'left'; ctx.fillText('VaR 95 %', xc + 6, 26);
+      ctx.fillStyle = c.accent; ctx.textAlign = 'right'; ctx.fillText('TVaR', xc - 6, 26);
+      ctx.strokeStyle = c.line; ctx.beginPath(); ctx.moveTo(16, h - 21.5); ctx.lineTo(w - 16, h - 21.5); ctx.stroke();
+      ctx.fillStyle = c.muted; ctx.textAlign = 'left'; ctx.fillText('P&L', 16, h - 6);
+    },
+    frontier(ctx, w, h, c) {
+      const r = rng(7), L = 28, B = h - 24, X = s => L + (s - 0.1) / 0.32 * (w - L - 16), Y = m => B - m / 0.42 * (B - 20);
+      const front = s => 0.03 + 0.62 * Math.sqrt(Math.max(0, s - 0.11));
+      for (let i = 0; i < 260; i++) {
+        const s = 0.12 + r() * 0.29, m = front(s) * (0.35 + 0.62 * Math.sqrt(r()));
+        ctx.fillStyle = c.a2; alpha(ctx, 0.4, () => { ctx.beginPath(); ctx.arc(X(s), Y(m), 1.6, 0, 7); ctx.fill(); });
+      }
+      const pts = []; for (let s = 0.11; s <= 0.42; s += 0.004) pts.push([X(s), Y(front(s))]);
+      line(ctx, pts, c.accent, 2);
+      const mv = { s: 0.24, m: front(0.24) }, hrp = { s: 0.19, m: front(0.19) * 0.86 };
+      ctx.fillStyle = c.accent; ctx.beginPath(); ctx.arc(X(mv.s), Y(mv.m), 5, 0, 7); ctx.fill();
+      ctx.strokeStyle = c.fg; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(X(hrp.s), Y(hrp.m), 5, 0, 7); ctx.stroke();
+      ctx.font = MONO; ctx.fillStyle = c.fg; ctx.textAlign = 'left';
+      ctx.fillText('Max Sharpe', X(mv.s) + 9, Y(mv.m) - 6); ctx.fillText('HRP', X(hrp.s) + 9, Y(hrp.m) + 12);
+      ctx.fillStyle = c.muted; ctx.fillText('σ', w - 24, h - 6); ctx.fillText('μ', 10, 22);
+      ctx.strokeStyle = c.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(L, 14); ctx.lineTo(L, B); ctx.lineTo(w - 16, B); ctx.stroke();
+    },
+    sentiment(ctx, w, h, c) {
+      const r = rng(31), n = 28, gap = 4, bw = (w - 32 - gap * (n - 1)) / n, H = h - 46;
+      for (let i = 0; i < n; i++) {
+        const p = Math.min(0.7, 0.25 + 0.175 * Math.sin(i / 4) + r() * 0.25), ng = 0.12 + r() * 0.25, ne = 1 - p - ng;
+        let y = h - 22; const x = 16 + i * (bw + gap);
+        [[ng, c.accent, .9], [ne, c.muted, .3], [p, c.a2, .8]].forEach(([v, col, a]) => { const bh = v * H; ctx.fillStyle = col; alpha(ctx, a, () => ctx.fillRect(x, y - bh, bw, bh - 1)); y -= bh; });
+      }
+      ctx.font = MONO; ctx.textAlign = 'left';
+      [['POS', c.a2], ['NEU', c.muted], ['NEG', c.accent]].forEach(([t, col], i) => { ctx.fillStyle = col; ctx.fillRect(16 + i * 64, h - 14, 8, 8); ctx.fillStyle = c.muted; ctx.fillText(t, 28 + i * 64, h - 6); });
+    },
+    masi(ctx, w, h, c) {
+      const n = 70, P = walk(23, n, 0.03, 0.5), pad = 14, mid = h * 0.7, mn = Math.min(...P), mx = Math.max(...P);
+      const X = i => pad + i / (n - 1) * (w - 2 * pad), Y = v => mid - (v - mn) / (mx - mn) * (mid - pad - 4);
+      line(ctx, P.map((v, i) => [X(i), Y(v)]), c.fg, 1.4);
+      const bw = (w - 2 * pad) / n;
+      for (let i = 1; i < n; i++) { const up = P[i] > P[i - 1]; ctx.fillStyle = up ? c.a2 : c.accent; alpha(ctx, .85, () => ctx.fillRect(X(i) - bw / 2 + 1, up ? mid + 12 : mid + 22, Math.max(1, bw - 2), 9)); }
+    },
+    fraud(ctx, w, h, c) {
+      const r = rng(11);
+      for (let i = 0; i < 240; i++) { const x = w * 0.42 + gauss(r) * w * 0.14, y = h * 0.55 + gauss(r) * h * 0.16; ctx.fillStyle = c.a2; alpha(ctx, .45, () => { ctx.beginPath(); ctx.arc(x, y, 1.8, 0, 7); ctx.fill(); }); }
+      [[.82, .2], [.88, .32], [.12, .18], [.78, .82], [.9, .7], [.16, .85]].forEach(([a, b]) => {
+        const x = a * w, y = b * h; ctx.fillStyle = c.accent; ctx.beginPath(); ctx.arc(x, y, 3, 0, 7); ctx.fill();
+        ctx.strokeStyle = c.accent; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 8, 0, 7); ctx.stroke();
+      });
+    },
+    dashboard(ctx, w, h, c) {
+      const n = 110, P = walk(53, n, 0.04, 0.45), pad = 14, mn = Math.min(...P), mx = Math.max(...P);
+      const M = P.map((_, i) => { const s = P.slice(Math.max(0, i - 14), i + 1); return s.reduce((a, b) => a + b, 0) / s.length; });
+      const X = i => pad + i / (n - 1) * (w - 2 * pad), Y = v => h - pad - (v - mn) / (mx - mn) * (h - 2 * pad);
+      line(ctx, P.map((v, i) => [X(i), Y(v)]), c.muted, 1); line(ctx, M.map((v, i) => [X(i), Y(v)]), c.accent, 2);
+      ctx.font = MONO; ctx.fillStyle = c.accent; ctx.textAlign = 'left'; ctx.fillText('MA 15', pad, 22);
+    },
+    backtest(ctx, w, h, c) {
+      const r = rng(19), n = 90, pad = 12, mid = h * 0.68; let a = 0, b = 0, peak = 0; const A = [], Bm = [], DD = [];
+      for (let i = 0; i < n; i++) { a += 0.05 + gauss(r) * 0.5; b += 0.02 + gauss(r) * 0.55; peak = Math.max(peak, a); A.push(a); Bm.push(b); DD.push(a - peak); }
+      const mn = Math.min(...A, ...Bm), mx = Math.max(...A, ...Bm), X = i => pad + i / (n - 1) * (w - 2 * pad), Y = v => mid - (v - mn) / (mx - mn) * (mid - pad - 4);
+      line(ctx, Bm.map((v, i) => [X(i), Y(v)]), c.muted, 1); line(ctx, A.map((v, i) => [X(i), Y(v)]), c.accent, 2);
+      const dmin = Math.min(...DD) || -1; ctx.fillStyle = c.a2;
+      alpha(ctx, .5, () => { ctx.beginPath(); ctx.moveTo(X(0), mid + 8); DD.forEach((d, i) => ctx.lineTo(X(i), mid + 8 + d / dmin * (h - mid - 16))); ctx.lineTo(X(n - 1), mid + 8); ctx.fill(); });
+    },
+    tweets(ctx, w, h, c) {
+      const r = rng(77), rows = 6, cols = 22, gx = (w - 28) / cols, gy = (h - 28) / rows;
+      for (let i = 0; i < rows; i++) for (let j = 0; j < cols; j++) {
+        const u = r(), col = u < .45 ? c.a2 : u < .78 ? c.muted : c.accent;
+        ctx.fillStyle = col; alpha(ctx, col === c.muted ? .35 : .85, () => { ctx.beginPath(); ctx.arc(14 + gx * (j + .5), 14 + gy * (i + .5), Math.min(gx, gy) * .28, 0, 7); ctx.fill(); });
+      }
+    },
+    dash(ctx, w, h, c) {
+      const r = rng(5), pad = 14, kw = (w - pad * 2 - 16) / 3;
+      ['Sharpe', 'Vol.', 'Max DD'].forEach((t, i) => {
+        const x = pad + i * (kw + 8);
+        ctx.strokeStyle = c.line; ctx.lineWidth = 1; ctx.strokeRect(x + .5, pad + .5, kw - 1, 40);
+        ctx.font = MONO; ctx.fillStyle = c.muted; ctx.textAlign = 'left'; ctx.fillText(t.toUpperCase(), x + 8, pad + 16);
+        ctx.fillStyle = i === 0 ? c.accent : c.a2; alpha(ctx, .8, () => ctx.fillRect(x + 8, pad + 25, (kw - 16) * (0.35 + r() * 0.5), 6));
+      });
+      const top = pad + 56, bot = h - 14, P = walk(9, 60, 0.12, 0.6), mn = Math.min(...P), mx = Math.max(...P);
+      const pts = P.map((v, i) => [pad + i / 59 * (w - 2 * pad), bot - (v - mn) / (mx - mn) * (bot - top - 6)]);
+      line(ctx, pts, c.accent, 2);
+      ctx.lineTo(w - pad, bot); ctx.lineTo(pad, bot); ctx.closePath(); ctx.fillStyle = c.accent; alpha(ctx, .1, () => ctx.fill());
+    }
+  };
+  function drawProjects() {
+    const c = colors();
+    document.querySelectorAll('canvas.viz').forEach(cv => {
+      const f = viz[cv.dataset.viz]; if (!f || !cv.clientWidth) return;
+      const { ctx, w, h } = fit(cv); try { f(ctx, w, h, c); } catch (e) {}
+    });
+  }
+
+  function redrawAll() { drawHero(); drawProjects(); }
+  let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(redrawAll, 120); });
+  try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', redrawAll); } catch (e) {}
+  new MutationObserver(redrawAll).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-lang'] });
+
+  const go = () => { drawProjects(); animate(); };
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(go, go);
+})();
+</script>
+</body>
 </html>
