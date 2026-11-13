@@ -278,10 +278,10 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
         <span class="mono"><span class="fr">120 trajectoires simulées · GBM, μ = 8 %, σ = 22 %</span><span class="en">120 simulated paths · GBM, μ = 8%, σ = 22%</span></span>
         <span class="legend mono"><span class="sim"><span class="fr">Simulées</span><span class="en">Simulated</span></span><span><span class="fr">Réalisée</span><span class="en">Realised</span></span></span>
       </div>
-      <div class="chart-box"><canvas id="path" role="img" aria-label="Parcours de François tracé comme la trajectoire réalisée parmi 120 trajectoires simulées, de 2020 à 2026, avec un cône ouvert vers 2027."></canvas></div>
+      <div class="chart-box"><canvas id="path" role="img" aria-label="Parcours de François, de la Guinée à Saint-Étienne en passant par Fès et Rabat, tracé comme la trajectoire réalisée parmi 120 trajectoires simulées, avec un cône ouvert vers 2027."></canvas></div>
       <ol class="milestones">
-        <li><span class="yr num">2020</span><b><span class="fr">Guinée</span><span class="en">Guinea</span></b><small><span class="fr">Bac scientifique, mention Bien</span><span class="en">Science baccalaureate, with honours</span></small></li>
-        <li><span class="yr num">2021</span><b>Fès</b><small><span class="fr">Licence Maths-Info, major de promotion</span><span class="en">BSc Maths &amp; CS, top of the class</span></small></li>
+        <li><span class="yr"><span class="fr">Origines</span><span class="en">Roots</span></span><b><span class="fr">Guinée</span><span class="en">Guinea</span></b><small><span class="fr">Le point de départ</span><span class="en">Where it all started</span></small></li>
+        <li><span class="yr num">2022</span><b>Fès</b><small><span class="fr">Licence Maths-Info, major de promotion</span><span class="en">BSc Maths &amp; CS, top of the class</span></small></li>
         <li><span class="yr num">2024</span><b>Rabat</b><small><span class="fr">ENSIAS, Ingénierie Digitale pour la Finance</span><span class="en">ENSIAS, Digital Engineering for Finance</span></small></li>
         <li><span class="yr num">2026</span><b>Saint-Étienne</b><small><span class="fr">Mines, double diplôme ingénieur</span><span class="en">Mines, engineering double degree</span></small></li>
       </ol>
@@ -313,7 +313,7 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   <div class="wrap">
     <div class="sec-head">
       <p class="mono"><span class="fr">Parcours</span><span class="en">Education</span></p>
-      <h2><span class="fr">Quatre étapes, <em>trois pays</em>.</span><span class="en">Four stages, <em>three countries</em>.</span></h2>
+      <h2><span class="fr">Trois écoles, <em>deux pays</em>.</span><span class="en">Three schools, <em>two countries</em>.</span></h2>
     </div>
     <ol class="timeline">
       <li>
@@ -333,22 +333,13 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
         <span class="where">Rabat, MA</span>
       </li>
       <li>
-        <span class="when num">2021 – 2024</span>
+        <span class="when num">2022 – 2024</span>
         <div>
           <h3>Université Sidi Mohamed Ben Abdellah</h3>
           <p><span class="fr">Licence fondamentale en Sciences Mathématiques et Informatique.</span><span class="en">Bachelor's in Mathematical Sciences and Computer Science.</span></p>
-          <span class="badge num"><span class="fr">Major de promotion · 15,01/20</span><span class="en">Top of the class · 15.01/20</span></span>
+          <span class="badge"><span class="fr">Major de promotion</span><span class="en">Top of the class</span></span>
         </div>
         <span class="where">Fès, MA</span>
-      </li>
-      <li>
-        <span class="when num">2020</span>
-        <div>
-          <h3><span class="fr">Baccalauréat scientifique</span><span class="en">Science baccalaureate</span></h3>
-          <p><span class="fr">Mention Bien.</span><span class="en">With honours.</span></p>
-          <span class="badge num"><span class="fr">15,98/20</span><span class="en">15.98/20</span></span>
-        </div>
-        <span class="where"><span class="fr">Guinée</span><span class="en">Guinea</span></span>
       </li>
     </ol>
   </div>
@@ -595,8 +586,8 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   const MONO = '11px "IBM Plex Mono", ui-monospace, monospace';
 
   /* ---------- hero: simulated paths + the realised one ---------- */
-  const T0 = 2020.3, T1 = 2028.0, S = 0.22, MU = 0.08, dt = 1 / 12;
-  const miles = [{ t: 2020.5, v: 1.0, fr: 'Guinée', en: 'Guinea' }, { t: 2021.7, v: 1.25, fr: 'Fès', en: 'Fès' }, { t: 2024.6, v: 1.8, fr: 'Rabat', en: 'Rabat' }, { t: 2026.7, v: 2.45, fr: 'Saint-Étienne', en: 'Saint-Étienne' }];
+  const T0 = 2020.8, T1 = 2028.0, S = 0.22, MU = 0.08, dt = 1 / 12;
+  const miles = [{ t: 2021.0, v: 1.0, fr: 'Guinée', en: 'Guinea' }, { t: 2022.75, v: 1.3, fr: 'Fès', en: 'Fès' }, { t: 2024.6, v: 1.8, fr: 'Rabat', en: 'Rabat' }, { t: 2026.7, v: 2.45, fr: 'Saint-Étienne', en: 'Saint-Étienne' }];
   const r = rng(20201126);
   const sims = [];
   for (let k = 0; k < 120; k++) {
@@ -627,7 +618,7 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
     const Y = y => padT + (1 - (y - Y0) / (Y1 - Y0)) * (h - padT - padB);
     const tMax = T0 + (T1 - T0) * prog;
     ctx.font = MONO; ctx.textAlign = 'center';
-    for (let yr = 2021; yr <= 2027; yr++) {
+    for (let yr = 2022; yr <= 2027; yr++) {
       const x = X(yr);
       ctx.strokeStyle = c.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(Math.round(x) + .5, padT - 10); ctx.lineTo(Math.round(x) + .5, h - padB); ctx.stroke();
       ctx.fillStyle = c.muted; ctx.fillText(String(yr), x, h - 8);
