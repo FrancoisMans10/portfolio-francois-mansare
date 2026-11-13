@@ -13,7 +13,7 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..900&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..900&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap">
 <style>
 /* Layout: Salim's single-scroll showcase (giant metallic name over a cut-out portrait, numbered skills, stacked project cards, marquee, big closing call) rebuilt in an engineered register: Geist, zinc black, one cobalt accent, a Monte Carlo trajectory as the signature. Deliberately dark-only. */
 :root {
@@ -31,6 +31,7 @@
   --ok: #3DD68C;
   --metal: linear-gradient(180deg, #FFFFFF 0%, #E4E7EC 35%, #A5ACB8 70%, #6B7280 100%);
   --f-sans: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-math: "Instrument Serif", "Times New Roman", Georgia, serif;
   --f-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   color-scheme: dark;
 }
@@ -64,8 +65,11 @@ button { font: inherit; color: inherit; }
 .nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; transition: background .3s, border-color .3s, backdrop-filter .3s; border-bottom: 1px solid transparent; }
 .nav.solid { background: color-mix(in srgb, var(--bg) 78%, transparent); backdrop-filter: saturate(140%) blur(14px); -webkit-backdrop-filter: saturate(140%) blur(14px); border-color: var(--line); }
 .nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 72px; }
-.brand { font-weight: 800; font-size: 18px; letter-spacing: -.04em; white-space: nowrap; }
-.brand b { color: var(--accent); }
+.brand { display: inline-flex; align-items: center; gap: 12px; white-space: nowrap; }
+.mark { display: inline-flex; align-items: baseline; font-size: 24px; line-height: 1; letter-spacing: -.02em; font-weight: 700; }
+.mark .f { font-family: var(--f-math); font-style: italic; font-weight: 400; font-size: 30px; color: var(--accent); margin-right: 1px; }
+.brand .nm { padding-left: 12px; border-left: 1px solid var(--line-2); font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #C9CAD0; }
+@media (max-width: 1060px) { .brand .nm { display: none; } }
 .links { display: flex; gap: clamp(18px, 3vw, 44px); list-style: none; margin: 0; padding: 0; }
 .links a { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #C9CAD0; transition: color .15s; position: relative; }
 .links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 1.5px; background: var(--accent); transform: scaleX(0); transition: transform .25s; }
@@ -93,44 +97,55 @@ kbd { font-family: var(--f-mono); font-size: 10.5px; color: var(--muted); border
 .pill.blue:hover { background: var(--btn); border-color: var(--btn); color: #fff; }
 
 /* ---------- hero ---------- */
-.hero { position: relative; overflow: hidden; padding-top: clamp(12px, 2.4vw, 28px); }
-.hero::before { content: ""; position: absolute; inset: 0; pointer-events: none;
-  background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size: 64px 64px;
-  -webkit-mask-image: radial-gradient(60% 55% at 50% 45%, #000, transparent 80%); mask-image: radial-gradient(60% 55% at 50% 45%, #000, transparent 80%); }
-.hero h1 { position: relative; z-index: 1; text-align: center; font-size: clamp(46px, 8.6vw, 128px); }
-.hero h1 span { white-space: nowrap; }
-.stage { position: relative; width: min(680px, 92vw); margin: clamp(-6px, -1vw, 0px) auto 0; z-index: 2; }
-.stage::before { content: ""; position: absolute; left: 50%; top: 4%; width: 120%; aspect-ratio: 1; transform: translateX(-50%); z-index: -1; pointer-events: none; background: radial-gradient(closest-side, rgba(46,107,255,.30), rgba(46,107,255,.08) 55%, transparent 72%); }
-.stage img { width: 100%; height: auto; aspect-ratio: 1100 / 1173;
-  -webkit-mask-image: linear-gradient(to bottom, #000 58%, transparent 92%), linear-gradient(to right, transparent 0%, #000 22%, #000 88%, transparent 100%); -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(to bottom, #000 58%, transparent 92%), linear-gradient(to right, transparent 0%, #000 22%, #000 88%, transparent 100%); mask-composite: intersect; }
-.float { position: absolute; z-index: 3; border-radius: 14px; border: 1px solid rgba(255,255,255,.10); background: rgba(17,17,20,.72); backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%); box-shadow: 0 30px 60px -24px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.06); animation: bob 8s ease-in-out infinite; }
+.hero { position: relative; overflow: hidden; }
+#hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
+  -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,.16), rgba(0,0,0,.3) 38%, #000 64%), linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent); -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, rgba(0,0,0,.16), rgba(0,0,0,.3) 38%, #000 64%), linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent); mask-composite: intersect; }
+.hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr); gap: 24px; align-items: end; }
+.hero-txt { align-self: center; padding-block: clamp(48px, 7vw, 96px); position: relative; z-index: 3; }
+.hero-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-bottom: 30px; }
+.live { display: inline-flex; align-items: center; gap: 9px; height: 32px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line-2); background: rgba(17,17,20,.7); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.live i { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px rgba(61,214,140,.18); }
+.who { font: 400 12.5px/1.4 var(--f-mono); color: var(--muted); }
+.hero h1 { font-size: clamp(54px, 7.3vw, 104px); line-height: .9; }
+.hero h1 .metal { display: block; }
+.hero h1 .dotb { color: var(--accent); -webkit-text-fill-color: var(--accent); }
+.hero .lede { margin: 28px 0 0; font-size: 18px; line-height: 1.6; color: var(--muted); max-width: 44ch; }
+.hero .lede b { color: var(--fg); font-weight: 500; }
+.hero .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+.hero-stats { display: flex; flex-wrap: wrap; list-style: none; margin: 46px 0 0; padding: 0; }
+.hero-stats li { padding: 0 24px; border-left: 1px solid var(--line-2); font-size: 13px; color: var(--muted); }
+.hero-stats li:first-child { padding-left: 0; border-left: 0; }
+.hero-stats b { display: block; font-size: 28px; font-weight: 700; letter-spacing: -.04em; color: var(--fg); line-height: 1.1; }
+.hero-pic { position: relative; align-self: end; z-index: 2; }
+.hero-pic::before { content: ""; position: absolute; left: 50%; top: 2%; width: 115%; aspect-ratio: 1; transform: translateX(-50%); z-index: -1; pointer-events: none; background: radial-gradient(closest-side, rgba(46,107,255,.28), rgba(46,107,255,.07) 55%, transparent 72%); }
+.hero-pic img { width: 100%; height: auto; aspect-ratio: 1100 / 1173;
+  -webkit-mask-image: linear-gradient(to bottom, #000 66%, transparent 98%), linear-gradient(to right, transparent 0%, #000 20%, #000 90%, transparent 100%); -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to bottom, #000 66%, transparent 98%), linear-gradient(to right, transparent 0%, #000 20%, #000 90%, transparent 100%); mask-composite: intersect; }
+.float { position: absolute; z-index: 3; border-radius: 14px; border: 1px solid rgba(255,255,255,.10); background: rgba(17,17,20,.74); backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%); box-shadow: 0 30px 60px -24px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.06); animation: bob 8s ease-in-out infinite; }
 @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 @media (prefers-reduced-motion: reduce) { .float { animation: none; } }
-.float.code { right: -14%; top: 9%; width: 330px; animation-delay: -3s; }
+.float.code { left: -12%; bottom: 16%; width: 320px; animation-delay: -3s; }
 .float .bar { display: flex; align-items: center; justify-content: space-between; height: 32px; padding: 0 12px; border-bottom: 1px solid rgba(255,255,255,.07); }
 .float .bar .l { display: flex; gap: 6px; } .float .bar .l i { width: 8px; height: 8px; border-radius: 50%; background: #34343C; }
 .float pre { margin: 0; padding: 12px 14px 14px; font: 11.5px/1.7 var(--f-mono); color: #D7D9DF; white-space: pre; overflow: hidden; }
 .float pre .c { color: var(--dim); } .float pre .k { color: #C792EA; } .float pre .f { color: var(--accent); } .float pre .n { color: #F78C6C; }
-.float.traj { left: -16%; top: 34%; width: 260px; padding: 14px 16px 12px; animation-delay: -5.5s; }
-.float.traj canvas { display: block; width: 100%; height: 64px; margin: 10px 0 6px; }
-.float.traj .row { display: flex; justify-content: space-between; align-items: baseline; }
-.float.traj b { font-size: 13px; font-weight: 600; }
-.float.traj .up { color: var(--ok); font: 500 12px/1 var(--f-mono); }
-.float.chip { left: -4%; top: 10%; padding: 10px 14px; display: flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; animation-delay: -1.5s; }
-.float.chip i { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px rgba(61,214,140,.18); }
-.hero-bottom { position: relative; z-index: 4; display: flex; justify-content: space-between; align-items: flex-end; gap: 24px 40px; margin-top: clamp(-170px, -12vw, -90px); padding-bottom: clamp(36px, 5vw, 64px); flex-wrap: wrap; }
-.hero-bottom p { margin: 0; max-width: 30ch; font-size: clamp(15px, 1.35vw, 18px); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; line-height: 1.35; color: #D3D5DB; }
-.hero-bottom p span.a { color: #fff; }
-@media (max-width: 1080px) { .float.code { right: -6%; width: 300px; } .float.traj { left: -8%; } }
-@media (max-width: 780px) {
-  .float.code { display: none; }
-  .float.traj { left: auto; right: -2%; top: 46%; width: 200px; }
-  .float.chip { left: 0; top: 4%; }
-  .hero-bottom { margin-top: -60px; }
+.float.route { right: 0; top: 12%; padding: 11px 14px; display: flex; align-items: center; gap: 10px; font: 500 12px/1 var(--f-mono); color: #D7D9DF; animation-delay: -5s; }
+.float.route i { width: 6px; height: 6px; border-radius: 50%; background: #5F5F69; } .float.route i:last-of-type { background: var(--accent); box-shadow: 0 0 0 3px rgba(91,149,255,.2); }
+@media (max-width: 1080px) { .float.code { left: -6%; width: 290px; } }
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: minmax(0, 1fr); }
+  .hero-txt { padding-bottom: 8px; }
+  .hero-pic { width: min(560px, 100%); margin: 0 auto; }
+  #hero-bg { -webkit-mask-image: linear-gradient(to bottom, transparent 52%, #000 68%, #000 90%, transparent); mask-image: linear-gradient(to bottom, transparent 52%, #000 68%, #000 90%, transparent); }
 }
-@media (max-width: 700px) { .hero h1 { font-size: clamp(44px, 14.5vw, 96px); line-height: .92; } .hero h1 span { white-space: normal; } .stage { margin-top: 10px; } }
-@media (max-width: 520px) { .float.traj { display: none; } .hero-bottom { margin-top: -40px; } .hero-bottom .btn { width: 100%; } }
+@media (max-width: 640px) {
+  .float.code { display: none; }
+  .hero h1 { font-size: clamp(44px, 13.6vw, 80px); }
+  .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 0; }
+  .hero-stats li, .hero-stats li:first-child { padding: 0 0 0 14px; border-left: 1px solid var(--line-2); } .hero-stats b { font-size: 24px; }
+  .hero .ctas .btn { flex: 1 1 auto; }
+}
 
 /* ---------- ticker ---------- */
 .ticker { border-block: 1px solid var(--line); background: var(--bg-2); overflow: hidden; }
@@ -255,11 +270,14 @@ kbd { font-family: var(--f-mono); font-size: 10.5px; color: var(--muted); border
 .giant .track span.f { background: var(--metal); -webkit-background-clip: text; background-clip: text; }
 .giant .track span.o { color: #1E1E24; }
 .giant .track span.s { color: var(--accent); font-size: clamp(26px, 3.6vw, 52px); padding-inline: clamp(22px, 3vw, 46px); }
+.giant .track span.m { font-family: var(--f-math); font-style: italic; font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--accent); padding-inline: clamp(28px, 4vw, 64px); font-size: clamp(58px, 9.4vw, 140px); }
 
 /* contact */
 .contact { position: relative; text-align: center; overflow: hidden; padding-block: clamp(96px, 12vw, 170px) clamp(80px, 10vw, 130px); }
 .contact::before { content: ""; position: absolute; left: 50%; bottom: -320px; width: 1100px; height: 640px; transform: translateX(-50%); pointer-events: none; background: radial-gradient(closest-side, rgba(46,107,255,.24), transparent); }
+#cone { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; -webkit-mask-image: radial-gradient(70% 70% at 50% 55%, #000 20%, transparent 80%); mask-image: radial-gradient(70% 70% at 50% 55%, #000 20%, transparent 80%); opacity: .9; }
 .contact .wrap { position: relative; }
+.contact h2 .q { color: var(--accent); -webkit-text-fill-color: var(--accent); }
 .avail { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #C9CAD0; }
 .avail i { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 4px rgba(61,214,140,.15); }
 .contact h2 { font-size: clamp(64px, 14vw, 210px); margin-top: 22px; }
@@ -274,8 +292,10 @@ kbd { font-family: var(--f-mono); font-size: 10.5px; color: var(--muted); border
 /* footer */
 footer { border-top: 1px solid var(--line); padding-block: clamp(48px, 6vw, 72px) 28px; }
 .f-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
-.f-name { font-size: clamp(40px, 6vw, 84px); }
-.f-sub { margin: 14px 0 0; font-size: 13px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.f-name { margin: 0; padding-top: .1em; font-size: clamp(72px, 11vw, 160px); font-weight: 800; letter-spacing: -.05em; line-height: 1; }
+.f-name .f { font-family: var(--f-math); font-style: italic; font-weight: 400; color: var(--accent); font-size: 1.22em; margin-right: .02em; }
+.f-who { margin: 26px 0 0; font-size: 18px; font-weight: 700; letter-spacing: -.02em; }
+.f-sub { margin: 6px 0 0; font-size: 13px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 .f-links { display: flex; gap: 26px; flex-wrap: wrap; list-style: none; margin: 0; padding: 0; }
 .f-links a { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #C9CAD0; } .f-links a:hover { color: #fff; }
 .f-bot { display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--line); }
@@ -335,7 +355,7 @@ footer { border-top: 1px solid var(--line); padding-block: clamp(48px, 6vw, 72px
 
 <header class="nav" id="nav">
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="François Mansare">FRANÇOIS<b>.</b></a>
+    <a class="brand" href="#top" aria-label="François Mansare, accueil"><span class="mark"><span class="f">f</span>(M)</span><span class="nm">François Mansare</span></a>
     <ul class="links">
       <li><a href="#apropos"><span class="fr">À propos</span><span class="en">About</span></a></li>
       <li><a href="#competences"><span class="fr">Compétences</span><span class="en">Skills</span></a></li>
@@ -355,11 +375,26 @@ footer { border-top: 1px solid var(--line); padding-block: clamp(48px, 6vw, 72px
 
 <main id="top">
   <section class="hero">
-    <div class="wrap">
-      <h1 class="display metal"><span class="fr">Je suis François</span><span class="en">Hi, I'm François</span></h1>
-      <div class="stage">
+    <canvas id="hero-bg" aria-hidden="true"></canvas>
+    <div class="wrap hero-grid">
+      <div class="hero-txt">
+        <div class="hero-meta"><span class="live"><i></i><span class="fr">Ouvert aux stages</span><span class="en">Open to internships</span></span><span class="who">François Mansare · Mines Saint-Étienne × ENSIAS</span></div>
+        <h1 class="display"><span class="fr"><span class="metal">Mesurer</span><span class="metal">le risque<span class="dotb">.</span></span></span><span class="en"><span class="metal">Measuring</span><span class="metal">risk<span class="dotb">.</span></span></span></h1>
+        <p class="lede"><span class="fr">Élève ingénieur en finance quantitative. Je conçois des modèles, du <b>scoring de crédit</b> à l'<b>allocation de portefeuille</b>, et j'en fais des applications que d'autres peuvent utiliser.</span><span class="en">Engineering student in quantitative finance. I design models, from <b>credit scoring</b> to <b>portfolio allocation</b>, and turn them into apps other people can use.</span></p>
+        <div class="ctas">
+          <a class="btn blue" href="#projets"><span class="fr">Voir les projets</span><span class="en">View projects</span> <span class="arrow">→</span></a>
+          <a class="btn" href="#contact"><span class="fr">Me contacter</span><span class="en">Contact me</span></a>
+        </div>
+        <ul class="hero-stats">
+          <li><b class="num">3</b><span class="fr">pays</span><span class="en">countries</span></li>
+          <li><b class="num">10</b><span class="fr">projets</span><span class="en">projects</span></li>
+          <li><b class="num">4</b><span class="fr">prix d'éloquence</span><span class="en">speaking awards</span></li>
+          <li><b>#1</b><span class="fr">de promo en Licence</span><span class="en">of my BSc class</span></li>
+        </ul>
+      </div>
+      <div class="hero-pic">
         <img src="francois.webp" alt="François Mansare, en costume, son ordinateur portable sur les genoux" width="1100" height="1173" fetchpriority="high">
-        <div class="float chip"><i></i><span class="fr">Ouvert aux stages</span><span class="en">Open to internships</span></div>
+        <div class="float route" aria-hidden="true"><i></i><span class="fr">Guinée</span><span class="en">Guinea</span><i></i><span class="fr">Maroc</span><span class="en">Morocco</span><i></i>France</div>
         <div class="float code" aria-hidden="true">
           <div class="bar"><span class="l"><i></i><i></i><i></i></span><span class="mono">risk.py</span></div>
 <pre><span class="c"># VaR paramétrique, horizon 1 an</span>
@@ -369,15 +404,6 @@ mu, sigma = r.<span class="f">mean</span>(), r.<span class="f">std</span>()
 var95  = -(mu + norm.<span class="f">ppf</span>(<span class="n">0.05</span>) * sigma)
 tvar95 = -r[r &lt;= -var95].<span class="f">mean</span>()</pre>
         </div>
-        <div class="float traj" aria-hidden="true">
-          <div class="row"><b><span class="fr">Trajectoire</span><span class="en">Trajectory</span></b><span class="up">▲ 2026</span></div>
-          <canvas id="spark"></canvas>
-          <span class="mono" style="white-space:nowrap">Guinée → Fès → Rabat → Mines</span>
-        </div>
-      </div>
-      <div class="hero-bottom">
-        <p><span class="fr"><span class="a">Ingénieur en devenir</span> qui transforme les données de marché en décisions.</span><span class="en"><span class="a">Engineer in the making</span> turning market data into decisions.</span></p>
-        <a class="btn blue" href="#contact"><span class="fr">Me contacter</span><span class="en">Contact me</span> <span class="arrow">→</span></a>
       </div>
     </div>
   </section>
@@ -532,16 +558,17 @@ tvar95 = -r[r &lt;= -var95].<span class="f">mean</span>()</pre>
 
   <div class="giant" aria-hidden="true">
     <div class="track">
-      <span class="f">Finance quant</span><span class="s">✦</span><span class="o">Machine learning</span><span class="s">✦</span><span class="f">Risque</span><span class="s">✦</span><span class="o">NLP</span><span class="s">✦</span><span class="f">Statistiques</span><span class="s">✦</span><span class="o">Data</span><span class="s">✦</span>
-      <span class="f">Finance quant</span><span class="s">✦</span><span class="o">Machine learning</span><span class="s">✦</span><span class="f">Risque</span><span class="s">✦</span><span class="o">NLP</span><span class="s">✦</span><span class="f">Statistiques</span><span class="s">✦</span><span class="o">Data</span><span class="s">✦</span>
+      <span class="f">Finance quant</span><span class="m">σ√t</span><span class="f">Machine learning</span><span class="m">E[R]</span><span class="f">Risque</span><span class="m">VaR<sub style="font-size:.45em">95</sub></span><span class="f">Statistiques</span><span class="m">∂V/∂t</span><span class="f">Data</span><span class="m">Σπ𝒩</span>
+      <span class="f">Finance quant</span><span class="m">σ√t</span><span class="f">Machine learning</span><span class="m">E[R]</span><span class="f">Risque</span><span class="m">VaR<sub style="font-size:.45em">95</sub></span><span class="f">Statistiques</span><span class="m">∂V/∂t</span><span class="f">Data</span><span class="m">Σπ𝒩</span>
     </div>
   </div>
 
   <section class="contact" id="contact">
+    <canvas id="cone" aria-hidden="true"></canvas>
     <div class="wrap">
       <span class="avail"><i></i><span class="fr">Ouvert aux stages · finance quant, data, ML</span><span class="en">Open to internships · quant finance, data, ML</span></span>
-      <h2 class="display metal"><span class="fr">Parlons<span class="dot">.</span></span><span class="en">Let's talk<span class="dot">.</span></span></h2>
-      <p class="t"><span class="fr">Vous cherchez un stagiaire qui code, modélise et sait présenter ses résultats ? Écrivez-moi, je réponds rapidement.</span><span class="en">Looking for an intern who codes, models and can present results? Write to me, I reply quickly.</span></p>
+      <h2 class="display metal"><span class="fr">Et après <span class="q">?</span></span><span class="en">What's next <span class="q">?</span></span></h2>
+      <p class="t"><span class="fr">La prochaine étape de la trajectoire reste à écrire. Vous cherchez un stagiaire qui code, modélise et sait présenter ses résultats ? Écrivez-moi.</span><span class="en">The next step of the path is still unwritten. Looking for an intern who codes, models and can present results? Write to me.</span></p>
       <div class="ctas">
         <a class="btn blue" href="mailto:francoismansare@gmail.com"><span class="fr">Me contacter</span><span class="en">Get in touch</span> <span class="arrow">→</span></a>
         <a class="btn" href="https://www.linkedin.com/in/francois-mansare/" target="_blank" rel="noopener">LinkedIn ↗</a>
@@ -554,7 +581,7 @@ tvar95 = -r[r &lt;= -var95].<span class="f">mean</span>()</pre>
 <footer>
   <div class="wrap">
     <div class="f-top">
-      <div><p class="display metal f-name">François Mansare</p><p class="f-sub"><span class="fr">Saint-Étienne, France · Finance quantitative &amp; data science</span><span class="en">Saint-Étienne, France · Quantitative finance &amp; data science</span></p></div>
+      <div><p class="f-name" aria-label="f(M)"><span class="f">f</span><span class="metal">(M)</span></p><p class="f-who">François Mansare</p><p class="f-sub"><span class="fr">Saint-Étienne, France · Finance quantitative &amp; data science</span><span class="en">Saint-Étienne, France · Quantitative finance &amp; data science</span></p></div>
       <ul class="f-links">
         <li><a href="#apropos"><span class="fr">À propos</span><span class="en">About</span></a></li>
         <li><a href="#projets"><span class="fr">Projets</span><span class="en">Projects</span></a></li>
@@ -802,16 +829,53 @@ tvar95 = -r[r &lt;= -var95].<span class="f">mean</span>()</pre>
   box.addEventListener('pointermove', e => { if (!geo || prog < 1) return; const rc = cv.getBoundingClientRect(); hoverT = T0 + (e.clientX - rc.left - geo.padL) / (geo.w - geo.padL - geo.padR) * (T1 - T0); box.classList.add('hover'); drawPath(); });
   box.addEventListener('pointerleave', () => { hoverT = null; box.classList.remove('hover'); drawPath(); });
 
-  function drawSpark() {
-    const el = document.getElementById('spark'); if (!el || !el.clientWidth) return;
-    const { ctx, w, h } = fit(el), pad = 5;
-    const ys = real.map(q => q.y), mn = Math.min(...ys), mx = Math.max(...ys);
-    const X = t => pad + (t - miles[0].t) / (miles[3].t - miles[0].t) * (w - 2 * pad), Y = y => h - pad - (y - mn) / (mx - mn) * (h - 2 * pad);
-    ctx.beginPath(); real.forEach((q, i) => i ? ctx.lineTo(X(q.t), Y(q.y)) : ctx.moveTo(X(q.t), Y(q.y)));
-    ctx.strokeStyle = C.accent; ctx.lineWidth = 1.8; ctx.stroke();
-    ctx.lineTo(X(miles[3].t), h); ctx.lineTo(X(miles[0].t), h); ctx.closePath();
-    const g = ctx.createLinearGradient(0, 0, 0, h); g.addColorStop(0, 'rgba(91,149,255,.35)'); g.addColorStop(1, 'rgba(91,149,255,0)'); ctx.fillStyle = g; ctx.fill();
-    miles.forEach(m => { ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(X(m.t), Y(Math.log(m.v)), 2.2, 0, 7); ctx.fill(); });
+  /* hero background: the same simulation, full-bleed, drawing in on load */
+  const heroCv = document.getElementById('hero-bg'); let heroProg = reduce ? 1 : 0;
+  function drawHeroBg() {
+    if (!heroCv || !heroCv.clientWidth) return;
+    const { ctx, w, h } = fit(heroCv);
+    const narrow = w < 900;
+    const x0 = 0, x1 = narrow ? w * 0.86 : w * 0.80, yTop = h * (narrow ? 0.62 : 0.22), yBot = h * (narrow ? 0.94 : 0.86);
+    const ta = miles[0].t, tb = miles[3].t;
+    const X = t => x0 + (t - ta) / (tb - ta) * (x1 - x0);
+    const ry = real.map(q => q.y), lo = Math.log(0.55), hi = Math.log(2.9);
+    const Y = y => yBot - (y - lo) / (hi - lo) * (yBot - yTop);
+    const tMax = ta + (tb - ta) * heroProg;
+    ctx.strokeStyle = C.grey; ctx.lineWidth = 1;
+    alpha(ctx, 0.075, () => sims.forEach(p => { ctx.beginPath(); let s = false; for (const q of p) { if (q.t > tMax) break; const x = X(q.t), y = Y(q.y); s ? ctx.lineTo(x, y) : (ctx.moveTo(x, y), s = true); } ctx.stroke(); }));
+    const vis = real.filter(q => q.t <= tMax);
+    if (vis.length > 1) {
+      ctx.beginPath(); vis.forEach((q, i) => i ? ctx.lineTo(X(q.t), Y(q.y)) : ctx.moveTo(X(q.t), Y(q.y)));
+      ctx.shadowColor = 'rgba(91,149,255,.7)'; ctx.shadowBlur = 14; ctx.strokeStyle = C.accent; ctx.lineWidth = 2.2; ctx.lineJoin = 'round'; ctx.stroke(); ctx.shadowBlur = 0;
+      if (heroProg >= 0.98) {
+        const last = real[real.length - 1], lx = X(last.t), ly = Y(last.y), cr = rng(77);
+        ctx.setLineDash([2, 5]); ctx.lineWidth = 1;
+        for (let k = 0; k < 14; k++) { let v = 0; ctx.strokeStyle = 'rgba(91,149,255,' + (k % 5 === 0 ? .5 : .2) + ')'; ctx.beginPath(); ctx.moveTo(lx, ly); for (let i = 1; i <= 24; i++) { v += 0.02 + 0.09 * gauss(cr); ctx.lineTo(lx + (i / 24) * (w - lx), ly - v * (yBot - yTop) * 0.35); } ctx.stroke(); }
+        ctx.setLineDash([]);
+      }
+      miles.forEach(m => { if (m.t > tMax) return; const x = X(m.t), y = Y(Math.log(m.v)); ctx.fillStyle = '#070708'; ctx.beginPath(); ctx.arc(x, y, 5.5, 0, 7); ctx.fill(); ctx.strokeStyle = C.accent; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(x, y, 3.5, 0, 7); ctx.stroke(); });
+    }
+  }
+  function runHero() {
+    if (reduce || document.hidden) { heroProg = 1; drawHeroBg(); return; }
+    const t0 = performance.now(), D = 2600;
+    (function step(now) { const x = Math.min(1, (now - t0) / D); heroProg = 1 - Math.pow(1 - x, 3); drawHeroBg(); if (x < 1) requestAnimationFrame(step); })(t0);
+  }
+
+  /* contact: the cone of paths still to be written */
+  const coneCv = document.getElementById('cone');
+  const conePaths = (() => { const r = rng(2027), out = []; for (let k = 0; k < 70; k++) { let x = 0; const p = [0]; for (let i = 1; i <= 60; i++) { x += 0.004 + 0.06 * gauss(r); p.push(x); } out.push(p); } return out; })();
+  function drawCone() {
+    if (!coneCv || !coneCv.clientWidth) return;
+    const { ctx, w, h } = fit(coneCv);
+    const ox = w * 0.5, oy = h * 0.92, len = Math.min(w * 0.46, 620);
+    ctx.setLineDash([2, 5]); ctx.lineWidth = 1;
+    conePaths.forEach((p, k) => {
+      ctx.strokeStyle = k % 9 === 0 ? 'rgba(91,149,255,.7)' : 'rgba(91,149,255,.24)';
+      [1, -1].forEach(side => { ctx.beginPath(); p.forEach((v, i) => { const x = ox + side * (i / 60) * len, y = oy - (i / 60) * h * 0.55 + v * h * 0.5; i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }); ctx.stroke(); });
+    });
+    ctx.setLineDash([]);
+    ctx.fillStyle = C.accent; ctx.beginPath(); ctx.arc(ox, oy, 4, 0, 7); ctx.fill();
   }
 
   const line = (ctx, pts, col, lw) => { ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.beginPath(); pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.stroke(); };
@@ -867,9 +931,9 @@ tvar95 = -r[r &lt;= -var95].<span class="f">mean</span>()</pre>
   setLang(start);
   document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => setLang(b.dataset.l)));
 
-  let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { drawPath(); drawSpark(); drawProjects(); stackFx(); }, 120); });
+  let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { drawPath(); drawHeroBg(); drawCone(); drawProjects(); stackFx(); }, 120); });
   const boot = () => {
-    drawProjects(); drawSpark(); drawPath(); armStatement(); stackFx();
+    drawProjects(); drawCone(); drawPath(); armStatement(); stackFx(); runHero();
     if (!reduce && 'IntersectionObserver' in window) { const o = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { runPath(); o.disconnect(); } }, { threshold: 0.35 }); o.observe(cv); }
     else runPath();
   };
