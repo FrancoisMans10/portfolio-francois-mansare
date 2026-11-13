@@ -90,6 +90,32 @@ kbd { font-family: var(--f-mono); font-size: 10.5px; color: var(--muted); border
 .seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
 @media (max-width: 920px) { .links { display: none; } .ibtn kbd, .ibtn .lbl { display: none; } }
 
+/* ---------- immersion ---------- */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: clip; }
+#thread { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+#aura { position: fixed; left: 0; top: 0; width: 720px; height: 720px; margin: -360px 0 0 -360px; border-radius: 50%; pointer-events: none; z-index: 0; opacity: 0; transition: opacity .6s; background: radial-gradient(closest-side, rgba(46,107,255,.075), transparent); will-change: transform; }
+html.pointer #aura { opacity: 1; }
+main, footer { position: relative; z-index: 1; }
+.progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 1.5px; transform-origin: 0 50%; transform: scaleX(var(--prog, 0)); background: linear-gradient(90deg, var(--btn), var(--accent)); pointer-events: none; }
+.chap { display: none; align-items: center; gap: 8px; padding-left: 12px; border-left: 1px solid var(--line-2); font: 500 12px/1 var(--f-mono); color: var(--muted); overflow: hidden; height: 18px; }
+.chap b { color: var(--accent); font-weight: 500; }
+.chap .t { display: inline-block; transition: transform .35s cubic-bezier(.2,.7,.2,1), opacity .35s; }
+.chap .t.out { transform: translateY(-110%); opacity: 0; }
+@media (max-width: 920px) { .chap { display: inline-flex; } }
+.rail { position: fixed; right: max(22px, env(safe-area-inset-right, 0px)); top: 50%; transform: translateY(-50%); z-index: 25; display: flex; flex-direction: column; gap: 6px; list-style: none; margin: 0; padding: 0; }
+.rail a { position: relative; display: flex; justify-content: flex-end; align-items: center; height: 16px; width: 40px; }
+.rail a i { display: block; width: 12px; height: 1.5px; border-radius: 1px; background: #3A3A44; transition: width .3s, background .3s; }
+.rail a span { position: absolute; right: 48px; padding: 6px 9px; border-radius: 7px; border: 1px solid var(--line-2); background: rgba(12,12,15,.92); font: 500 11px/1 var(--f-mono); color: var(--fg); white-space: nowrap; opacity: 0; transform: translateX(6px); transition: opacity .2s, transform .2s; pointer-events: none; }
+.rail a:hover span, .rail a:focus-visible span { opacity: 1; transform: none; }
+.rail a:hover i { background: #8A8A96; }
+.rail a.on i { width: 30px; background: var(--accent); }
+@media (max-width: 1320px) { .rail { display: none; } }
+.head h2 { transition: clip-path 1.1s cubic-bezier(.2,.7,.2,1), transform 1.1s cubic-bezier(.2,.7,.2,1); }
+.head.pre h2 { clip-path: inset(0 0 100% 0); transform: translateY(35%); }
+.btn.mag { transition: transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s, background .2s, border-color .2s; }
+
 /* ---------- buttons ---------- */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 54px; padding: 0 30px; border-radius: 999px; font-size: 13.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; border: 1px solid var(--line-2); background: transparent; color: var(--fg); cursor: pointer; transition: transform .2s, box-shadow .25s, background .2s, border-color .2s; }
 .btn:hover { border-color: #4A4A54; transform: translateY(-2px); }
@@ -397,9 +423,11 @@ footer { border-top: 1px solid var(--line); padding-block: clamp(48px, 6vw, 72px
 </head>
 <body>
 
+<canvas id="thread" aria-hidden="true"></canvas>
+<div id="aura" aria-hidden="true"></div>
 <header class="nav" id="nav">
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="François Mansaré, accueil"><span class="mark"><span class="f">f</span>(M)</span><span class="nm">Francois Mansare</span></a>
+    <a class="brand" href="#top" aria-label="François Mansaré, accueil"><span class="mark"><span class="f">f</span>(M)</span><span class="nm">Francois Mansare</span><span class="chap" aria-live="polite"><b id="chap-n">01</b><span class="t" id="chap-t">Ouverture</span></span></a>
     <ul class="links">
       <li><a href="#apropos"><span class="fr">À propos</span><span class="en">About</span></a></li>
       <li><a href="#competences"><span class="fr">Compétences</span><span class="en">Skills</span></a></li>
@@ -416,8 +444,10 @@ footer { border-top: 1px solid var(--line); padding-block: clamp(48px, 6vw, 72px
       </div>
     </div>
   </div>
+  <div class="progress" id="progress"></div>
 </header>
 
+<ol class="rail" id="rail" aria-label="Chapitres"></ol>
 <main id="top">
   <section class="hero">
     <canvas id="hero-bg" aria-hidden="true"></canvas>
@@ -679,6 +709,7 @@ decision = p[:, <span class="n">1</span>] &gt; seuil</pre>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"><i></i><span></span></div>
 
+<script src="/vendor/lenis-1.2.3.min.js"></script>
 <script>
 (function () {
   const root = document.documentElement;
@@ -686,6 +717,7 @@ decision = p[:, <span class="n">1</span>] &gt; seuil</pre>
   const legacy = { '#/projects': '#projets', '#/about': '#apropos', '#/contact': '#contact' };
   if (legacy[location.hash]) location.replace(legacy[location.hash]);
   const L = () => (root.dataset.lang === 'en' ? 'en' : 'fr');
+  let railReady = false;
   const T = (fr, en) => (L() === 'en' ? en : fr);
 
   /* language */
@@ -693,7 +725,7 @@ decision = p[:, <span class="n">1</span>] &gt; seuil</pre>
     root.dataset.lang = l; root.lang = l;
     document.querySelectorAll('.seg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.l === l)));
     try { localStorage.setItem('fm-lang', l); } catch (e) {}
-    armStatement(); drawPath(); if (typeof lab !== 'undefined' && lab) lab.relabel();
+    armStatement(); drawPath(); if (typeof lab !== 'undefined' && lab) lab.relabel(); if (typeof chapLabels === 'function' && railReady) chapLabels();
   }
 
   /* toast + copy */
@@ -759,7 +791,7 @@ decision = p[:, <span class="n">1</span>] &gt; seuil</pre>
   const isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
   document.getElementById('kbd-hint').textContent = isMac ? '⌘K' : 'Ctrl K';
   const back = document.getElementById('cmdk'), input = document.getElementById('cmdk-input'), list = document.getElementById('cmdk-list');
-  const go = id => () => document.getElementById(id).scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+  const go = id => () => { const el = document.getElementById(id); if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80 }); else el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); };
   const open = url => () => { const a = document.createElement('a'); a.href = url; a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove(); };
   const cmds = () => [
     { g: T('Naviguer', 'Navigate'), t: T('À propos', 'About'), k: '#', run: go('apropos') },
@@ -1093,9 +1125,122 @@ decision = p[:, <span class="n">1</span>] &gt; seuil</pre>
   setLang(start);
   document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => setLang(b.dataset.l)));
 
+
+  /* ---------- immersion ---------- */
+  const fine = window.matchMedia('(pointer: fine)').matches;
+  let lenis = null;
+  if (!reduce && window.Lenis) {
+    try { lenis = new window.Lenis({ lerp: 0.09, wheelMultiplier: 0.95, anchors: { offset: -80 }, autoRaf: true }); } catch (e) { lenis = null; }
+  }
+  window.__lenis = lenis;
+  document.querySelectorAll('.cmdk ul').forEach(el => el.setAttribute('data-lenis-prevent', ''));
+
+  const chapters = [
+    ['top', '01', 'Ouverture', 'Opening'], ['apropos', '02', 'À propos', 'About'], ['competences', '03', 'Compétences', 'Skills'],
+    ['projets', '04', 'Projets', 'Projects'], ['labo', '05', 'Labo', 'Lab'], ['trajectoire', '06', 'Trajectoire', 'Trajectory'],
+    ['parcours', '07', 'Parcours', 'Experience'], ['parole', '08', 'Prise de parole', 'Speaking'], ['contact', '09', 'Et après ?', "What's next?"]
+  ].filter(c => document.getElementById(c[0]));
+  const rail = document.getElementById('rail');
+  chapters.forEach(c => {
+    const li = document.createElement('li'), a = document.createElement('a');
+    a.href = '#' + c[0]; a.innerHTML = '<span></span><i></i>'; a.dataset.id = c[0];
+    li.appendChild(a); rail.appendChild(li);
+  });
+  const railLinks = [...rail.querySelectorAll('a')];
+  const chapN = document.getElementById('chap-n'), chapT = document.getElementById('chap-t'), progress = document.getElementById('progress');
+  let curChap = -1;
+  function chapLabels() {
+    railLinks.forEach((a, i) => { a.firstChild.textContent = chapters[i][1] + ' · ' + (L() === 'en' ? chapters[i][3] : chapters[i][2]); a.setAttribute('aria-label', a.firstChild.textContent); });
+    if (curChap >= 0) chapT.textContent = L() === 'en' ? chapters[curChap][3] : chapters[curChap][2];
+  }
+  function onChapters() {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.setProperty('--prog', max > 0 ? Math.min(1, window.scrollY / max) : 0);
+    let k = 0; const y = window.innerHeight * 0.42;
+    chapters.forEach((c, i) => { const el = c[0] === 'top' ? document.querySelector('.hero') : document.getElementById(c[0]); if (el && el.getBoundingClientRect().top < y) k = i; });
+    if (k === curChap) return;
+    curChap = k;
+    railLinks.forEach((a, i) => a.classList.toggle('on', i === k));
+    chapT.classList.add('out');
+    setTimeout(() => { chapN.textContent = chapters[k][1]; chapT.textContent = L() === 'en' ? chapters[k][3] : chapters[k][2]; chapT.classList.remove('out'); }, reduce ? 0 : 180);
+  }
+  railReady = true; chapLabels();
+
+  /* the thread: my trajectory keeps drawing itself down the page as you scroll */
+  const thr = document.getElementById('thread');
+  let tPts = [], tStart = 0, tEnd = 0;
+  function buildThread() {
+    const hero = document.querySelector('.hero'), contact = document.getElementById('contact');
+    if (!hero || !contact) return;
+    const vw = window.innerWidth, sy = window.scrollY, hr = hero.getBoundingClientRect(), cr = contact.getBoundingClientRect();
+    tStart = hr.bottom + sy - 30; tEnd = cr.top + sy + cr.height * 0.92;
+    const step = 14, n = Math.max(2, Math.ceil((tEnd - tStart) / step)), r = rng(314);
+    const W = [0]; for (let i = 1; i <= n; i++) W.push(W[i - 1] + gauss(r));
+    const B = W.map((w, i) => w - (i / n) * W[n]); const mb = Math.max(...B.map(Math.abs)) || 1;
+    const x0 = vw * 0.86, x1 = vw * 0.5, raw = [];
+    for (let i = 0; i <= n; i++) {
+      const f = i / n, env = Math.min(1, f * 7, (1 - f) * 5);
+      let x = x0 + (x1 - x0) * f + env * (vw * 0.22 * B[i] / mb + vw * 0.16 * Math.sin(f * Math.PI * 5.2));
+      raw.push(Math.max(vw * 0.03, Math.min(vw * 0.97, x)));
+    }
+    tPts = raw.map((x, i) => { let a = 0, c = 0; for (let k = -3; k <= 3; k++) { const v = raw[i + k]; if (v !== undefined) { a += v; c++; } } return { x: a / c, y: tStart + i * step }; });
+    tPts[0].x = x0; tPts[tPts.length - 1].x = x1;
+    drawThread();
+  }
+  function drawThread() {
+    if (!thr || !tPts.length) return;
+    const { ctx, w, h } = fit(thr), sy = window.scrollY;
+    const head = Math.max(tStart, Math.min(tEnd, sy + h * 0.6));
+    const narrow = w < 760, a1 = narrow ? .4 : .55;
+    const vis = tPts.filter(p => p.y > sy - 40 && p.y < sy + h + 40);
+    if (vis.length < 2) return;
+    const fadeIn = y => Math.min(1, (y - tStart) / 260);
+    // future: faint dashed
+    ctx.setLineDash([2, 6]); ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(91,149,255,.16)';
+    ctx.beginPath(); let st = false;
+    vis.forEach(p => { if (p.y < head) return; st ? ctx.lineTo(p.x, p.y - sy) : (ctx.moveTo(p.x, p.y - sy), st = true); }); ctx.stroke();
+    ctx.setLineDash([]);
+    // realised: solid with glow
+    const done = vis.filter(p => p.y <= head);
+    if (done.length > 1) {
+      ctx.lineJoin = 'round'; ctx.lineWidth = narrow ? 1.6 : 2; ctx.shadowColor = 'rgba(91,149,255,.6)'; ctx.shadowBlur = 12;
+      for (let i = 1; i < done.length; i++) {
+        ctx.strokeStyle = 'rgba(91,149,255,' + (a1 * fadeIn(done[i].y)).toFixed(3) + ')';
+        ctx.beginPath(); ctx.moveTo(done[i - 1].x, done[i - 1].y - sy); ctx.lineTo(done[i].x, done[i].y - sy); ctx.stroke();
+      }
+      ctx.shadowBlur = 0;
+    }
+    // head
+    if (head > tStart + 40 && head < tEnd - 4 && head >= sy && head <= sy + h) {
+      let q = tPts[0]; for (const p of tPts) { if (p.y <= head) q = p; else break; }
+      const al = fadeIn(q.y);
+      ctx.fillStyle = 'rgba(91,149,255,' + (.18 * al) + ')'; ctx.beginPath(); ctx.arc(q.x, q.y - sy, 10, 0, 7); ctx.fill();
+      ctx.fillStyle = 'rgba(91,149,255,' + al + ')'; ctx.beginPath(); ctx.arc(q.x, q.y - sy, 3.5, 0, 7); ctx.fill();
+    }
+  }
+
+  /* pointer aura + magnetic buttons (desktop only) */
+  if (fine && !reduce) {
+    const aura = document.getElementById('aura'); let ax = innerWidth / 2, ay = innerHeight / 2, tx = ax, ty = ay, moving = false;
+    function loop() { ax += (tx - ax) * 0.12; ay += (ty - ay) * 0.12; aura.style.transform = `translate(${ax}px, ${ay}px)`; if (Math.abs(tx - ax) + Math.abs(ty - ay) > .5) requestAnimationFrame(loop); else moving = false; }
+    window.addEventListener('pointermove', e => { tx = e.clientX; ty = e.clientY; root.classList.add('pointer'); if (!moving) { moving = true; requestAnimationFrame(loop); } }, { passive: true });
+    document.addEventListener('pointerleave', () => root.classList.remove('pointer'));
+    document.querySelectorAll('.btn').forEach(b => {
+      b.classList.add('mag');
+      b.addEventListener('pointermove', e => { const r = b.getBoundingClientRect(); b.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.18}px, ${(e.clientY - r.top - r.height / 2) * 0.3}px)`; });
+      b.addEventListener('pointerleave', () => { b.style.transform = ''; });
+    });
+  }
+
+  let tf = false;
+  function onFrame() { if (tf) return; tf = true; requestAnimationFrame(() => { tf = false; drawThread(); onChapters(); }); }
+  window.addEventListener('scroll', onFrame, { passive: true });
+  if ('ResizeObserver' in window) { let rb; new ResizeObserver(() => { clearTimeout(rb); rb = setTimeout(buildThread, 150); }).observe(document.body); }
+
   let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { drawPath(); drawHeroBg(); drawCone(); drawProjects(); stackFx(); if (lab) lab.draw(); }, 120); });
   const boot = () => {
     drawProjects(); drawCone(); drawPath(); armStatement(); stackFx(); runHero(); if (lab) lab.run(false);
+    buildThread(); onChapters();
     if (!reduce && 'IntersectionObserver' in window) { const o = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { runPath(); o.disconnect(); } }, { threshold: 0.35 }); o.observe(cv); }
     else runPath();
   };
