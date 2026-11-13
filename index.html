@@ -1,13 +1,1106 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<html lang="fr" data-lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>François Mansaré</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="François Mansaré, élève ingénieur en double diplôme Mines Saint-Étienne × ENSIAS. Data science, modélisation mathématique et aide à la décision, avec des projets en finance quantitative, machine learning et NLP.">
+<meta name="theme-color" content="#070708">
+<meta property="og:title" content="François Mansaré · Data science & modélisation">
+<meta property="og:description" content="Élève ingénieur, Mines × ENSIAS. Data science et modélisation mathématique, cap sur la finance quantitative.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://francoismansare.site/">
+<meta property="og:image" content="https://francoismansare.site/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://francoismansare.site/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..900&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap">
+<style>
+/* Layout: Salim's single-scroll showcase (giant metallic name over a cut-out portrait, numbered skills, stacked project cards, marquee, big closing call) rebuilt in an engineered register: Geist, zinc black, one cobalt accent, a Monte Carlo trajectory as the signature. Deliberately dark-only. */
+:root {
+  --bg: #070708;
+  --bg-2: #0C0C0F;
+  --panel: #111114;
+  --panel-2: #17171B;
+  --line: #1E1E23;
+  --line-2: #2A2A31;
+  --fg: #EDEDEF;
+  --muted: #9A9AA3;
+  --dim: #5F5F69;
+  --accent: #5B95FF;
+  --btn: #2E6BFF;
+  --ok: #3DD68C;
+  --metal: linear-gradient(180deg, #FFFFFF 0%, #E4E7EC 35%, #A5ACB8 70%, #6B7280 100%);
+  --f-sans: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-math: "Instrument Serif", "Times New Roman", Georgia, serif;
+  --f-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--f-sans); font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-x: hidden; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 40; background: var(--bg); }
+::selection { background: var(--btn); color: #fff; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+[hidden] { display: none !important; }
+:root[data-lang="en"] .fr { display: none !important; }
+:root:not([data-lang="en"]) .en { display: none !important; }
+
+.wrap { max-width: 1240px; margin: 0 auto; padding-left: max(24px, env(safe-area-inset-left, 0px)); padding-right: max(24px, env(safe-area-inset-right, 0px)); }
+.mono { font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+.num { font-variant-numeric: tabular-nums; }
+.metal { background: var(--metal); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.caps { text-transform: uppercase; }
+.display { font-weight: 800; text-transform: uppercase; letter-spacing: -.035em; line-height: .9; margin: 0; }
+
+/* reveal (only below the fold at load) */
+.pre { opacity: 0; transform: translateY(26px); }
+.rise { transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
+
+/* ---------- nav ---------- */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; transition: background .3s, border-color .3s, backdrop-filter .3s; border-bottom: 1px solid transparent; }
+.nav.solid { background: color-mix(in srgb, var(--bg) 78%, transparent); backdrop-filter: saturate(140%) blur(14px); -webkit-backdrop-filter: saturate(140%) blur(14px); border-color: var(--line); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 72px; }
+.brand { display: inline-flex; align-items: center; gap: 12px; white-space: nowrap; }
+.mark { display: inline-flex; align-items: baseline; font-size: 24px; line-height: 1; letter-spacing: -.02em; font-weight: 700; }
+.mark .f { font-family: var(--f-math); font-style: italic; font-weight: 400; font-size: 30px; color: var(--accent); margin-right: 1px; }
+.brand .nm { padding-left: 12px; border-left: 1px solid var(--line-2); font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #C9CAD0; }
+@media (max-width: 1060px) { .brand .nm { display: none; } }
+.links { display: flex; gap: clamp(18px, 3vw, 44px); list-style: none; margin: 0; padding: 0; }
+.links a { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #C9CAD0; transition: color .15s; position: relative; }
+.links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 1.5px; background: var(--accent); transform: scaleX(0); transition: transform .25s; }
+.links a:hover, .links a.on { color: #fff; }
+.links a:hover::after, .links a.on::after { transform: scaleX(1); }
+.tools { display: flex; align-items: center; gap: 8px; }
+.ibtn { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 10px; border-radius: 999px; border: 1px solid var(--line-2); background: color-mix(in srgb, var(--panel) 80%, transparent); color: var(--muted); font-size: 12.5px; cursor: pointer; transition: color .15s, border-color .15s; }
+.ibtn:hover { color: var(--fg); border-color: #3A3A42; }
+kbd { font-family: var(--f-mono); font-size: 10.5px; color: var(--muted); border: 1px solid var(--line-2); border-bottom-width: 2px; border-radius: 5px; padding: 0 5px; background: var(--bg-2); line-height: 1.6; }
+.seg { display: inline-flex; height: 34px; border: 1px solid var(--line-2); border-radius: 999px; padding: 3px; background: color-mix(in srgb, var(--panel) 80%, transparent); }
+.seg button { border: 0; background: none; padding: 0 10px; border-radius: 999px; font: 500 11.5px/1 var(--f-mono); color: var(--dim); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+@media (max-width: 920px) { .links { display: none; } .ibtn kbd, .ibtn .lbl { display: none; } }
+
+/* ---------- buttons ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 54px; padding: 0 30px; border-radius: 999px; font-size: 13.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; border: 1px solid var(--line-2); background: transparent; color: var(--fg); cursor: pointer; transition: transform .2s, box-shadow .25s, background .2s, border-color .2s; }
+.btn:hover { border-color: #4A4A54; transform: translateY(-2px); }
+.btn.blue { background: var(--btn); border-color: var(--btn); color: #fff; box-shadow: 0 12px 40px -12px rgba(46,107,255,.75), inset 0 1px 0 rgba(255,255,255,.2); }
+.btn.blue:hover { background: #3B76FF; box-shadow: 0 18px 50px -10px rgba(46,107,255,.85), inset 0 1px 0 rgba(255,255,255,.25); }
+.btn .arrow { transition: transform .2s; } .btn:hover .arrow { transform: translateX(3px); }
+@media (prefers-reduced-motion: reduce) { .btn:hover { transform: none; } }
+.pill { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px; border-radius: 999px; border: 1px solid #3A3A42; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; transition: background .2s, color .2s, border-color .2s; white-space: nowrap; }
+.pill:hover { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.pill.blue { border-color: rgba(91,149,255,.6); color: #CFE0FF; }
+.pill.blue:hover { background: var(--btn); border-color: var(--btn); color: #fff; }
+
+/* ---------- hero ---------- */
+.hero { position: relative; overflow: hidden; }
+#hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
+  -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,.16), rgba(0,0,0,.3) 38%, #000 64%), linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent); -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, rgba(0,0,0,.16), rgba(0,0,0,.3) 38%, #000 64%), linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent); mask-composite: intersect; }
+.hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr); gap: 24px; align-items: end; }
+.hero-txt { align-self: center; padding-block: clamp(48px, 7vw, 96px); position: relative; z-index: 3; }
+.hero-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-bottom: 30px; }
+.live { display: inline-flex; align-items: center; gap: 9px; height: 32px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line-2); background: rgba(17,17,20,.7); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.live i { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px rgba(61,214,140,.18); }
+.who { font: 400 12.5px/1.4 var(--f-mono); color: var(--muted); }
+.hero h1 { font-size: clamp(54px, 7.3vw, 104px); line-height: .9; }
+.hero h1 .metal { display: block; padding-top: .12em; margin-top: -.12em; }
+.hero h1 > .en { display: block; font-size: .86em; }
+.hero h1 .dotb { color: var(--accent); -webkit-text-fill-color: var(--accent); }
+.hero .lede { margin: 28px 0 0; font-size: 18px; line-height: 1.6; color: var(--muted); max-width: 44ch; }
+.hero .lede b { color: var(--fg); font-weight: 500; }
+.hero .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+.hero-stats { display: flex; flex-wrap: wrap; list-style: none; margin: 46px 0 0; padding: 0; }
+.hero-stats li { padding: 0 24px; border-left: 1px solid var(--line-2); font-size: 13px; color: var(--muted); }
+.hero-stats li:first-child { padding-left: 0; border-left: 0; }
+.hero-stats b { display: block; font-size: 28px; font-weight: 700; letter-spacing: -.04em; color: var(--fg); line-height: 1.1; }
+.hero-pic { position: relative; align-self: end; z-index: 2; }
+.hero-pic::before { content: ""; position: absolute; left: 50%; top: 2%; width: 115%; aspect-ratio: 1; transform: translateX(-50%); z-index: -1; pointer-events: none; background: radial-gradient(closest-side, rgba(46,107,255,.28), rgba(46,107,255,.07) 55%, transparent 72%); }
+.hero-pic img { width: 100%; height: auto; aspect-ratio: 1100 / 1173;
+  -webkit-mask-image: linear-gradient(to bottom, #000 66%, transparent 98%), linear-gradient(to right, transparent 0%, #000 20%, #000 90%, transparent 100%); -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to bottom, #000 66%, transparent 98%), linear-gradient(to right, transparent 0%, #000 20%, #000 90%, transparent 100%); mask-composite: intersect; }
+.float { position: absolute; z-index: 3; border-radius: 14px; border: 1px solid rgba(255,255,255,.10); background: rgba(17,17,20,.74); backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%); box-shadow: 0 30px 60px -24px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.06); animation: bob 8s ease-in-out infinite; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@media (prefers-reduced-motion: reduce) { .float { animation: none; } }
+.float.code { left: -12%; bottom: 16%; width: 320px; animation-delay: -3s; }
+.float .bar { display: flex; align-items: center; justify-content: space-between; height: 32px; padding: 0 12px; border-bottom: 1px solid rgba(255,255,255,.07); }
+.float .bar .l { display: flex; gap: 6px; } .float .bar .l i { width: 8px; height: 8px; border-radius: 50%; background: #34343C; }
+.float pre { margin: 0; padding: 12px 14px 14px; font: 11.5px/1.7 var(--f-mono); color: #D7D9DF; white-space: pre; overflow: hidden; }
+.float pre .c { color: var(--dim); } .float pre .k { color: #C792EA; } .float pre .f { color: var(--accent); } .float pre .n { color: #F78C6C; }
+.float.route { right: 0; top: 12%; padding: 11px 14px; display: flex; align-items: center; gap: 10px; font: 500 12px/1 var(--f-mono); color: #D7D9DF; animation-delay: -5s; }
+.float.route i { width: 6px; height: 6px; border-radius: 50%; background: #5F5F69; } .float.route i:last-of-type { background: var(--accent); box-shadow: 0 0 0 3px rgba(91,149,255,.2); }
+@media (max-width: 1080px) { .float.code { left: -6%; width: 290px; } }
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: minmax(0, 1fr); }
+  .hero-txt { padding-bottom: 8px; }
+  .hero-pic { width: min(560px, 100%); margin: 0 auto; }
+  #hero-bg { -webkit-mask-image: linear-gradient(to bottom, transparent 52%, #000 68%, #000 90%, transparent); mask-image: linear-gradient(to bottom, transparent 52%, #000 68%, #000 90%, transparent); }
+}
+@media (max-width: 640px) {
+  .float.code { display: none; }
+  .hero h1 { font-size: clamp(44px, 13.6vw, 80px); }
+  .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 0; }
+  .hero-stats li, .hero-stats li:first-child { padding: 0 0 0 14px; border-left: 1px solid var(--line-2); } .hero-stats b { font-size: 24px; }
+  .hero .ctas .btn { flex: 1 1 auto; }
+}
+
+/* ---------- ticker ---------- */
+.ticker { border-block: 1px solid var(--line); background: var(--bg-2); overflow: hidden; }
+.track { display: flex; width: max-content; animation: slide 45s linear infinite; }
+.track span { font: 500 12.5px/1 var(--f-mono); color: var(--muted); padding: 15px 22px; white-space: nowrap; }
+.track span b { color: var(--fg); font-weight: 500; } .track span em { font-style: normal; color: var(--ok); }
+@keyframes slide { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .track { animation: none; } }
+
+/* ---------- sections ---------- */
+.sec { padding-block: clamp(84px, 11vw, 150px); position: relative; }
+.head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px 40px; flex-wrap: wrap; margin-bottom: clamp(36px, 5vw, 64px); }
+.head h2 { font-size: clamp(46px, 8.4vw, 120px); }
+.head .side { max-width: 38ch; color: var(--muted); font-size: 15.5px; margin: 0; }
+.head .side b { color: var(--fg); font-weight: 500; }
+
+/* about */
+.about { text-align: center; }
+.about .label { display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin: 0 0 28px; }
+.statement { font-size: clamp(28px, 3.7vw, 50px); line-height: 1.16; font-weight: 600; letter-spacing: -.035em; margin: 0 auto; max-width: 24ch; text-wrap: balance; }
+.statement .w { transition: color .35s; }
+.statement.armed .w { color: #2C2C33; }
+.statement.armed .w.on { color: var(--fg); }
+.statement .hl.on { color: var(--accent) !important; }
+.about .facts { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; list-style: none; margin: 40px 0 0; padding: 0; }
+.about .facts li { height: 36px; display: inline-flex; align-items: center; gap: 8px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line-2); background: var(--panel); font-size: 13px; color: #C9CAD0; }
+.about .facts li .mono { color: var(--dim); }
+.about .btn { margin-top: 40px; }
+
+/* skills */
+.skills { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.skills > li { position: relative; display: grid; grid-template-columns: 120px minmax(0, 1fr) minmax(0, 1.05fr); gap: 16px 48px; align-items: center; padding: 34px 0; border-bottom: 1px solid var(--line); isolation: isolate; }
+.skills > li::before { content: ""; position: absolute; inset: 0 -24px; z-index: -1; background: linear-gradient(90deg, rgba(46,107,255,.12), transparent 65%); opacity: 0; transition: opacity .35s; border-radius: 4px; }
+.skills > li:hover::before { opacity: 1; }
+.skills .n { font-size: 64px; font-weight: 800; letter-spacing: -.05em; line-height: .8; color: #26262D; transition: color .3s; }
+.skills > li:hover .n { color: var(--accent); }
+.skills h3 { margin: 0; font-size: clamp(22px, 2.4vw, 32px); font-weight: 800; letter-spacing: -.03em; text-transform: uppercase; line-height: 1; }
+.skills p { margin: 0 0 12px; color: var(--muted); font-size: 15px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0; padding: 0; }
+.tags li { font: 400 11.5px/1 var(--f-mono); color: #C3C4CB; padding: 7px 9px; border-radius: 7px; border: 1px solid var(--line-2); background: var(--panel); }
+
+/* stacked projects */
+.stack { display: grid; gap: 30px; }
+.card { position: sticky; top: calc(96px + var(--i) * 18px); border-radius: 28px; border: 1px solid #2A2A31; background: linear-gradient(180deg, #141418, #0D0D10); padding: clamp(18px, 2.4vw, 28px); transform-origin: 50% 0; box-shadow: 0 -24px 60px -30px rgba(0,0,0,.95), inset 0 1px 0 rgba(255,255,255,.05); }
+.card .top { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px 22px; align-items: center; padding: 6px 6px 20px; }
+.card .no { font-size: clamp(56px, 6.4vw, 92px); font-weight: 800; letter-spacing: -.06em; line-height: .78; }
+.card .cat { display: block; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.card h3 { margin: 0; font-size: clamp(22px, 2.6vw, 34px); font-weight: 800; letter-spacing: -.035em; text-transform: uppercase; line-height: 1; }
+.card .acts { display: flex; gap: 8px; }
+.card .shot { position: relative; border-radius: 18px; overflow: hidden; border: 1px solid var(--line-2); background: radial-gradient(90% 90% at 70% 20%, rgba(46,107,255,.10), transparent 60%), var(--bg-2); display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); min-height: 340px; }
+.card .viz-box { position: relative; min-height: 300px; border-right: 1px solid var(--line); }
+.card .viz-box canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.card .info { padding: 24px; display: flex; flex-direction: column; gap: 14px; }
+.card .info p { margin: 0; color: #B9BAC2; font-size: 15px; line-height: 1.6; }
+.card .info .tags { margin-top: auto; }
+.kpis { display: flex; gap: 26px; }
+.kpis div { display: flex; flex-direction: column; gap: 4px; }
+.kpis b { font-size: 30px; font-weight: 700; letter-spacing: -.04em; line-height: 1; }
+
+.more { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: clamp(64px, 8vw, 96px) 0 14px; }
+.more h3 { margin: 0; font-size: clamp(22px, 2.4vw, 30px); font-weight: 800; letter-spacing: -.03em; text-transform: uppercase; }
+.table-wrap { overflow-x: auto; }
+.table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.table th { text-align: left; font: 400 11.5px/1 var(--f-mono); color: var(--dim); padding: 0 16px 12px 0; border-bottom: 1px solid var(--line); text-transform: uppercase; letter-spacing: .04em; }
+.table td { padding: 18px 16px 18px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.table tbody tr { transition: background .15s; }
+.table tbody tr:hover { background: rgba(255,255,255,.018); }
+.table td.pj b { display: block; font-weight: 600; font-size: 15px; }
+.table td.pj span { display: block; color: var(--muted); font-size: 13.5px; margin-top: 3px; max-width: 48ch; }
+.table .dm { color: var(--muted); white-space: nowrap; }
+.table .yr { font-family: var(--f-mono); font-size: 12.5px; color: var(--muted); white-space: nowrap; }
+.table .lk { text-align: right; white-space: nowrap; padding-right: 0; }
+.table .lk a { color: #C9CAD0; font-size: 13px; margin-left: 14px; } .table .lk a:hover { color: var(--accent); }
+.note { margin-top: 18px; }
+
+/* trajectory */
+.chart { border: 1px solid var(--line-2); border-radius: 24px; background: linear-gradient(180deg, #111114, #0B0B0E); overflow: hidden; }
+.chart .top { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+.legend { display: flex; gap: 18px; }
+.legend > span { display: inline-flex; align-items: center; gap: 8px; }
+.legend > span::before { content: ""; width: 14px; height: 2px; border-radius: 1px; background: var(--accent); }
+.legend > span.sim::before { background: #4A4A54; }
+.chart-box { position: relative; height: clamp(280px, 34vw, 420px); cursor: crosshair; touch-action: pan-y; }
+#path { display: block; width: 100%; height: 100%; }
+.tip { position: absolute; top: 12px; pointer-events: none; padding: 8px 11px; border-radius: 9px; border: 1px solid var(--line-2); background: rgba(17,17,20,.94); font-size: 12.5px; white-space: nowrap; transform: translateX(-50%); opacity: 0; transition: opacity .15s; z-index: 2; }
+.tip b { font-weight: 600; } .tip .mono { display: block; margin-bottom: 2px; } .tip .d { color: var(--muted); }
+.chart-box.hover .tip { opacity: 1; }
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); list-style: none; margin: 0; padding: 0; }
+.steps li { padding: 20px; border-right: 1px solid var(--line); min-width: 0; }
+.steps li:last-child { border-right: 0; }
+.steps .y { font: 500 12px/1 var(--f-mono); color: var(--accent); }
+.steps b { display: block; margin-top: 10px; font-weight: 800; font-size: 16px; text-transform: uppercase; letter-spacing: -.01em; }
+.steps small { display: block; margin-top: 4px; color: var(--muted); font-size: 13px; line-height: 1.45; }
+
+/* risk lab */
+.lab { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); border: 1px solid var(--line-2); border-radius: 24px; background: linear-gradient(180deg, #111114, #0B0B0E); overflow: hidden; }
+.lab-ctrl { padding: 26px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 20px; }
+.lab-ctrl h3 { margin: 0; font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+.fld { display: flex; flex-direction: column; gap: 9px; }
+.fld .lb { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: 13.5px; color: #C9CAD0; }
+.fld .lb output { font: 500 13px/1 var(--f-mono); color: var(--fg); }
+.fld input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 4px; outline: none; cursor: pointer;
+  background: linear-gradient(90deg, var(--btn) 0 var(--p, 50%), #26262D var(--p, 50%) 100%); }
+.fld input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 3px solid var(--btn); box-shadow: 0 0 0 4px rgba(46,107,255,.18); }
+.fld input[type=range]::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: #fff; border: 3px solid var(--btn); }
+.fld input[type=range]:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
+.segs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; border-radius: 12px; border: 1px solid var(--line-2); background: var(--bg-2); }
+.segs button { height: 34px; border: 0; border-radius: 9px; background: none; color: var(--muted); font-size: 12.5px; font-weight: 600; cursor: pointer; }
+.segs button[aria-pressed="true"] { background: var(--panel-2); color: var(--fg); box-shadow: inset 0 0 0 1px var(--line-2); }
+.lab-ctrl .note2 { margin: 0; font-size: 12.5px; color: var(--dim); line-height: 1.5; }
+.lab-ctrl .btn { height: 46px; width: 100%; margin-top: auto; }
+.lab-out { display: flex; flex-direction: column; min-width: 0; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
+.tile { padding: 18px 20px; border-right: 1px solid var(--line); min-width: 0; }
+.tile:last-child { border-right: 0; }
+.tile .k { font: 400 11.5px/1.3 var(--f-mono); color: var(--dim); text-transform: uppercase; letter-spacing: .03em; }
+.tile b { display: block; margin-top: 8px; font-size: clamp(20px, 2vw, 26px); font-weight: 700; letter-spacing: -.035em; white-space: nowrap; }
+.tile .s { display: block; margin-top: 3px; font-size: 12.5px; color: var(--muted); }
+.tile.hl b { color: var(--accent); }
+.lab-plot { position: relative; flex: 1; min-height: 320px; }
+#lab-cv { position: absolute; inset: 0; width: 100%; height: 100%; }
+.lab-foot { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 12px 20px; border-top: 1px solid var(--line); }
+.lab-foot .mono b { color: var(--fg); font-weight: 500; }
+@media (max-width: 980px) { .lab { grid-template-columns: minmax(0, 1fr); } .lab-ctrl { border-right: 0; border-bottom: 1px solid var(--line); } .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tile:nth-child(2) { border-right: 0; } .tile:nth-child(-n+2) { border-bottom: 1px solid var(--line); } }
+
+/* case studies */
+.case { margin: 0; display: grid; gap: 12px; }
+.case div { display: grid; grid-template-columns: 82px minmax(0, 1fr); gap: 12px; }
+.case dt { font: 500 11px/1.9 var(--f-mono); color: var(--accent); text-transform: uppercase; letter-spacing: .05em; }
+.case dd { margin: 0; color: #C3C4CB; font-size: 14.5px; line-height: 1.55; }
+@media (max-width: 600px) { .case div { grid-template-columns: minmax(0, 1fr); gap: 2px; } }
+
+/* path (experience + education) */
+.cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; }
+.cols h3 { margin: 0 0 6px; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+.tl { list-style: none; margin: 0; padding: 0; }
+.tl li { display: grid; grid-template-columns: 116px minmax(0, 1fr); gap: 18px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+.tl .when { font: 400 12.5px/1.8 var(--f-mono); color: var(--muted); }
+.tl b { display: block; font-weight: 700; font-size: 17px; letter-spacing: -.02em; }
+.tl .org { display: block; color: #C9CAD0; font-size: 14px; margin-top: 2px; }
+.tl p { margin: 8px 0 0; color: var(--muted); font-size: 14px; }
+.tag-mini { display: inline-block; margin-left: 8px; font: 500 11px/1 var(--f-mono); color: var(--accent); border: 1px solid rgba(91,149,255,.4); padding: 3px 6px; border-radius: 5px; vertical-align: 1px; }
+
+/* speaking */
+.speak { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 56px; align-items: start; }
+.quote { margin: 0; font-size: clamp(28px, 3.4vw, 46px); line-height: 1.1; letter-spacing: -.04em; font-weight: 700; text-wrap: balance; }
+.quote .m { color: var(--dim); }
+.speak p.t { color: var(--muted); margin: 22px 0 0; font-size: 15px; max-width: 48ch; }
+.awards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; list-style: none; margin: 0; padding: 0; }
+.awards li { border-radius: 18px; border: 1px solid var(--line-2); background: var(--panel); padding: 22px; position: relative; overflow: hidden; }
+.awards li::after { content: ""; position: absolute; right: -40px; top: -40px; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(closest-side, rgba(46,107,255,.16), transparent); }
+.awards .yr { font-size: 34px; font-weight: 800; letter-spacing: -.05em; line-height: 1; }
+.awards b { display: block; margin-top: 14px; font-weight: 600; font-size: 15.5px; }
+.awards span { display: block; color: var(--muted); font-size: 13.5px; margin-top: 2px; }
+
+/* giant marquee */
+.giant { overflow: hidden; padding-block: 12px; border-block: 1px solid var(--line); }
+.giant .track { animation-duration: 60s; align-items: center; }
+.giant .track span { font: 800 clamp(56px, 9vw, 136px)/1.05 var(--f-sans); letter-spacing: -.045em; text-transform: uppercase; padding: 20px 0; color: transparent; }
+.giant .track span.f { background: var(--metal); -webkit-background-clip: text; background-clip: text; }
+.giant .track span.o { color: #1E1E24; }
+.giant .track span.s { color: var(--accent); font-size: clamp(26px, 3.6vw, 52px); padding-inline: clamp(22px, 3vw, 46px); }
+.giant .track span.m { font-family: var(--f-math); font-style: italic; font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--accent); padding-inline: clamp(28px, 4vw, 64px); font-size: clamp(58px, 9.4vw, 140px); }
+
+/* contact */
+.contact { position: relative; text-align: center; overflow: hidden; padding-block: clamp(96px, 12vw, 170px) clamp(80px, 10vw, 130px); }
+.contact::before { content: ""; position: absolute; left: 50%; bottom: -320px; width: 1100px; height: 640px; transform: translateX(-50%); pointer-events: none; background: radial-gradient(closest-side, rgba(46,107,255,.24), transparent); }
+#cone { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; -webkit-mask-image: radial-gradient(70% 70% at 50% 55%, #000 20%, transparent 80%); mask-image: radial-gradient(70% 70% at 50% 55%, #000 20%, transparent 80%); opacity: .9; }
+.contact .wrap { position: relative; }
+.contact h2 .q { color: var(--accent); -webkit-text-fill-color: var(--accent); }
+.avail { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #C9CAD0; }
+.avail i { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 4px rgba(61,214,140,.15); }
+.contact h2 { font-size: clamp(64px, 14vw, 210px); margin-top: 22px; }
+.contact h2 .dot { color: var(--accent); -webkit-text-fill-color: var(--accent); }
+.contact p.t { color: var(--muted); font-size: 17px; max-width: 52ch; margin: 22px auto 0; }
+.contact .ctas { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+.term { display: inline-flex; align-items: center; gap: 12px; margin-top: 22px; height: 44px; padding: 0 6px 0 16px; border-radius: 12px; border: 1px solid var(--line-2); background: rgba(12,12,15,.8); font: 400 13.5px/1 var(--f-mono); max-width: 100%; }
+.term .p { color: var(--accent); } .term .addr { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.copy { height: 32px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--line-2); background: var(--panel); color: var(--muted); font: 400 12px/1 var(--f-mono); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.copy:hover { color: var(--fg); }
+
+/* footer */
+footer { border-top: 1px solid var(--line); padding-block: clamp(48px, 6vw, 72px) 28px; }
+.f-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
+.f-name { margin: 0; padding-top: .1em; font-size: clamp(72px, 11vw, 160px); font-weight: 800; letter-spacing: -.05em; line-height: 1; }
+.f-name .f { font-family: var(--f-math); font-style: italic; font-weight: 400; color: var(--accent); font-size: 1.22em; margin-right: .02em; }
+.f-who { margin: 26px 0 0; font-size: 18px; font-weight: 700; letter-spacing: -.02em; }
+.f-sub { margin: 6px 0 0; font-size: 13px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.f-links { display: flex; gap: 26px; flex-wrap: wrap; list-style: none; margin: 0; padding: 0; }
+.f-links a { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #C9CAD0; } .f-links a:hover { color: #fff; }
+.f-bot { display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--line); }
+
+/* command palette + toast */
+.cmdk-back { position: fixed; inset: 0; z-index: 80; background: rgba(0,0,0,.55); backdrop-filter: blur(3px); display: flex; align-items: flex-start; justify-content: center; padding: calc(12vh + env(safe-area-inset-top, 0px)) 16px 16px; }
+.cmdk { width: min(560px, 100%); border-radius: 16px; border: 1px solid var(--line-2); background: #121215; box-shadow: 0 40px 120px -20px rgba(0,0,0,.9); overflow: hidden; animation: pop .16s ease-out; }
+@keyframes pop { from { opacity: 0; transform: scale(.98) translateY(-4px); } }
+.cmdk input { width: 100%; height: 54px; border: 0; border-bottom: 1px solid var(--line); background: transparent; padding: 0 18px; color: var(--fg); font: 400 15px/1 var(--f-sans); outline: none; }
+.cmdk input::placeholder { color: var(--dim); }
+.cmdk ul { list-style: none; margin: 0; padding: 6px; max-height: 340px; overflow-y: auto; }
+.cmdk .grp { padding: 10px 12px 6px; font: 400 11px/1 var(--f-mono); color: var(--dim); }
+.cmdk .it { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px; border-radius: 9px; font-size: 14px; color: var(--muted); cursor: pointer; }
+.cmdk .it[aria-selected="true"] { background: var(--panel-2); color: var(--fg); }
+.cmdk .it .k { font: 400 11px/1 var(--f-mono); color: var(--dim); }
+.cmdk .foot { display: flex; gap: 14px; padding: 10px 14px; border-top: 1px solid var(--line); font: 400 11px/1 var(--f-mono); color: var(--dim); }
+.toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); z-index: 90; transform: translateX(-50%) translateY(20px); opacity: 0; pointer-events: none; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--line-2); background: #141417; font-size: 13.5px; transition: opacity .2s, transform .2s; display: flex; align-items: center; gap: 8px; }
+.toast.show { opacity: 1; transform: translateX(-50%); }
+.toast i { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); }
+
+/* responsive */
+@media (max-width: 980px) {
+  .skills > li { grid-template-columns: 84px minmax(0, 1fr); }
+  .skills > li > div { grid-column: 2; }
+  .skills .n { font-size: 48px; }
+  .card .shot { grid-template-columns: minmax(0, 1fr); }
+  .card .viz-box { border-right: 0; border-bottom: 1px solid var(--line); min-height: 240px; }
+  .cols, .speak { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 760px) {
+  .card { position: relative; top: 0; }
+  .card .top { grid-template-columns: auto minmax(0, 1fr); }
+  .card .acts { grid-column: 1 / -1; }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .steps li:nth-child(2) { border-right: 0; }
+  .steps li:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .tl li { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .table thead { display: none; }
+  .table tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; border-bottom: 1px solid var(--line); padding: 16px 0; }
+  .table td { border: 0; padding: 0; }
+  .table td.yr { grid-column: 2; grid-row: 1; text-align: right; }
+  .table td.dm { grid-column: 1 / -1; margin-top: 8px; font-size: 13px; }
+  .table td.st { grid-column: 1 / -1; margin-top: 8px; }
+  .table td.lk { grid-column: 1 / -1; text-align: left; margin-top: 10px; }
+  .table .lk a { margin: 0 14px 0 0; }
+  .term .p { display: none; }
+}
+@media (max-width: 600px) {
+  .skills > li { grid-template-columns: minmax(0, 1fr); gap: 12px; padding: 28px 0; }
+  .skills > li > div { grid-column: auto; }
+  .awards { grid-template-columns: minmax(0, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="François Mansaré, accueil"><span class="mark"><span class="f">f</span>(M)</span><span class="nm">Francois Mansare</span></a>
+    <ul class="links">
+      <li><a href="#apropos"><span class="fr">À propos</span><span class="en">About</span></a></li>
+      <li><a href="#competences"><span class="fr">Compétences</span><span class="en">Skills</span></a></li>
+      <li><a href="#projets"><span class="fr">Projets</span><span class="en">Projects</span></a></li>
+      <li><a href="#labo"><span class="fr">Labo</span><span class="en">Lab</span></a></li>
+      <li><a href="#parcours"><span class="fr">Parcours</span><span class="en">Path</span></a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="tools">
+      <button type="button" class="ibtn" id="open-cmdk" aria-label="Rechercher"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><kbd id="kbd-hint">⌘K</kbd></button>
+      <div class="seg" role="group" aria-label="Langue / Language">
+        <button type="button" data-l="fr" aria-pressed="true">FR</button>
+        <button type="button" data-l="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <canvas id="hero-bg" aria-hidden="true"></canvas>
+    <div class="wrap hero-grid">
+      <div class="hero-txt">
+        <div class="hero-meta"><span class="live"><i></i><span class="fr">Ouvert aux stages</span><span class="en">Open to internships</span></span><span class="who">François Mansaré · <span class="fr">Data science · Finance quantitative</span><span class="en">Data science · Quantitative finance</span></span></div>
+        <h1 class="display"><span class="fr"><span class="metal">Modéliser</span><span class="metal">l'incertain<span class="dotb">.</span></span></span><span class="en"><span class="metal">Modelling</span><span class="metal">uncertainty<span class="dotb">.</span></span></span></h1>
+        <p class="lede"><span class="fr">Élève ingénieur en <b>data science</b> et <b>modélisation mathématique pour l'aide à la décision</b>, avec un cap : la <b>finance quantitative</b>. Je construis des modèles qui transforment l'incertitude en choix chiffrés, et les applications pour s'en servir.</span><span class="en">Engineering student in <b>data science</b> and <b>mathematical modelling for decision-making</b>, heading for <b>quantitative finance</b>. I build models that turn uncertainty into quantified choices, and the apps to use them.</span></p>
+        <div class="ctas">
+          <a class="btn blue" href="#projets"><span class="fr">Voir les projets</span><span class="en">View projects</span> <span class="arrow">→</span></a>
+          <a class="btn" href="#contact"><span class="fr">Me contacter</span><span class="en">Contact me</span></a>
+        </div>
+        <ul class="hero-stats">
+          <li><b class="num">3</b><span class="fr">pays</span><span class="en">countries</span></li>
+          <li><b class="num">10</b><span class="fr">projets</span><span class="en">projects</span></li>
+          <li><b class="num">4</b><span class="fr">prix d'éloquence</span><span class="en">speaking awards</span></li>
+          <li><b>#1</b><span class="fr">de promo en Licence</span><span class="en">of my BSc class</span></li>
+        </ul>
+      </div>
+      <div class="hero-pic">
+        <img src="francois.webp" alt="François Mansaré, en costume, son ordinateur portable sur les genoux" width="1100" height="1173" fetchpriority="high">
+        <div class="float route" aria-hidden="true"><i></i><span class="fr">Guinée</span><span class="en">Guinea</span><i></i><span class="fr">Maroc</span><span class="en">Morocco</span><i></i>France</div>
+        <div class="float code" aria-hidden="true">
+          <div class="bar"><span class="l"><i></i><i></i><i></i></span><span class="mono">model.py</span></div>
+<pre><span class="c"># modéliser l'incertain, puis décider</span>
+<span class="k">from</span> sklearn.mixture <span class="k">import</span> GaussianMixture
+
+gmm = <span class="f">GaussianMixture</span>(<span class="n">3</span>).<span class="f">fit</span>(X)
+p = gmm.<span class="f">predict_proba</span>(x_new)
+decision = p[:, <span class="n">1</span>] &gt; seuil</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="track">
+      <span><b>DATA SCIENCE</b> <em>▲</em></span><span><b>MACHINE LEARNING</b> <em>▲</em></span><span><b>MONTE CARLO</b> <em>▲</em></span><span><b>GMM</b> <em>▲</em></span><span><b>XGBOOST</b> <em>▲</em></span><span><b>NLP</b> <em>▲</em></span><span><b>OPTIMISATION</b> <em>▲</em></span><span><b>VAR 95 %</b> <em>▲</em></span><span><b>MARKOWITZ</b> <em>▲</em></span><span><b>SQL</b> <em>▲</em></span><span><b>PYTHON</b> <em>▲</em></span><span><b>DOCKER</b> <em>▲</em></span>
+      <span><b>DATA SCIENCE</b> <em>▲</em></span><span><b>MACHINE LEARNING</b> <em>▲</em></span><span><b>MONTE CARLO</b> <em>▲</em></span><span><b>GMM</b> <em>▲</em></span><span><b>XGBOOST</b> <em>▲</em></span><span><b>NLP</b> <em>▲</em></span><span><b>OPTIMISATION</b> <em>▲</em></span><span><b>VAR 95 %</b> <em>▲</em></span><span><b>MARKOWITZ</b> <em>▲</em></span><span><b>SQL</b> <em>▲</em></span><span><b>PYTHON</b> <em>▲</em></span><span><b>DOCKER</b> <em>▲</em></span>
+    </div>
+  </div>
+
+  <section class="sec about" id="apropos">
+    <div class="wrap">
+      <p class="label" data-rise><span class="fr">À propos</span><span class="en">About me</span></p>
+      <p class="statement" id="statement"><span class="fr">En double diplôme Mines × ENSIAS, je me spécialise en <span class="hl">data science et modélisation mathématique</span>. J'aime transformer des données incertaines en modèles clairs et en décisions que l'on peut défendre, en finance comme ailleurs.</span><span class="en">On a Mines × ENSIAS double degree, I specialise in <span class="hl">data science and mathematical modelling</span>. I like turning uncertain data into clear models and decisions you can defend, in finance and beyond.</span></p>
+      <ul class="facts" data-rise>
+        <li><span class="mono">01</span><span class="fr">Major de promotion en Licence</span><span class="en">Top of my BSc class</span></li>
+        <li><span class="mono">02</span><span class="fr">3 pays, 3 écoles</span><span class="en">3 countries, 3 schools</span></li>
+        <li><span class="mono">03</span><span class="fr">4 prix d'éloquence</span><span class="en">4 public-speaking awards</span></li>
+        <li><span class="mono">04</span><span class="fr">Français C1/C2 · Anglais B2</span><span class="en">French C1/C2 · English B2</span></li>
+      </ul>
+      <a class="btn blue" href="#contact" data-rise><span class="fr">Me contacter</span><span class="en">Contact me</span> <span class="arrow">→</span></a>
+    </div>
+  </section>
+
+  <section class="sec" id="competences" style="padding-top:0">
+    <div class="wrap">
+      <div class="head" data-rise>
+        <h2 class="display metal"><span class="fr">Compétences</span><span class="en">Skills</span></h2>
+        <p class="side"><span class="fr">Cinq domaines que je pratique sur des <b>projets réels</b>, de la donnée brute jusqu'à la décision.</span><span class="en">Five areas I practise on <b>real projects</b>, from raw data all the way to a decision.</span></p>
+      </div>
+      <ol class="skills">
+        <li data-rise><span class="n num">01</span><h3><span class="fr">Data science &amp; ML</span><span class="en">Data science &amp; ML</span></h3><div><p><span class="fr">Exploration, préparation des données, classification et prédiction, avec une comparaison rigoureuse des modèles par validation croisée.</span><span class="en">Exploration, data preparation, classification and prediction, with rigorous model comparison through cross-validation.</span></p><ul class="tags"><li>scikit-learn</li><li>XGBoost</li><li>Random Forest</li><li>PyTorch</li></ul></div></li>
+        <li data-rise><span class="n num">02</span><h3><span class="fr">Modélisation &amp; décision</span><span class="en">Modelling &amp; decisions</span></h3><div><p><span class="fr">Modèles probabilistes, simulation de Monte Carlo et optimisation pour expliquer, prévoir et éclairer une décision.</span><span class="en">Probabilistic models, Monte Carlo simulation and optimisation to explain, forecast and inform a decision.</span></p><ul class="tags"><li>GMM</li><li>Monte Carlo</li><li><span class="fr">Inférence</span><span class="en">Inference</span></li><li><span class="fr">Optimisation</span><span class="en">Optimisation</span></li></ul></div></li>
+        <li data-rise><span class="n num">03</span><h3><span class="fr">Finance quantitative</span><span class="en">Quantitative finance</span></h3><div><p><span class="fr">Mon premier terrain d'application : risque de marché et de crédit, allocation de portefeuille et backtesting de stratégies.</span><span class="en">My first field of application: market and credit risk, portfolio allocation and strategy backtesting.</span></p><ul class="tags"><li>VaR / TVaR</li><li>Markowitz</li><li>HRP</li><li>Backtesting</li></ul></div></li>
+        <li data-rise><span class="n num">04</span><h3><span class="fr">IA &amp; NLP</span><span class="en">AI &amp; NLP</span></h3><div><p><span class="fr">Faire parler le texte : modèles de langage fine-tunés, analyse de sentiment et assistants IA alimentés par RAG.</span><span class="en">Making text speak: fine-tuned language models, sentiment analysis and AI assistants powered by RAG.</span></p><ul class="tags"><li>FinBERT</li><li>Fine-tuning</li><li>RAG</li></ul></div></li>
+        <li data-rise><span class="n num">05</span><h3><span class="fr">Data &amp; applications</span><span class="en">Data &amp; applications</span></h3><div><p><span class="fr">De la base de données au tableau de bord en ligne : des modèles que d'autres peuvent utiliser.</span><span class="en">From the database to a live dashboard: models other people can actually use.</span></p><ul class="tags"><li>Python</li><li>SQL</li><li>PostgreSQL</li><li>Django</li><li>Flask</li><li>Streamlit</li><li>React</li><li>Docker</li></ul></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec" id="projets" style="padding-top:0">
+    <div class="wrap">
+      <div class="head" data-rise>
+        <h2 class="display metal"><span class="fr">Projets</span><span class="en">Projects</span></h2>
+        <p class="side"><span class="fr">Du risque au signal, en code. Projets académiques et personnels, <b>du modèle mathématique à l'application déployée</b>.</span><span class="en">From risk to signal, in code. Academic and personal projects, <b>from the mathematical model to the deployed app</b>.</span></p>
+      </div>
+
+      <div class="stack">
+        <article class="card" style="--i:0">
+          <div class="top"><span class="no metal num">01</span><div><span class="cat"><span class="fr">Risque de crédit</span><span class="en">Credit risk</span> · 2025–2026</span><h3><span class="fr">Scoring crédit par mélanges gaussiens</span><span class="en">Credit scoring with Gaussian mixtures</span></h3></div><div class="acts"><a class="pill blue" href="https://github.com/FrancoisMans10/Risk-Credit" target="_blank" rel="noopener"><span class="fr">Voir le code</span><span class="en">View code</span> ↗</a></div></div>
+          <div class="shot"><div class="viz-box"><canvas class="viz" data-viz="credit" aria-hidden="true"></canvas></div><div class="info"><dl class="case"><div><dt><span class="fr">Problème</span><span class="en">Problem</span></dt><dd><span class="fr">Décider à qui accorder un prêt, avec une probabilité plutôt qu'un simple oui ou non.</span><span class="en">Deciding who should get a loan, with a probability rather than a plain yes or no.</span></dd></div><div><dt><span class="fr">Approche</span><span class="en">Approach</span></dt><dd><span class="fr">Un mélange gaussien par classe et une classification par vraisemblance, comparés à six modèles supervisés (précision, rappel, F1, AUC).</span><span class="en">One Gaussian mixture per class and likelihood-based classification, benchmarked against six supervised models (precision, recall, F1, AUC).</span></dd></div><div><dt><span class="fr">Résultat</span><span class="en">Result</span></dt><dd><span class="fr">Une application de scoring en temps réel, réalisée avec Marcellin Soukroumde.</span><span class="en">A real-time scoring app, built with Marcellin Soukroumde.</span></dd></div></dl><ul class="tags"><li>scikit-learn</li><li>Flask</li><li>React</li><li>Docker</li></ul></div></div>
+        </article>
+
+        <article class="card" style="--i:1">
+          <div class="top"><span class="no metal num">02</span><div><span class="cat">NLP · FinBERT</span><h3>FinSent</h3></div><div class="acts"><a class="pill blue" href="https://github.com/FrancoisMans10/Natural-Language-Processing-project-applied-to-financiel-text-analysis." target="_blank" rel="noopener"><span class="fr">Voir le code</span><span class="en">View code</span> ↗</a></div></div>
+          <div class="shot"><div class="viz-box"><canvas class="viz" data-viz="sentiment" aria-hidden="true"></canvas></div><div class="info"><dl class="case"><div><dt><span class="fr">Problème</span><span class="en">Problem</span></dt><dd><span class="fr">Mesurer automatiquement le ton des actualités financières.</span><span class="en">Measuring the tone of financial news automatically.</span></dd></div><div><dt><span class="fr">Approche</span><span class="en">Approach</span></dt><dd><span class="fr">FinBERT fine-tuné, et un pipeline automatisé : titres du S&amp;P 500 → actualités → analyse.</span><span class="en">Fine-tuned FinBERT and an automated pipeline: S&amp;P 500 tickers → news → analysis.</span></dd></div><div><dt><span class="fr">Résultat</span><span class="en">Result</span></dt><dd><span class="fr">Un tableau de bord web de sentiment par titre.</span><span class="en">A web dashboard of sentiment per ticker.</span></dd></div></dl><div class="kpis num"><div><b>≈ 91 %</b><span class="mono">accuracy</span></div><div><b><span class="fr">≈ 0,85</span><span class="en">≈ 0.85</span></b><span class="mono">F1-score</span></div></div><ul class="tags"><li>FinBERT</li><li>Django</li><li>PostgreSQL</li></ul></div></div>
+        </article>
+
+        <article class="card" style="--i:2">
+          <div class="top"><span class="no metal num">03</span><div><span class="cat"><span class="fr">Gestion des risques</span><span class="en">Risk management</span> · ENSIAS</span><h3>VaR &amp; TVaR</h3></div><div class="acts"></div></div>
+          <div class="shot"><div class="viz-box"><canvas class="viz" data-viz="var" aria-hidden="true"></canvas></div><div class="info"><dl class="case"><div><dt><span class="fr">Problème</span><span class="en">Problem</span></dt><dd><span class="fr">Combien un portefeuille de 1 M MAD (actions, ETF) peut-il perdre en un an ?</span><span class="en">How much can a 1M MAD portfolio (equities, ETF) lose in a year?</span></dd></div><div><dt><span class="fr">Approche</span><span class="en">Approach</span></dt><dd><span class="fr">VaR paramétrique et TVaR, en comparant rendements arithmétiques et logarithmiques.</span><span class="en">Parametric VaR and TVaR, comparing arithmetic and log returns.</span></dd></div><div><dt><span class="fr">Résultat</span><span class="en">Result</span></dt><dd><span class="fr">Une mesure annuelle de la perte potentielle, au format attendu par un comité de risque.</span><span class="en">An annual measure of potential loss, in the format a risk committee expects.</span></dd></div></dl><ul class="tags"><li>Python</li><li>NumPy</li><li>Pandas</li><li>SciPy</li></ul></div></div>
+        </article>
+
+        <article class="card" style="--i:3">
+          <div class="top"><span class="no metal num">04</span><div><span class="cat"><span class="fr">Allocation de portefeuille</span><span class="en">Portfolio allocation</span> · ENSIAS</span><h3>Markowitz vs HRP</h3></div><div class="acts"></div></div>
+          <div class="shot"><div class="viz-box"><canvas class="viz" data-viz="frontier" aria-hidden="true"></canvas></div><div class="info"><dl class="case"><div><dt><span class="fr">Problème</span><span class="en">Problem</span></dt><dd><span class="fr">L'optimisation classique concentre le portefeuille et réagit mal aux erreurs d'estimation.</span><span class="en">Classic optimisation concentrates the portfolio and reacts badly to estimation error.</span></dd></div><div><dt><span class="fr">Approche</span><span class="en">Approach</span></dt><dd><span class="fr">Max Sharpe (Markowitz) face au Hierarchical Risk Parity, qui regroupe les actifs par clustering. Huit grandes capitalisations US, 2020-2023.</span><span class="en">Max Sharpe (Markowitz) against Hierarchical Risk Parity, which clusters assets first. Eight US large caps, 2020-2023.</span></dd></div><div><dt><span class="fr">Résultat</span><span class="en">Result</span></dt><dd><span class="fr">Une comparaison des allocations, de la diversification et du couple rendement-risque.</span><span class="en">A comparison of allocations, diversification and risk-return.</span></dd></div></dl><ul class="tags"><li>PyPortfolioOpt</li><li>yfinance</li></ul></div></div>
+        </article>
+      </div>
+
+      <div class="more" data-rise><h3><span class="fr">Autres projets</span><span class="en">More projects</span></h3><a class="pill" href="https://github.com/FrancoisMans10" target="_blank" rel="noopener">GitHub ↗</a></div>
+      <div class="table-wrap" data-rise>
+        <table class="table">
+          <thead><tr><th><span class="fr">Projet</span><span class="en">Project</span></th><th><span class="fr">Domaine</span><span class="en">Area</span></th><th>Stack</th><th><span class="fr">Année</span><span class="en">Year</span></th><th></th></tr></thead>
+          <tbody>
+            <tr><td class="pj"><b><span class="fr">Direction du MASI</span><span class="en">MASI direction</span></b><span><span class="fr">Prédire le sens quotidien de la Bourse de Casablanca à partir d'indicateurs techniques et macro.</span><span class="en">Predicting the daily direction of the Casablanca exchange from technical and macro features.</span></span></td><td class="dm"><span class="fr">Prédiction de marché</span><span class="en">Market prediction</span></td><td class="st"><ul class="tags"><li>Random Forest</li><li>XGBoost</li></ul></td><td class="yr">—</td><td class="lk"></td></tr>
+            <tr><td class="pj"><b><span class="fr">Fraude bancaire</span><span class="en">Bank fraud detection</span></b><span><span class="fr">KNN, régression logistique, Random Forest et XGBoost comparés sur des transactions.</span><span class="en">KNN, logistic regression, Random Forest and XGBoost compared on transactions.</span></span></td><td class="dm">Machine learning</td><td class="st"><ul class="tags"><li>XGBoost</li><li>Streamlit</li></ul></td><td class="yr num">2025</td><td class="lk"></td></tr>
+            <tr><td class="pj"><b><span class="fr">Dashboard boursier</span><span class="en">Stock dashboard</span></b><span><span class="fr">Cours en direct via Yahoo Finance, moyenne mobile et période au choix.</span><span class="en">Live prices from Yahoo Finance, moving average and custom period.</span></span></td><td class="dm">Data</td><td class="st"><ul class="tags"><li>Streamlit</li><li>yfinance</li></ul></td><td class="yr num">2024</td><td class="lk"><a href="https://dashbordfinancierdefrancoismans.streamlit.app" target="_blank" rel="noopener">Demo ↗</a><a href="https://github.com/FrancoisMans10/DASHBORD_FINANCIER" target="_blank" rel="noopener">Code ↗</a></td></tr>
+            <tr><td class="pj"><b><span class="fr">Backtesting Forex</span><span class="en">Forex backtesting</span></b><span><span class="fr">Test de stratégies sur le marché des changes, performance et drawdown.</span><span class="en">Strategy testing on FX markets, performance and drawdown.</span></span></td><td class="dm"><span class="fr">Trading algorithmique</span><span class="en">Algo trading</span></td><td class="st"><ul class="tags"><li>Python</li><li>Pandas</li></ul></td><td class="yr">—</td><td class="lk"></td></tr>
+            <tr><td class="pj"><b><span class="fr">Analyse de tweets par IA</span><span class="en">AI tweet analysis</span></b><span><span class="fr">Projet de fin de Licence : sentiment de tweets et stockage dans MongoDB.</span><span class="en">BSc final project: tweet sentiment and storage in MongoDB.</span></span></td><td class="dm">NLP</td><td class="st"><ul class="tags"><li>NLP</li><li>MongoDB</li></ul></td><td class="yr num">2024</td><td class="lk"></td></tr>
+            <tr><td class="pj"><b><span class="fr">Plateforme de résultats</span><span class="en">Results platform</span></b><span><span class="fr">Interface web pour présenter des résultats quantitatifs en soutenance.</span><span class="en">Web interface to present quantitative results in a defence.</span></span></td><td class="dm">Visualisation</td><td class="st"><ul class="tags"><li>HTML</li><li>JavaScript</li></ul></td><td class="yr num">2026</td><td class="lk"></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mono note"><span class="fr">Visuels illustratifs dessinés pour ce site</span><span class="en">Illustrative visuals drawn for this site</span></p>
+    </div>
+  </section>
+
+  <section class="sec" id="labo" style="padding-top:0">
+    <div class="wrap">
+      <div class="head" data-rise>
+        <h2 class="display metal"><span class="fr">Labo</span><span class="en">Lab</span></h2>
+        <p class="side"><span class="fr">Un simulateur de risque codé pour ce site. Réglez le portefeuille, lancez <b>10 000 scénarios Monte Carlo</b> et regardez où se cache la perte.</span><span class="en">A risk simulator built for this site. Set up the portfolio, run <b>10,000 Monte Carlo scenarios</b> and see where the loss hides.</span></p>
+      </div>
+      <div class="lab" data-rise>
+        <form class="lab-ctrl" id="lab-form" onsubmit="return false">
+          <h3><span class="fr">Paramètres</span><span class="en">Parameters</span></h3>
+          <div class="fld"><label class="lb" for="lab-mu"><span class="fr">Rendement annuel μ</span><span class="en">Annual return μ</span><output id="o-mu"></output></label><input type="range" id="lab-mu" min="-10" max="20" step="1" value="7"></div>
+          <div class="fld"><label class="lb" for="lab-sig"><span class="fr">Volatilité annuelle σ</span><span class="en">Annual volatility σ</span><output id="o-sig"></output></label><input type="range" id="lab-sig" min="5" max="60" step="1" value="20"></div>
+          <div class="fld"><label class="lb" for="lab-h"><span class="fr">Horizon</span><span class="en">Horizon</span><output id="o-h"></output></label><input type="range" id="lab-h" min="1" max="252" step="1" value="10"></div>
+          <div class="fld"><span class="lb"><span class="fr">Niveau de confiance</span><span class="en">Confidence level</span></span><div class="segs" role="group" aria-label="Niveau de confiance"><button type="button" data-a="0.95" aria-pressed="false">95 %</button><button type="button" data-a="0.99" aria-pressed="true">99 %</button></div></div>
+          <div class="fld"><span class="lb"><span class="fr">Loi des rendements</span><span class="en">Return distribution</span></span><div class="segs" role="group" aria-label="Loi des rendements"><button type="button" data-d="n" aria-pressed="false"><span class="fr">Normale</span><span class="en">Normal</span></button><button type="button" data-d="t" aria-pressed="true">Student-t ν=4</button></div></div>
+          <p class="note2"><span class="fr">Portefeuille de 1 000 000 €. La loi de Student a des queues épaisses : les krachs y sont plus probables qu'avec la loi normale.</span><span class="en">€1,000,000 portfolio. Student's t has fat tails: crashes are more likely than under the normal law.</span></p>
+          <button type="button" class="btn blue" id="lab-run"><span class="fr">Nouveau tirage</span><span class="en">New draw</span> <span class="arrow">↻</span></button>
+        </form>
+        <div class="lab-out">
+          <div class="tiles">
+            <div class="tile hl"><span class="k" id="k-var">VaR</span><b class="num" id="t-var">—</b><span class="s"><span class="fr">perte à ne pas dépasser</span><span class="en">loss not exceeded</span></span></div>
+            <div class="tile"><span class="k" id="k-es">Expected Shortfall</span><b class="num" id="t-es">—</b><span class="s"><span class="fr">perte moyenne au-delà</span><span class="en">average loss beyond</span></span></div>
+            <div class="tile"><span class="k"><span class="fr">VaR loi normale</span><span class="en">Normal VaR</span></span><b class="num" id="t-norm">—</b><span class="s" id="t-gap">&nbsp;</span></div>
+            <div class="tile"><span class="k"><span class="fr">Pire scénario</span><span class="en">Worst scenario</span></span><b class="num" id="t-max">—</b><span class="s"><span class="fr">sur 10 000 tirages</span><span class="en">out of 10,000 draws</span></span></div>
+          </div>
+          <div class="lab-plot"><canvas id="lab-cv" role="img" aria-label="Histogramme des profits et pertes simulés, avec la VaR et l'Expected Shortfall."></canvas></div>
+          <div class="lab-foot"><span class="mono">VaR<sub>α</sub> = −q<sub>1−α</sub>(P&amp;L) · ES<sub>α</sub> = −E[P&amp;L | P&amp;L ≤ −VaR<sub>α</sub>]</span><span class="mono" id="lab-meta"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="trajectoire" style="padding-top:0">
+    <div class="wrap">
+      <div class="head" data-rise>
+        <h2 class="display metal"><span class="fr">Trajectoire</span><span class="en">Trajectory</span></h2>
+        <p class="side"><span class="fr">Mon parcours tracé comme on trace un actif : <b>120 trajectoires simulées</b>, une seule réalisée. Survolez le graphique.</span><span class="en">My path plotted like an asset: <b>120 simulated paths</b>, only one realised. Hover the chart.</span></p>
+      </div>
+      <div class="chart" data-rise>
+        <div class="top"><span class="mono">GBM · μ = 8 % · σ = 22 % · n = 120</span><span class="legend mono"><span class="sim"><span class="fr">Simulées</span><span class="en">Simulated</span></span><span><span class="fr">Réalisée</span><span class="en">Realised</span></span></span></div>
+        <div class="chart-box" id="chart-box"><canvas id="path" role="img" aria-label="Parcours de François, de la Guinée à Saint-Étienne en passant par Fès et Rabat, tracé comme la trajectoire réalisée parmi 120 trajectoires simulées, avec un cône ouvert vers 2027."></canvas><div class="tip" id="tip"></div></div>
+        <ol class="steps">
+          <li><span class="y"><span class="fr">Origines</span><span class="en">Roots</span></span><b><span class="fr">Guinée</span><span class="en">Guinea</span></b><small><span class="fr">Le point de départ</span><span class="en">Where it started</span></small></li>
+          <li><span class="y num">2022</span><b>Fès</b><small><span class="fr">Licence Maths-Info, major de promotion</span><span class="en">BSc Maths &amp; CS, top of the class</span></small></li>
+          <li><span class="y num">2024</span><b>Rabat</b><small><span class="fr">ENSIAS, Ingénierie Digitale pour la Finance</span><span class="en">ENSIAS, Digital Engineering for Finance</span></small></li>
+          <li><span class="y num">2026</span><b>Saint-Étienne</b><small><span class="fr">Mines, majeure data science</span><span class="en">Mines, data science major</span></small></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="parcours" style="padding-top:0">
+    <div class="wrap">
+      <div class="head" data-rise>
+        <h2 class="display metal"><span class="fr">Parcours</span><span class="en">Experience</span></h2>
+        <p class="side"><span class="fr">Du code en entreprise aux bancs de trois écoles.</span><span class="en">From shipping code at work to three schools.</span></p>
+      </div>
+      <div class="cols">
+        <div data-rise>
+          <h3><span class="fr">Expérience</span><span class="en">Experience</span></h3>
+          <ol class="tl">
+            <li><span class="when num">2025</span><div><b><span class="fr">Stagiaire développeur</span><span class="en">Developer intern</span></b><span class="org">3D Smart Factory · GuiTroc</span><p><span class="fr">Place de marché d'économie circulaire avec sa monnaie locale (GuiCoins) : backend, intégration blockchain et assistant IA (RAG).</span><span class="en">Circular-economy marketplace with its own local currency (GuiCoins): backend, blockchain integration and an AI assistant (RAG).</span></p></div></li>
+            <li><span class="when num"><span class="fr">2025 – auj.</span><span class="en">2025 – now</span></span><div><b><span class="fr">Co-fondateur</span><span class="en">Co-founder</span></b><span class="org">YIRI TECH AFRICA</span><p><span class="fr">Solutions numériques pour des organisations africaines, autour de l'IA et de l'éducation.</span><span class="en">Digital solutions for African organisations, focused on AI and education.</span></p></div></li>
+            <li><span class="when num">2024 – 2025</span><div><b><span class="fr">Président</span><span class="en">President</span></b><span class="org">ASEGUIM Fès</span><p><span class="fr">Association des étudiants guinéens au Maroc : événements jusqu'à 400 participants, relations partenaires.</span><span class="en">Guinean students' association in Morocco: events of up to 400 people, partner relations.</span></p></div></li>
+            <li><span class="when num">2026</span><div><b><span class="fr">Membre du jury</span><span class="en">Judge</span></b><span class="org">YIRIHACK 2026</span><p><span class="fr">Évaluation de projets innovants en IA et éducation.</span><span class="en">Evaluated innovative projects in AI and education.</span></p></div></li>
+            <li><span class="when"><span class="fr">Depuis 2023</span><span class="en">Since 2023</span></span><div><b><span class="fr">Tuteur</span><span class="en">Tutor</span></b><span class="org"><span class="fr">Mathématiques &amp; français</span><span class="en">Maths &amp; French</span></span></div></li>
+          </ol>
+        </div>
+        <div data-rise>
+          <h3><span class="fr">Formation</span><span class="en">Education</span></h3>
+          <ol class="tl">
+            <li><span class="when num"><span class="fr">2026 – auj.</span><span class="en">2026 – now</span></span><div><b>École des Mines de Saint-Étienne</b><span class="org"><span class="fr">Ingénieur civil des mines (ICM) · majeure Data science</span><span class="en">Civil engineering degree (ICM) · Data science major</span></span><p><span class="fr">Modélisation mathématique pour l'aide à la décision, en double diplôme avec l'ENSIAS.</span><span class="en">Mathematical modelling for decision-making, as a double degree with ENSIAS.</span></p></div></li>
+            <li><span class="when num">2024 – 2026</span><div><b>ENSIAS, Rabat</b><span class="org"><span class="fr">Cycle ingénieur · Ingénierie Digitale pour la Finance</span><span class="en">Engineering programme · Digital Engineering for Finance</span></span><p><span class="fr">Mathématiques financières, statistiques, machine learning, finance de marché.</span><span class="en">Financial mathematics, statistics, machine learning, market finance.</span></p></div></li>
+            <li><span class="when num">2022 – 2024</span><div><b><span class="fr">Université Sidi Mohamed Ben Abdellah, Fès</span><span class="en">Sidi Mohamed Ben Abdellah University, Fès</span></b><span class="org"><span class="fr">Licence Sciences Mathématiques et Informatique</span><span class="en">BSc Mathematical Sciences &amp; Computer Science</span></span><p><span class="fr">Major de promotion.</span><span class="en">Top of the class.</span><span class="tag-mini">#1</span></p></div></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="parole" style="padding-top:0">
+    <div class="wrap speak">
+      <div data-rise>
+        <p class="mono" style="margin:0 0 18px;color:var(--accent);font-family:var(--f-sans);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:13px"><span class="fr">Prise de parole</span><span class="en">Public speaking</span></p>
+        <p class="quote"><span class="fr">Un modèle ne vaut que si l'on sait l'expliquer. <span class="m">Je m'entraîne aussi à ça.</span></span><span class="en">A model is only worth what you can explain. <span class="m">I train for that too.</span></span></p>
+        <p class="t"><span class="fr">Modérateur de conférences et de débats depuis 2023, dont le Hackathon Fintech ENSIAS 2025 : gestion du temps, des interventions et des échanges entre experts et public.</span><span class="en">Moderator of conferences and debates since 2023, including the ENSIAS Fintech Hackathon 2025: managing time, speakers and the exchange between experts and the audience.</span></p>
+      </div>
+      <ol class="awards">
+        <li data-rise><span class="yr metal num">2024</span><b><span class="fr">Concours d'éloquence</span><span class="en">Eloquence contest</span></b><span>CESAM</span></li>
+        <li data-rise><span class="yr metal num">2024</span><b><span class="fr">Débat &amp; art oratoire</span><span class="en">Debate &amp; oratory</span></b><span>CESAM Fès</span></li>
+        <li data-rise><span class="yr metal num">2023</span><b><span class="fr">Éloquence, concours national</span><span class="en">National eloquence contest</span></b><span>ASEGUIM</span></li>
+        <li data-rise><span class="yr metal num">2022</span><b><span class="fr">Culture générale</span><span class="en">General knowledge</span></b><span>ASEGUIM Fès</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="giant" aria-hidden="true">
+    <div class="track">
+      <span class="f">Data science</span><span class="m">E[X]</span><span class="f">Modélisation</span><span class="m">σ√t</span><span class="f">Machine learning</span><span class="m">argmax</span><span class="f">Décision</span><span class="m">Σπ𝒩</span><span class="f">Finance quant</span><span class="m">∂V/∂t</span>
+      <span class="f">Data science</span><span class="m">E[X]</span><span class="f">Modélisation</span><span class="m">σ√t</span><span class="f">Machine learning</span><span class="m">argmax</span><span class="f">Décision</span><span class="m">Σπ𝒩</span><span class="f">Finance quant</span><span class="m">∂V/∂t</span>
+    </div>
+  </div>
+
+  <section class="contact" id="contact">
+    <canvas id="cone" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <span class="avail"><i></i><span class="fr">Ouvert aux stages · data science, modélisation, finance · mobile</span><span class="en">Open to internships · data science, modelling, finance · mobile</span></span>
+      <h2 class="display metal"><span class="fr">Et après <span class="q">?</span></span><span class="en">What's next <span class="q">?</span></span></h2>
+      <p class="t"><span class="fr">La prochaine étape de la trajectoire reste à écrire. Vous cherchez un stagiaire qui code, modélise et sait présenter ses résultats ? Écrivez-moi.</span><span class="en">The next step of the path is still unwritten. Looking for an intern who codes, models and can present results? Write to me.</span></p>
+      <div class="ctas">
+        <a class="btn blue" href="mailto:francoismansare@gmail.com"><span class="fr">Me contacter</span><span class="en">Get in touch</span> <span class="arrow">→</span></a>
+        <a class="btn" href="https://www.linkedin.com/in/francois-mansare/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+      <div class="term"><span class="p">$</span><span class="addr">francoismansare@gmail.com</span><button type="button" class="copy" id="copy-mail"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span class="fr">Copier</span><span class="en">Copy</span></button></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-top">
+      <div><p class="f-name" aria-label="f(M)"><span class="f">f</span><span class="metal">(M)</span></p><p class="f-who">François Mansaré</p><p class="f-sub"><span class="fr">Data science · Modélisation · Aide à la décision</span><span class="en">Data science · Modelling · Decision-making</span></p></div>
+      <ul class="f-links">
+        <li><a href="#apropos"><span class="fr">À propos</span><span class="en">About</span></a></li>
+        <li><a href="#projets"><span class="fr">Projets</span><span class="en">Projects</span></a></li>
+        <li><a href="https://github.com/FrancoisMans10" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/francois-mansare/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="f-bot mono"><span>© 2026 François Mansaré · <span class="fr">Tous droits réservés</span><span class="en">All rights reserved</span></span><span><span class="fr">Conçu et développé par François Mansaré</span><span class="en">Designed and built by François Mansaré</span></span></div>
+  </div>
+</footer>
+
+<div class="cmdk-back" id="cmdk" hidden>
+  <div class="cmdk" role="dialog" aria-modal="true" aria-label="Palette de commandes">
+    <input id="cmdk-input" type="text" autocomplete="off" spellcheck="false" aria-controls="cmdk-list">
+    <ul id="cmdk-list" role="listbox"></ul>
+    <div class="foot"><span>↑↓ <span class="fr">naviguer</span><span class="en">navigate</span></span><span>↵ <span class="fr">ouvrir</span><span class="en">open</span></span><span>esc <span class="fr">fermer</span><span class="en">close</span></span></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"><i></i><span></span></div>
+
+<script>
+(function () {
+  const root = document.documentElement;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const legacy = { '#/projects': '#projets', '#/about': '#apropos', '#/contact': '#contact' };
+  if (legacy[location.hash]) location.replace(legacy[location.hash]);
+  const L = () => (root.dataset.lang === 'en' ? 'en' : 'fr');
+  const T = (fr, en) => (L() === 'en' ? en : fr);
+
+  /* language */
+  function setLang(l) {
+    root.dataset.lang = l; root.lang = l;
+    document.querySelectorAll('.seg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.l === l)));
+    try { localStorage.setItem('fm-lang', l); } catch (e) {}
+    armStatement(); drawPath(); if (typeof lab !== 'undefined' && lab) lab.relabel();
+  }
+
+  /* toast + copy */
+  const toast = document.getElementById('toast'); let tt;
+  function say(msg) { toast.querySelector('span').textContent = msg; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 1800); }
+  function copyMail() { const m = 'francoismansare@gmail.com'; try { navigator.clipboard.writeText(m).then(() => say(T('Adresse e-mail copiée', 'Email address copied')), () => say(m)); } catch (e) { say(m); } }
+  document.getElementById('copy-mail').addEventListener('click', copyMail);
+
+
+  /* nav */
+  const nav = document.getElementById('nav');
+  const navLinks = [...document.querySelectorAll('.links a')];
+  const secs = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  function onScroll() {
+    nav.classList.toggle('solid', window.scrollY > 30);
+    const y = window.innerHeight * 0.35; let cur = null;
+    secs.forEach(s => { if (s.getBoundingClientRect().top < y) cur = s.id; });
+    navLinks.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + cur));
+  }
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  /* reveal below the fold */
+  if (!reduce && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.remove('pre'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -6% 0px' });
+    document.querySelectorAll('[data-rise]').forEach(el => { if (el.getBoundingClientRect().top > window.innerHeight) { el.classList.add('pre', 'rise'); io.observe(el); } });
+  }
+
+  /* statement: words light up while scrolling */
+  const st = document.getElementById('statement'); let words = [];
+  function wrapWords(node, hl) {
+    [...node.childNodes].forEach(n => {
+      if (n.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach(t => { if (!t) return; if (/^\s+$/.test(t)) frag.appendChild(document.createTextNode(t)); else { const s = document.createElement('span'); s.className = 'w' + (hl ? ' hl' : ''); s.textContent = t; frag.appendChild(s); } });
+        n.replaceWith(frag);
+      } else if (n.nodeType === 1 && !n.classList.contains('w')) wrapWords(n, hl || n.classList.contains('hl'));
+    });
+  }
+  function paintStatement() {
+    if (!words.length) return;
+    const r = st.getBoundingClientRect(), vh = window.innerHeight;
+    const p = Math.min(1, Math.max(0, (vh * 0.8 - r.top) / (r.height + vh * 0.3)));
+    const n = Math.round(p * words.length);
+    words.forEach((w, i) => w.classList.toggle('on', i < n));
+  }
+  function armStatement() { if (!st || !st.classList.contains('armed')) return; words = [...st.querySelector(L() === 'en' ? '.en' : '.fr').querySelectorAll('.w')]; paintStatement(); }
+  if (!reduce && st) { wrapWords(st, false); st.classList.add('armed'); window.addEventListener('scroll', paintStatement, { passive: true }); }
+
+  /* stacked cards */
+  const cards = [...document.querySelectorAll('.card')];
+  function stackFx() {
+    if (window.innerWidth <= 760 || reduce) { cards.forEach(c => { c.style.transform = ''; c.style.filter = ''; }); return; }
+    cards.forEach((c, i) => {
+      const next = cards[i + 1]; if (!next) return;
+      const a = c.getBoundingClientRect(), b = next.getBoundingClientRect();
+      const t = Math.min(1, Math.max(0, 1 - (b.top - a.top) / a.height));
+      c.style.transform = t ? `scale(${1 - t * 0.05})` : ''; c.style.filter = t ? `brightness(${1 - t * 0.5})` : '';
+    });
+  }
+  let sf = false; window.addEventListener('scroll', () => { if (!sf) { sf = true; requestAnimationFrame(() => { stackFx(); sf = false; }); } }, { passive: true });
+
+  /* command palette */
+  const isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+  document.getElementById('kbd-hint').textContent = isMac ? '⌘K' : 'Ctrl K';
+  const back = document.getElementById('cmdk'), input = document.getElementById('cmdk-input'), list = document.getElementById('cmdk-list');
+  const go = id => () => document.getElementById(id).scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+  const open = url => () => { const a = document.createElement('a'); a.href = url; a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove(); };
+  const cmds = () => [
+    { g: T('Naviguer', 'Navigate'), t: T('À propos', 'About'), k: '#', run: go('apropos') },
+    { g: T('Naviguer', 'Navigate'), t: T('Compétences', 'Skills'), k: '#', run: go('competences') },
+    { g: T('Naviguer', 'Navigate'), t: T('Projets', 'Projects'), k: '#', run: go('projets') },
+    { g: T('Naviguer', 'Navigate'), t: T('Labo : simulateur de risque', 'Lab: risk simulator'), k: '#', run: go('labo') },
+    { g: T('Naviguer', 'Navigate'), t: T('Trajectoire', 'Trajectory'), k: '#', run: go('trajectoire') },
+    { g: T('Naviguer', 'Navigate'), t: T('Parcours', 'Experience'), k: '#', run: go('parcours') },
+    { g: T('Naviguer', 'Navigate'), t: T('Prise de parole', 'Public speaking'), k: '#', run: go('parole') },
+    { g: T('Naviguer', 'Navigate'), t: 'Contact', k: '#', run: go('contact') },
+    { g: 'Actions', t: T("Copier l'adresse e-mail", 'Copy email address'), k: 'mail', run: copyMail },
+    { g: 'Actions', t: T('Passer en anglais', 'Switch to French'), k: 'lang', run: () => setLang(L() === 'en' ? 'fr' : 'en') },
+    { g: T('Liens', 'Links'), t: T('Ouvrir GitHub', 'Open GitHub'), k: '↗', run: open('https://github.com/FrancoisMans10') },
+    { g: T('Liens', 'Links'), t: T('Ouvrir LinkedIn', 'Open LinkedIn'), k: '↗', run: open('https://www.linkedin.com/in/francois-mansare/') },
+    { g: T('Liens', 'Links'), t: T('Démo : dashboard boursier', 'Demo: stock dashboard'), k: '↗', run: open('https://dashbordfinancierdefrancoismans.streamlit.app') }
+  ];
+  let items = [], sel = 0;
+  const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  function render() {
+    const q = norm(input.value.trim());
+    items = cmds().filter(c => !q || norm(c.t + ' ' + c.g).includes(q));
+    sel = Math.min(sel, Math.max(0, items.length - 1));
+    list.innerHTML = ''; let g = null;
+    if (!items.length) { const li = document.createElement('li'); li.className = 'grp'; li.textContent = T('Aucun résultat', 'No results'); list.appendChild(li); return; }
+    items.forEach((c, i) => {
+      if (c.g !== g) { g = c.g; const h = document.createElement('li'); h.className = 'grp'; h.textContent = g; list.appendChild(h); }
+      const li = document.createElement('li'); li.className = 'it'; li.setAttribute('role', 'option'); li.setAttribute('aria-selected', String(i === sel));
+      li.innerHTML = '<span></span><span class="k"></span>'; li.firstChild.textContent = c.t; li.lastChild.textContent = c.k;
+      li.addEventListener('mousemove', () => { if (sel !== i) { sel = i; render(); } });
+      li.addEventListener('click', () => run(i)); list.appendChild(li);
+    });
+    const s = list.querySelector('[aria-selected="true"]'); if (s) s.scrollIntoView({ block: 'nearest' });
+  }
+  function show() { back.hidden = false; input.value = ''; input.placeholder = T('Rechercher une section ou une action…', 'Search a section or an action…'); sel = 0; render(); setTimeout(() => input.focus(), 0); }
+  function hide() { back.hidden = true; }
+  function run(i) { const c = items[i]; hide(); if (c) c.run(); }
+  document.getElementById('open-cmdk').addEventListener('click', show);
+  back.addEventListener('click', e => { if (e.target === back) hide(); });
+  input.addEventListener('input', () => { sel = 0; render(); });
+  document.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); back.hidden ? show() : hide(); return; }
+    if (back.hidden) return;
+    if (e.key === 'Escape') hide();
+    else if (e.key === 'ArrowDown') { e.preventDefault(); sel = (sel + 1) % Math.max(1, items.length); render(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); sel = (sel - 1 + items.length) % Math.max(1, items.length); render(); }
+    else if (e.key === 'Enter') { e.preventDefault(); run(sel); }
+  });
+
+  /* ---------- charts ---------- */
+  function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function gauss(r) { let u = 0, v = 0; while (u === 0) u = r(); while (v === 0) v = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+  const C = { fg: '#EDEDEF', muted: '#9A9AA3', dim: '#5F5F69', line: '#1E1E23', line2: '#2A2A31', accent: '#5B95FF', panel: '#111114', grey: '#8A8A96', red: '#E5484D' };
+  function fit(cv) {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2), w = cv.clientWidth, h = cv.clientHeight;
+    if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+    const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
+    return { ctx, w, h };
+  }
+  function alpha(ctx, a, fn) { ctx.save(); ctx.globalAlpha = a; fn(); ctx.restore(); }
+  const MONO = '11px "Geist Mono", ui-monospace, monospace';
+
+  const T0 = 2020.8, T1 = 2028.0, S = 0.22, MU = 0.08, dt = 1 / 12;
+  const miles = [
+    { t: 2021.0, v: 1.0, fr: 'Guinée', en: 'Guinea', dfr: 'Origines', den: 'Roots' },
+    { t: 2022.75, v: 1.3, fr: 'Fès', en: 'Fès', dfr: 'Licence Maths-Info', den: 'BSc Maths & CS' },
+    { t: 2024.6, v: 1.8, fr: 'Rabat', en: 'Rabat', dfr: 'ENSIAS · IDF', den: 'ENSIAS · Digital Finance' },
+    { t: 2026.7, v: 2.45, fr: 'Saint-Étienne', en: 'Saint-Étienne', dfr: 'Mines · data science', den: 'Mines · data science' }];
+  const r = rng(20201126), sims = [];
+  for (let k = 0; k < 120; k++) { let x = 0; const p = [{ t: miles[0].t, y: 0 }]; for (let t = miles[0].t + dt; t <= miles[3].t + 1e-9; t += dt) { x += (MU - S * S / 2) * dt + S * Math.sqrt(dt) * gauss(r); p.push({ t, y: x }); } sims.push(p); }
+  const real = [{ t: miles[0].t, y: 0 }];
+  for (let i = 0; i < 3; i++) {
+    const a = miles[i], b = miles[i + 1], n = Math.round((b.t - a.t) / dt), ya = Math.log(a.v), yb = Math.log(b.v);
+    const W = [0]; for (let j = 1; j <= n; j++) W.push(W[j - 1] + S * 0.8 * Math.sqrt(dt) * gauss(r));
+    for (let j = 1; j <= n; j++) { const f = j / n; real.push({ t: a.t + j * dt, y: ya + (yb - ya) * f + (W[j] - f * W[n]) }); }
+  }
+  const cone = [];
+  for (let k = 0; k < 18; k++) { let x = Math.log(miles[3].v); const p = [{ t: miles[3].t, y: x }]; for (let t = miles[3].t + dt; t <= T1 - 0.15; t += dt) { x += (MU + 0.06) * dt + S * Math.sqrt(dt) * gauss(r); p.push({ t, y: x }); } cone.push(p); }
+  const Y0 = Math.log(0.42), Y1 = Math.log(3.6);
+  const cv = document.getElementById('path'), box = document.getElementById('chart-box'), tip = document.getElementById('tip');
+  let prog = reduce ? 1 : 0, started = false, hoverT = null, geo = null;
+
+  function drawPath() {
+    if (!cv.clientWidth) return;
+    const { ctx, w, h } = fit(cv);
+    const padT = 30, padB = 30, padL = 18, padR = 18;
+    const X = t => padL + (t - T0) / (T1 - T0) * (w - padL - padR), Y = y => padT + (1 - (y - Y0) / (Y1 - Y0)) * (h - padT - padB);
+    geo = { padL, padR, w };
+    const tMax = T0 + (T1 - T0) * prog;
+    ctx.font = MONO; ctx.textAlign = 'center';
+    for (let g = 1; g < 4; g++) { const y = Math.round(padT + (h - padT - padB) * g / 4) + .5; ctx.strokeStyle = C.line; ctx.setLineDash([2, 4]); ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(w - padR, y); ctx.stroke(); }
+    ctx.setLineDash([]);
+    for (let yr = 2022; yr <= 2027; yr++) { const x = Math.round(X(yr)) + .5; ctx.strokeStyle = C.line; ctx.beginPath(); ctx.moveTo(x, padT - 6); ctx.lineTo(x, h - padB); ctx.stroke(); ctx.fillStyle = C.dim; ctx.fillText(String(yr), x, h - 10); }
+    ctx.save(); ctx.beginPath(); ctx.rect(0, padT - 10, w, h - padT - padB + 10); ctx.clip();
+    ctx.strokeStyle = C.grey; ctx.lineWidth = 1;
+    alpha(ctx, 0.11, () => sims.forEach(p => { ctx.beginPath(); let s = false; for (const q of p) { if (q.t > tMax) break; const x = X(q.t), y = Y(q.y); s ? ctx.lineTo(x, y) : (ctx.moveTo(x, y), s = true); } ctx.stroke(); }));
+    if (prog > 0.82) {
+      const a = Math.min(1, (prog - 0.82) / 0.18);
+      ctx.setLineDash([2, 4]); ctx.strokeStyle = C.accent; ctx.lineWidth = 1;
+      alpha(ctx, 0.35 * a, () => cone.forEach(p => { ctx.beginPath(); p.forEach((q, i) => { if (q.t > tMax) return; const x = X(q.t), y = Y(q.y); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }); ctx.stroke(); }));
+      ctx.setLineDash([]);
+    }
+    const vis = real.filter(q => q.t <= tMax);
+    if (vis.length > 1) {
+      ctx.beginPath(); vis.forEach((q, i) => i ? ctx.lineTo(X(q.t), Y(q.y)) : ctx.moveTo(X(q.t), Y(q.y)));
+      ctx.lineTo(X(vis[vis.length - 1].t), h - padB); ctx.lineTo(X(vis[0].t), h - padB); ctx.closePath();
+      const g = ctx.createLinearGradient(0, padT, 0, h - padB); g.addColorStop(0, 'rgba(91,149,255,.22)'); g.addColorStop(1, 'rgba(91,149,255,0)'); ctx.fillStyle = g; ctx.fill();
+      ctx.beginPath(); vis.forEach((q, i) => i ? ctx.lineTo(X(q.t), Y(q.y)) : ctx.moveTo(X(q.t), Y(q.y)));
+      ctx.shadowColor = 'rgba(91,149,255,.6)'; ctx.shadowBlur = 10; ctx.strokeStyle = C.accent; ctx.lineWidth = 2.2; ctx.lineJoin = 'round'; ctx.stroke(); ctx.shadowBlur = 0;
+    }
+    ctx.restore();
+    const wide = w > 640;
+    miles.forEach((m, i) => {
+      if (m.t > tMax + 0.01) return;
+      const x = X(m.t), y = Y(Math.log(m.v));
+      ctx.fillStyle = C.panel; ctx.beginPath(); ctx.arc(x, y, 6, 0, 7); ctx.fill();
+      ctx.strokeStyle = C.accent; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(x, y, 4, 0, 7); ctx.stroke();
+      if (wide) { ctx.font = MONO; ctx.fillStyle = C.fg; ctx.textAlign = i === 0 ? 'left' : 'center'; ctx.fillText(m[L()], i === 0 ? x - 4 : x, y - 14); }
+    });
+    if (prog >= 1) { ctx.font = MONO; ctx.fillStyle = C.accent; ctx.textAlign = 'right'; ctx.fillText('2027 → ?', X(T1 - .05), padT - 12); }
+    if (hoverT !== null && prog >= 1) {
+      const t = Math.max(real[0].t, Math.min(real[real.length - 1].t, hoverT));
+      let q = real[0]; for (const p of real) { if (p.t <= t) q = p; else break; }
+      const x = X(q.t), y = Y(q.y);
+      ctx.strokeStyle = C.line2; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(Math.round(x) + .5, padT - 6); ctx.lineTo(Math.round(x) + .5, h - padB); ctx.stroke();
+      ctx.strokeStyle = 'rgba(91,149,255,.35)'; ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(x, y, 7, 0, 7); ctx.stroke();
+      ctx.fillStyle = C.accent; ctx.beginPath(); ctx.arc(x, y, 4, 0, 7); ctx.fill();
+      let k = 0; miles.forEach((m, i) => { if (q.t >= m.t - 1e-6) k = i; });
+      const m = miles[k], yr = Math.floor(q.t), mo = Math.min(11, Math.round((q.t - yr) * 12));
+      const month = new Intl.DateTimeFormat(L() === 'en' ? 'en-GB' : 'fr-FR', { month: 'short', year: 'numeric' }).format(new Date(yr, mo, 1));
+      tip.innerHTML = '<span class="mono"></span><b></b> <span class="d"></span>';
+      tip.children[0].textContent = month; tip.children[1].textContent = m[L()]; tip.children[2].textContent = '· ' + (L() === 'en' ? m.den : m.dfr);
+      tip.style.left = Math.max(110, Math.min(w - 110, x)) + 'px';
+    }
+  }
+  function runPath() {
+    if (started) return; started = true;
+    if (reduce || document.hidden) { prog = 1; drawPath(); return; }
+    const t0 = performance.now(), D = 2200;
+    (function step(now) { const x = Math.min(1, (now - t0) / D); prog = 1 - Math.pow(1 - x, 3); drawPath(); if (x < 1) requestAnimationFrame(step); })(t0);
+  }
+  box.addEventListener('pointermove', e => { if (!geo || prog < 1) return; const rc = cv.getBoundingClientRect(); hoverT = T0 + (e.clientX - rc.left - geo.padL) / (geo.w - geo.padL - geo.padR) * (T1 - T0); box.classList.add('hover'); drawPath(); });
+  box.addEventListener('pointerleave', () => { hoverT = null; box.classList.remove('hover'); drawPath(); });
+
+  /* hero background: the same simulation, full-bleed, drawing in on load */
+  const heroCv = document.getElementById('hero-bg'); let heroProg = reduce ? 1 : 0;
+  function drawHeroBg() {
+    if (!heroCv || !heroCv.clientWidth) return;
+    const { ctx, w, h } = fit(heroCv);
+    const narrow = w < 900;
+    const x0 = 0, x1 = narrow ? w * 0.86 : w * 0.80, yTop = h * (narrow ? 0.62 : 0.22), yBot = h * (narrow ? 0.94 : 0.86);
+    const ta = miles[0].t, tb = miles[3].t;
+    const X = t => x0 + (t - ta) / (tb - ta) * (x1 - x0);
+    const ry = real.map(q => q.y), lo = Math.log(0.55), hi = Math.log(2.9);
+    const Y = y => yBot - (y - lo) / (hi - lo) * (yBot - yTop);
+    const tMax = ta + (tb - ta) * heroProg;
+    ctx.strokeStyle = C.grey; ctx.lineWidth = 1;
+    alpha(ctx, 0.075, () => sims.forEach(p => { ctx.beginPath(); let s = false; for (const q of p) { if (q.t > tMax) break; const x = X(q.t), y = Y(q.y); s ? ctx.lineTo(x, y) : (ctx.moveTo(x, y), s = true); } ctx.stroke(); }));
+    const vis = real.filter(q => q.t <= tMax);
+    if (vis.length > 1) {
+      ctx.beginPath(); vis.forEach((q, i) => i ? ctx.lineTo(X(q.t), Y(q.y)) : ctx.moveTo(X(q.t), Y(q.y)));
+      ctx.shadowColor = 'rgba(91,149,255,.7)'; ctx.shadowBlur = 14; ctx.strokeStyle = C.accent; ctx.lineWidth = 2.2; ctx.lineJoin = 'round'; ctx.stroke(); ctx.shadowBlur = 0;
+      if (heroProg >= 0.98) {
+        const last = real[real.length - 1], lx = X(last.t), ly = Y(last.y), cr = rng(77);
+        ctx.setLineDash([2, 5]); ctx.lineWidth = 1;
+        for (let k = 0; k < 14; k++) { let v = 0; ctx.strokeStyle = 'rgba(91,149,255,' + (k % 5 === 0 ? .5 : .2) + ')'; ctx.beginPath(); ctx.moveTo(lx, ly); for (let i = 1; i <= 24; i++) { v += 0.02 + 0.09 * gauss(cr); ctx.lineTo(lx + (i / 24) * (w - lx), ly - v * (yBot - yTop) * 0.35); } ctx.stroke(); }
+        ctx.setLineDash([]);
+      }
+      miles.forEach(m => { if (m.t > tMax) return; const x = X(m.t), y = Y(Math.log(m.v)); ctx.fillStyle = '#070708'; ctx.beginPath(); ctx.arc(x, y, 5.5, 0, 7); ctx.fill(); ctx.strokeStyle = C.accent; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(x, y, 3.5, 0, 7); ctx.stroke(); });
+    }
+  }
+  function runHero() {
+    if (reduce || document.hidden) { heroProg = 1; drawHeroBg(); return; }
+    const t0 = performance.now(), D = 2600;
+    (function step(now) { const x = Math.min(1, (now - t0) / D); heroProg = 1 - Math.pow(1 - x, 3); drawHeroBg(); if (x < 1) requestAnimationFrame(step); })(t0);
+  }
+
+  /* contact: the cone of paths still to be written */
+  const coneCv = document.getElementById('cone');
+  const conePaths = (() => { const r = rng(2027), out = []; for (let k = 0; k < 70; k++) { let x = 0; const p = [0]; for (let i = 1; i <= 60; i++) { x += 0.004 + 0.06 * gauss(r); p.push(x); } out.push(p); } return out; })();
+  function drawCone() {
+    if (!coneCv || !coneCv.clientWidth) return;
+    const { ctx, w, h } = fit(coneCv);
+    const ox = w * 0.5, oy = h * 0.92, len = Math.min(w * 0.46, 620);
+    ctx.setLineDash([2, 5]); ctx.lineWidth = 1;
+    conePaths.forEach((p, k) => {
+      ctx.strokeStyle = k % 9 === 0 ? 'rgba(91,149,255,.7)' : 'rgba(91,149,255,.24)';
+      [1, -1].forEach(side => { ctx.beginPath(); p.forEach((v, i) => { const x = ox + side * (i / 60) * len, y = oy - (i / 60) * h * 0.55 + v * h * 0.5; i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }); ctx.stroke(); });
+    });
+    ctx.setLineDash([]);
+    ctx.fillStyle = C.accent; ctx.beginPath(); ctx.arc(ox, oy, 4, 0, 7); ctx.fill();
+  }
+
+  const line = (ctx, pts, col, lw) => { ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.beginPath(); pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.stroke(); };
+  const viz = {
+    credit(ctx, w, h) {
+      const r = rng(41), comps = [{ x: .36, y: .6, sx: .11, sy: .13, rot: -.5, col: C.grey, n: 190 }, { x: .58, y: .42, sx: .08, sy: .1, rot: .3, col: C.grey, n: 110 }, { x: .77, y: .27, sx: .07, sy: .07, rot: 0, col: C.accent, n: 52 }];
+      comps.forEach(k => {
+        for (let i = 0; i < k.n; i++) { const a = gauss(r) * k.sx, b = gauss(r) * k.sy, x = (k.x + a * Math.cos(k.rot) - b * Math.sin(k.rot)) * w, y = (k.y + a * Math.sin(k.rot) + b * Math.cos(k.rot)) * h; ctx.fillStyle = k.col; alpha(ctx, k.col === C.accent ? .95 : .4, () => { ctx.beginPath(); ctx.arc(x, y, 2, 0, 7); ctx.fill(); }); }
+        ctx.strokeStyle = k.col; ctx.lineWidth = 1.1; [1, 2].forEach(s => alpha(ctx, s === 1 ? .85 : .35, () => { ctx.beginPath(); ctx.ellipse(k.x * w, k.y * h, k.sx * w * s, k.sy * h * s, k.rot, 0, 7); ctx.stroke(); }));
+      });
+      ctx.font = MONO; ctx.textAlign = 'left'; ctx.fillStyle = C.dim; ctx.fillText('GMM · k = 3', 18, h - 16);
+      ctx.fillStyle = C.accent; ctx.textAlign = 'right'; ctx.fillText('P(default) ↑', w - 18, 24);
+    },
+    var(ctx, w, h) {
+      const pdf = x => 0.9 * Math.exp(-((x - 0.25) ** 2) / 2) + 0.12 * Math.exp(-((x + 2.6) ** 2) / (2 * 1.3 ** 2));
+      const lo = -5, hi = 4, n = 52, Lp = 24, bw = (w - 2 * Lp) / n, cut = -1.75, base = h - 32;
+      let mx = 0; for (let i = 0; i < n; i++) mx = Math.max(mx, pdf(lo + (i + .5) * (hi - lo) / n));
+      for (let i = 0; i < n; i++) { const x = lo + (i + .5) * (hi - lo) / n, bh = pdf(x) / mx * (h - 80); ctx.fillStyle = x < cut ? C.accent : C.grey; alpha(ctx, x < cut ? 0.95 : 0.26, () => ctx.fillRect(Lp + i * bw + 1, base - bh, bw - 2, bh)); }
+      const xc = Lp + (cut - lo) / (hi - lo) * n * bw;
+      ctx.strokeStyle = C.fg; ctx.lineWidth = 1; ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.moveTo(xc, 28); ctx.lineTo(xc, base); ctx.stroke(); ctx.setLineDash([]);
+      ctx.font = MONO; ctx.fillStyle = C.fg; ctx.textAlign = 'left'; ctx.fillText('VaR 95 %', xc + 6, 34);
+      ctx.fillStyle = C.accent; ctx.textAlign = 'right'; ctx.fillText('TVaR', xc - 6, 34);
+      ctx.strokeStyle = C.line2; ctx.beginPath(); ctx.moveTo(Lp, base + .5); ctx.lineTo(w - Lp, base + .5); ctx.stroke();
+      ctx.fillStyle = C.dim; ctx.textAlign = 'left'; ctx.fillText('P&L', Lp, h - 11);
+    },
+    frontier(ctx, w, h) {
+      const r = rng(7), Lp = 36, B = h - 30, X = s => Lp + (s - 0.1) / 0.32 * (w - Lp - 24), Y = m => B - m / 0.42 * (B - 24), front = s => 0.03 + 0.62 * Math.sqrt(Math.max(0, s - 0.11));
+      for (let i = 0; i < 360; i++) { const s = 0.12 + r() * 0.29, m = front(s) * (0.35 + 0.62 * Math.sqrt(r())); ctx.fillStyle = C.grey; alpha(ctx, 0.35, () => { ctx.beginPath(); ctx.arc(X(s), Y(m), 1.7, 0, 7); ctx.fill(); }); }
+      const pts = []; for (let s = 0.11; s <= 0.42; s += 0.004) pts.push([X(s), Y(front(s))]);
+      ctx.shadowColor = 'rgba(91,149,255,.6)'; ctx.shadowBlur = 10; line(ctx, pts, C.accent, 2.2); ctx.shadowBlur = 0;
+      const mv = { s: 0.24, m: front(0.24) }, hrp = { s: 0.19, m: front(0.19) * 0.86 };
+      ctx.fillStyle = C.accent; ctx.beginPath(); ctx.arc(X(mv.s), Y(mv.m), 5.5, 0, 7); ctx.fill();
+      ctx.strokeStyle = C.fg; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.arc(X(hrp.s), Y(hrp.m), 5.5, 0, 7); ctx.stroke();
+      ctx.font = MONO; ctx.fillStyle = C.fg; ctx.textAlign = 'left'; ctx.fillText('Max Sharpe', X(mv.s) + 11, Y(mv.m) - 9); ctx.fillText('HRP', X(hrp.s) + 11, Y(hrp.m) + 15);
+      ctx.fillStyle = C.dim; ctx.fillText('σ', w - 26, h - 10); ctx.fillText('μ', 14, 28);
+      ctx.strokeStyle = C.line2; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(Lp + .5, 18); ctx.lineTo(Lp + .5, B + .5); ctx.lineTo(w - 24, B + .5); ctx.stroke();
+    },
+    sentiment(ctx, w, h) {
+      const r = rng(31), n = 36, gap = 4, Lp = 24, bw = (w - 2 * Lp - gap * (n - 1)) / n, H = h - 70;
+      for (let i = 0; i < n; i++) {
+        const p = Math.min(0.7, 0.25 + 0.175 * Math.sin(i / 4) + r() * 0.25), ng = 0.12 + r() * 0.25, ne = 1 - p - ng;
+        let y = h - 38; const x = Lp + i * (bw + gap);
+        [[ng, C.red, .32], [ne, C.grey, .12], [p, C.accent, .85]].forEach(([v, col, a]) => { const bh = v * H; ctx.fillStyle = col; alpha(ctx, a, () => ctx.fillRect(x, y - bh, bw, bh - 1.5)); y -= bh; });
+      }
+      ctx.font = MONO; ctx.textAlign = 'left';
+      [['pos', C.accent], ['neu', C.grey], ['neg', 'rgba(229,72,77,.55)']].forEach(([t, col], i) => { ctx.fillStyle = col; ctx.fillRect(Lp + i * 64, h - 21, 8, 8); ctx.fillStyle = C.dim; ctx.fillText(t, Lp + 13 + i * 64, h - 13); });
+    }
+  };
+
+  /* ---------- risk lab ---------- */
+  const lab = (() => {
+    const cvL = document.getElementById('lab-cv'); if (!cvL) return null;
+    const $ = id => document.getElementById(id);
+    const st = { mu: 7, sig: 20, h: 10, a: 0.99, d: 't', seed: 11 };
+    const CAP = 1e6, N = 10000, NU = 4;
+    let res = null;
+    const eur = v => new Intl.NumberFormat(L() === 'en' ? 'en-GB' : 'fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(v);
+    const pct = v => new Intl.NumberFormat(L() === 'en' ? 'en-GB' : 'fr-FR', { maximumFractionDigits: 0 }).format(v) + ' %';
+    function chi2(rr, k) { let s = 0; for (let i = 0; i < k; i++) { const z = gauss(rr); s += z * z; } return s; }
+    function simulate() {
+      const rr = rng(st.seed), T = st.h / 252, m = st.mu / 100 * T, sd = st.sig / 100 * Math.sqrt(T), scale = Math.sqrt((NU - 2) / NU);
+      const pnl = new Float64Array(N);
+      for (let i = 0; i < N; i++) {
+        let z = gauss(rr);
+        if (st.d === 't') z = z / Math.sqrt(chi2(rr, NU) / NU) * scale;
+        pnl[i] = CAP * (Math.exp(m - 0.5 * sd * sd + sd * z) - 1);
+      }
+      const sorted = Float64Array.from(pnl).sort();
+      const k = Math.floor((1 - st.a) * N);
+      const varL = -sorted[k];
+      let es = 0; for (let i = 0; i < k; i++) es += sorted[i]; es = -es / Math.max(1, k);
+      const zq = st.a === 0.99 ? 2.3263 : 1.6449;
+      const vn = CAP * (1 - Math.exp(m - 0.5 * sd * sd - zq * sd));
+      res = { sorted, varL, es, vn, worst: -sorted[0] };
+    }
+    function setP(el) { const p = (el.value - el.min) / (el.max - el.min) * 100; el.style.setProperty('--p', p + '%'); }
+    function labels() {
+      $('o-mu').textContent = (st.mu > 0 ? '+' : '') + st.mu + ' %';
+      $('o-sig').textContent = st.sig + ' %';
+      $('o-h').textContent = st.h + (L() === 'en' ? (st.h > 1 ? ' days' : ' day') : (st.h > 1 ? ' jours' : ' jour'));
+      const a = Math.round(st.a * 100);
+      $('k-var').textContent = 'VaR ' + a + ' %'; $('k-es').textContent = 'Expected Shortfall ' + a + ' %';
+      ['lab-mu', 'lab-sig', 'lab-h'].forEach(id => setP($(id)));
+    }
+    function stats() {
+      if (!res) return;
+      $('t-var').textContent = eur(res.varL); $('t-es').textContent = eur(res.es);
+      $('t-norm').textContent = eur(res.vn); $('t-max').textContent = eur(res.worst);
+      const g = (1 - res.vn / res.varL) * 100;
+      $('t-gap').textContent = st.d !== 't' ? (L() === 'en' ? 'closed-form check' : 'contrôle analytique')
+        : g >= 0 ? (L() === 'en' ? 'underestimates by ' : 'sous-estime de ') + pct(g) : (L() === 'en' ? 'overestimates by ' : 'surestime de ') + pct(-g);
+      $('lab-meta').textContent = 'N = 10 000 · seed ' + st.seed;
+    }
+    function draw() {
+      if (!res || !cvL.clientWidth) return;
+      const { ctx, w, h } = fit(cvL), padL = 18, padR = 18, padT = 34, padB = 34;
+      const s = res.sorted, x0 = Math.min(s[Math.floor(N * 0.002)], -res.es * 1.35), x1 = Math.max(s[Math.floor(N * 0.998)], res.varL * 0.6);
+      const B = w < 600 ? 44 : 64, bw = (x1 - x0) / B, bins = new Array(B).fill(0);
+      for (let i = 0; i < N; i++) { const b = Math.floor((s[i] - x0) / bw); if (b >= 0 && b < B) bins[b]++; }
+      const span = Math.max(-x0, x1);
+      const mx = Math.max(...bins), X = v => padL + (v - x0) / (x1 - x0) * (w - padL - padR), Hh = h - padT - padB;
+      ctx.strokeStyle = C.line; ctx.lineWidth = 1;
+      for (let g = 1; g <= 3; g++) { const y = Math.round(padT + Hh * g / 4) + .5; ctx.setLineDash([2, 4]); ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(w - padR, y); ctx.stroke(); }
+      ctx.setLineDash([]);
+      const pw = (w - padL - padR) / B;
+      for (let b = 0; b < B; b++) {
+        const v = x0 + (b + .5) * bw, bh = bins[b] / mx * Hh, tail = v <= -res.varL;
+        ctx.fillStyle = tail ? C.accent : C.grey; alpha(ctx, tail ? .95 : .3, () => ctx.fillRect(padL + b * pw + 1, h - padB - bh, Math.max(1, pw - 2), bh));
+      }
+      ctx.strokeStyle = C.line2; ctx.beginPath(); ctx.moveTo(padL, h - padB + .5); ctx.lineTo(w - padR, h - padB + .5); ctx.stroke();
+      const xz = X(0); ctx.strokeStyle = C.dim; ctx.beginPath(); ctx.moveTo(Math.round(xz) + .5, padT); ctx.lineTo(Math.round(xz) + .5, h - padB); ctx.stroke();
+      const xv = X(-res.varL), xe = X(-res.es);
+      ctx.font = MONO; ctx.lineWidth = 1.2;
+      ctx.strokeStyle = C.fg; ctx.setLineDash([4, 3]); ctx.beginPath(); ctx.moveTo(xv, padT - 8); ctx.lineTo(xv, h - padB); ctx.stroke();
+      ctx.strokeStyle = C.accent; ctx.beginPath(); ctx.moveTo(xe, padT - 8); ctx.lineTo(xe, h - padB); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = C.fg; ctx.textAlign = 'left'; ctx.fillText('VaR', xv + 6, padT - 10);
+      ctx.fillStyle = C.accent; ctx.textAlign = 'right'; ctx.fillText('ES', xe - 6, padT - 10);
+      ctx.fillStyle = C.dim; ctx.textAlign = 'center';
+      const target = (x1 - x0) / (w < 600 ? 3 : 6), mag = Math.pow(10, Math.floor(Math.log10(target)));
+      const step = [1, 2, 5, 10].map(m => m * mag).find(v => v >= target);
+      const ticks = []; for (let v = Math.ceil(x0 / step) * step; v <= x1; v += step) ticks.push(v);
+      const k = v => (Math.abs(v) >= 1000 ? Math.round(v / 1000) + ' k€' : Math.round(v) + ' €');
+      ticks.filter(v => X(v) > padL + 26 && X(v) < w - padR - 26).forEach(v => ctx.fillText((v > 0 ? '+' : '') + k(v), X(v), h - 12));
+      if (xe > padL + 60) { ctx.fillStyle = C.dim; ctx.textAlign = 'left'; ctx.fillText('P&L', padL, padT - 10); }
+    }
+    function run(newSeed) { if (newSeed) st.seed = (st.seed * 48271 + 7) % 2147483647; simulate(); labels(); stats(); draw(); }
+    let t; const soon = () => { clearTimeout(t); t = setTimeout(() => run(false), 30); };
+    $('lab-mu').addEventListener('input', e => { st.mu = +e.target.value; labels(); soon(); });
+    $('lab-sig').addEventListener('input', e => { st.sig = +e.target.value; labels(); soon(); });
+    $('lab-h').addEventListener('input', e => { st.h = +e.target.value; labels(); soon(); });
+    document.querySelectorAll('#lab-form [data-a]').forEach(b => b.addEventListener('click', () => { st.a = +b.dataset.a; document.querySelectorAll('#lab-form [data-a]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); run(false); }));
+    document.querySelectorAll('#lab-form [data-d]').forEach(b => b.addEventListener('click', () => { st.d = b.dataset.d; document.querySelectorAll('#lab-form [data-d]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); run(false); }));
+    $('lab-run').addEventListener('click', () => run(true));
+    return { run, draw, relabel: () => { labels(); stats(); draw(); } };
+  })();
+
+  function drawProjects() { document.querySelectorAll('canvas.viz').forEach(el => { const f = viz[el.dataset.viz]; if (!f || !el.clientWidth) return; const { ctx, w, h } = fit(el); try { f(ctx, w, h); } catch (e) {} }); }
+
+  let start = 'fr';
+  try { start = localStorage.getItem('fm-lang') || ((navigator.language || 'fr').toLowerCase().startsWith('fr') ? 'fr' : 'en'); } catch (e) {}
+  setLang(start);
+  document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => setLang(b.dataset.l)));
+
+  let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { drawPath(); drawHeroBg(); drawCone(); drawProjects(); stackFx(); if (lab) lab.draw(); }, 120); });
+  const boot = () => {
+    drawProjects(); drawCone(); drawPath(); armStatement(); stackFx(); runHero(); if (lab) lab.run(false);
+    if (!reduce && 'IntersectionObserver' in window) { const o = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { runPath(); o.disconnect(); } }, { threshold: 0.35 }); o.observe(cv); }
+    else runPath();
+  };
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(boot, boot);
+})();
+</script>
+</body>
 </html>
