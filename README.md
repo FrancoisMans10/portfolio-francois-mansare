@@ -24,3 +24,4 @@ Tout le contenu est dans `index.html`. Chaque texte existe en deux versions :
 - **Photo** : remplacer `public/photo.jpg` (format portrait 4:5 conseillé).
 - **Projets** : section `id="projets"`. Les liens « Code ↗ » et « Demo ↗ » sont dans `.plinks`.
 - **Visuels des projets** : dessinés en canvas par les fonctions `viz.*` en bas de `index.html`.
+- **Défilement fluide** : Lenis 1.2.3, servi depuis `public/vendor/` (désactivé si l'appareil demande moins d'animations).
