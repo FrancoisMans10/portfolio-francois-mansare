@@ -3,13 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>François Mansare</title>
+<title>François Mansaré</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="François Mansare, élève ingénieur en double diplôme Mines Saint-Étienne × ENSIAS. Data science, modélisation mathématique et aide à la décision, avec des projets en finance quantitative, machine learning et NLP.">
+<meta name="description" content="François Mansaré, élève ingénieur en double diplôme Mines Saint-Étienne × ENSIAS. Data science, modélisation mathématique et aide à la décision, avec des projets en finance quantitative, machine learning et NLP.">
 <meta name="theme-color" content="#070708">
-<meta property="og:title" content="François Mansare · Data science & modélisation">
-<meta property="og:description" content="Élève ingénieur, Mines × ENSIAS. Data science, modélisation mathématique et aide à la décision.">
+<meta property="og:title" content="François Mansaré · Data science & modélisation">
+<meta property="og:description" content="Élève ingénieur, Mines × ENSIAS. Data science et modélisation mathématique, cap sur la finance quantitative.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://francoismansare.site/">
+<meta property="og:image" content="https://francoismansare.site/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://francoismansare.site/">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -241,6 +247,44 @@ kbd { font-family: var(--f-mono); font-size: 10.5px; color: var(--muted); border
 .steps b { display: block; margin-top: 10px; font-weight: 800; font-size: 16px; text-transform: uppercase; letter-spacing: -.01em; }
 .steps small { display: block; margin-top: 4px; color: var(--muted); font-size: 13px; line-height: 1.45; }
 
+/* risk lab */
+.lab { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); border: 1px solid var(--line-2); border-radius: 24px; background: linear-gradient(180deg, #111114, #0B0B0E); overflow: hidden; }
+.lab-ctrl { padding: 26px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 20px; }
+.lab-ctrl h3 { margin: 0; font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+.fld { display: flex; flex-direction: column; gap: 9px; }
+.fld .lb { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: 13.5px; color: #C9CAD0; }
+.fld .lb output { font: 500 13px/1 var(--f-mono); color: var(--fg); }
+.fld input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 4px; outline: none; cursor: pointer;
+  background: linear-gradient(90deg, var(--btn) 0 var(--p, 50%), #26262D var(--p, 50%) 100%); }
+.fld input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 3px solid var(--btn); box-shadow: 0 0 0 4px rgba(46,107,255,.18); }
+.fld input[type=range]::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: #fff; border: 3px solid var(--btn); }
+.fld input[type=range]:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
+.segs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; border-radius: 12px; border: 1px solid var(--line-2); background: var(--bg-2); }
+.segs button { height: 34px; border: 0; border-radius: 9px; background: none; color: var(--muted); font-size: 12.5px; font-weight: 600; cursor: pointer; }
+.segs button[aria-pressed="true"] { background: var(--panel-2); color: var(--fg); box-shadow: inset 0 0 0 1px var(--line-2); }
+.lab-ctrl .note2 { margin: 0; font-size: 12.5px; color: var(--dim); line-height: 1.5; }
+.lab-ctrl .btn { height: 46px; width: 100%; margin-top: auto; }
+.lab-out { display: flex; flex-direction: column; min-width: 0; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
+.tile { padding: 18px 20px; border-right: 1px solid var(--line); min-width: 0; }
+.tile:last-child { border-right: 0; }
+.tile .k { font: 400 11.5px/1.3 var(--f-mono); color: var(--dim); text-transform: uppercase; letter-spacing: .03em; }
+.tile b { display: block; margin-top: 8px; font-size: clamp(20px, 2vw, 26px); font-weight: 700; letter-spacing: -.035em; white-space: nowrap; }
+.tile .s { display: block; margin-top: 3px; font-size: 12.5px; color: var(--muted); }
+.tile.hl b { color: var(--accent); }
+.lab-plot { position: relative; flex: 1; min-height: 320px; }
+#lab-cv { position: absolute; inset: 0; width: 100%; height: 100%; }
+.lab-foot { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 12px 20px; border-top: 1px solid var(--line); }
+.lab-foot .mono b { color: var(--fg); font-weight: 500; }
+@media (max-width: 980px) { .lab { grid-template-columns: minmax(0, 1fr); } .lab-ctrl { border-right: 0; border-bottom: 1px solid var(--line); } .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tile:nth-child(2) { border-right: 0; } .tile:nth-child(-n+2) { border-bottom: 1px solid var(--line); } }
+
+/* case studies */
+.case { margin: 0; display: grid; gap: 12px; }
+.case div { display: grid; grid-template-columns: 82px minmax(0, 1fr); gap: 12px; }
+.case dt { font: 500 11px/1.9 var(--f-mono); color: var(--accent); text-transform: uppercase; letter-spacing: .05em; }
+.case dd { margin: 0; color: #C3C4CB; font-size: 14.5px; line-height: 1.55; }
+@media (max-width: 600px) { .case div { grid-template-columns: minmax(0, 1fr); gap: 2px; } }
+
 /* path (experience + education) */
 .cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; }
 .cols h3 { margin: 0 0 6px; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
@@ -355,11 +399,12 @@ footer { border-top: 1px solid var(--line); padding-block: clamp(48px, 6vw, 72px
 
 <header class="nav" id="nav">
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="François Mansare, accueil"><span class="mark"><span class="f">f</span>(M)</span><span class="nm">François Mansare</span></a>
+    <a class="brand" href="#top" aria-label="François Mansaré, accueil"><span class="mark"><span class="f">f</span>(M)</span><span class="nm">Francois Mansare</span></a>
     <ul class="links">
       <li><a href="#apropos"><span class="fr">À propos</span><span class="en">About</span></a></li>
       <li><a href="#competences"><span class="fr">Compétences</span><span class="en">Skills</span></a></li>
       <li><a href="#projets"><span class="fr">Projets</span><span class="en">Projects</span></a></li>
+      <li><a href="#labo"><span class="fr">Labo</span><span class="en">Lab</span></a></li>
       <li><a href="#parcours"><span class="fr">Parcours</span><span class="en">Path</span></a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -378,9 +423,9 @@ footer { border-top: 1px solid var(--line); padding-block: clamp(48px, 6vw, 72px
     <canvas id="hero-bg" aria-hidden="true"></canvas>
     <div class="wrap hero-grid">
       <div class="hero-txt">
-        <div class="hero-meta"><span class="live"><i></i><span class="fr">Ouvert aux stages</span><span class="en">Open to internships</span></span><span class="who">François Mansare · <span class="fr">Data science &amp; aide à la décision</span><span class="en">Data science &amp; decision-making</span></span></div>
+        <div class="hero-meta"><span class="live"><i></i><span class="fr">Ouvert aux stages</span><span class="en">Open to internships</span></span><span class="who">François Mansaré · <span class="fr">Data science · Finance quantitative</span><span class="en">Data science · Quantitative finance</span></span></div>
         <h1 class="display"><span class="fr"><span class="metal">Modéliser</span><span class="metal">l'incertain<span class="dotb">.</span></span></span><span class="en"><span class="metal">Modelling</span><span class="metal">uncertainty<span class="dotb">.</span></span></span></h1>
-        <p class="lede"><span class="fr">Élève ingénieur en <b>data science</b> et <b>modélisation mathématique pour l'aide à la décision</b>. De la finance au langage naturel, je construis des modèles qui transforment l'incertitude en choix éclairés, et les applications pour s'en servir.</span><span class="en">Engineering student in <b>data science</b> and <b>mathematical modelling for decision-making</b>. From finance to natural language, I build models that turn uncertainty into informed choices, and the apps to use them.</span></p>
+        <p class="lede"><span class="fr">Élève ingénieur en <b>data science</b> et <b>modélisation mathématique pour l'aide à la décision</b>, avec un cap : la <b>finance quantitative</b>. Je construis des modèles qui transforment l'incertitude en choix chiffrés, et les applications pour s'en servir.</span><span class="en">Engineering student in <b>data science</b> and <b>mathematical modelling for decision-making</b>, heading for <b>quantitative finance</b>. I build models that turn uncertainty into quantified choices, and the apps to use them.</span></p>
         <div class="ctas">
           <a class="btn blue" href="#projets"><span class="fr">Voir les projets</span><span class="en">View projects</span> <span class="arrow">→</span></a>
           <a class="btn" href="#contact"><span class="fr">Me contacter</span><span class="en">Contact me</span></a>
@@ -393,7 +438,7 @@ footer { border-top: 1px solid var(--line); padding-block: clamp(48px, 6vw, 72px
         </ul>
       </div>
       <div class="hero-pic">
-        <img src="francois.webp" alt="François Mansare, en costume, son ordinateur portable sur les genoux" width="1100" height="1173" fetchpriority="high">
+        <img src="francois.webp" alt="François Mansaré, en costume, son ordinateur portable sur les genoux" width="1100" height="1173" fetchpriority="high">
         <div class="float route" aria-hidden="true"><i></i><span class="fr">Guinée</span><span class="en">Guinea</span><i></i><span class="fr">Maroc</span><span class="en">Morocco</span><i></i>France</div>
         <div class="float code" aria-hidden="true">
           <div class="bar"><span class="l"><i></i><i></i><i></i></span><span class="mono">model.py</span></div>
@@ -455,22 +500,22 @@ decision = p[:, <span class="n">1</span>] &gt; seuil</pre>
       <div class="stack">
         <article class="card" style="--i:0">
           <div class="top"><span class="no metal num">01</span><div><span class="cat"><span class="fr">Risque de crédit</span><span class="en">Credit risk</span> · 2025–2026</span><h3><span class="fr">Scoring crédit par mélanges gaussiens</span><span class="en">Credit scoring with Gaussian mixtures</span></h3></div><div class="acts"><a class="pill blue" href="https://github.com/FrancoisMans10/Risk-Credit" target="_blank" rel="noopener"><span class="fr">Voir le code</span><span class="en">View code</span> ↗</a></div></div>
-          <div class="shot"><div class="viz-box"><canvas class="viz" data-viz="credit" aria-hidden="true"></canvas></div><div class="info"><p><span class="fr">Un GMM par classe pour estimer la probabilité d'accorder un prêt, classification par vraisemblance, comparée à six modèles supervisés (précision, rappel, F1, AUC). Application de scoring en temps réel, réalisée avec Marcellin Soukroumde.</span><span class="en">One GMM per class to estimate loan approval probability, likelihood-based classification, benchmarked against six supervised models (precision, recall, F1, AUC). Real-time scoring app, built with Marcellin Soukroumde.</span></p><ul class="tags"><li>scikit-learn</li><li>Flask</li><li>React</li><li>Docker</li></ul></div></div>
+          <div class="shot"><div class="viz-box"><canvas class="viz" data-viz="credit" aria-hidden="true"></canvas></div><div class="info"><dl class="case"><div><dt><span class="fr">Problème</span><span class="en">Problem</span></dt><dd><span class="fr">Décider à qui accorder un prêt, avec une probabilité plutôt qu'un simple oui ou non.</span><span class="en">Deciding who should get a loan, with a probability rather than a plain yes or no.</span></dd></div><div><dt><span class="fr">Approche</span><span class="en">Approach</span></dt><dd><span class="fr">Un mélange gaussien par classe et une classification par vraisemblance, comparés à six modèles supervisés (précision, rappel, F1, AUC).</span><span class="en">One Gaussian mixture per class and likelihood-based classification, benchmarked against six supervised models (precision, recall, F1, AUC).</span></dd></div><div><dt><span class="fr">Résultat</span><span class="en">Result</span></dt><dd><span class="fr">Une application de scoring en temps réel, réalisée avec Marcellin Soukroumde.</span><span class="en">A real-time scoring app, built with Marcellin Soukroumde.</span></dd></div></dl><ul class="tags"><li>scikit-learn</li><li>Flask</li><li>React</li><li>Docker</li></ul></div></div>
         </article>
 
         <article class="card" style="--i:1">
           <div class="top"><span class="no metal num">02</span><div><span class="cat">NLP · FinBERT</span><h3>FinSent</h3></div><div class="acts"><a class="pill blue" href="https://github.com/FrancoisMans10/Natural-Language-Processing-project-applied-to-financiel-text-analysis." target="_blank" rel="noopener"><span class="fr">Voir le code</span><span class="en">View code</span> ↗</a></div></div>
-          <div class="shot"><div class="viz-box"><canvas class="viz" data-viz="sentiment" aria-hidden="true"></canvas></div><div class="info"><p><span class="fr">FinBERT fine-tuné pour classer le sentiment des actualités financières, avec un pipeline automatisé (titres du S&amp;P 500 → actualités → analyse) et un tableau de bord web.</span><span class="en">Fine-tuned FinBERT to classify financial news sentiment, with an automated pipeline (S&amp;P 500 tickers → news → analysis) and a web dashboard.</span></p><div class="kpis num"><div><b>≈ 91 %</b><span class="mono">accuracy</span></div><div><b><span class="fr">≈ 0,85</span><span class="en">≈ 0.85</span></b><span class="mono">F1-score</span></div></div><ul class="tags"><li>FinBERT</li><li>Django</li><li>PostgreSQL</li></ul></div></div>
+          <div class="shot"><div class="viz-box"><canvas class="viz" data-viz="sentiment" aria-hidden="true"></canvas></div><div class="info"><dl class="case"><div><dt><span class="fr">Problème</span><span class="en">Problem</span></dt><dd><span class="fr">Mesurer automatiquement le ton des actualités financières.</span><span class="en">Measuring the tone of financial news automatically.</span></dd></div><div><dt><span class="fr">Approche</span><span class="en">Approach</span></dt><dd><span class="fr">FinBERT fine-tuné, et un pipeline automatisé : titres du S&amp;P 500 → actualités → analyse.</span><span class="en">Fine-tuned FinBERT and an automated pipeline: S&amp;P 500 tickers → news → analysis.</span></dd></div><div><dt><span class="fr">Résultat</span><span class="en">Result</span></dt><dd><span class="fr">Un tableau de bord web de sentiment par titre.</span><span class="en">A web dashboard of sentiment per ticker.</span></dd></div></dl><div class="kpis num"><div><b>≈ 91 %</b><span class="mono">accuracy</span></div><div><b><span class="fr">≈ 0,85</span><span class="en">≈ 0.85</span></b><span class="mono">F1-score</span></div></div><ul class="tags"><li>FinBERT</li><li>Django</li><li>PostgreSQL</li></ul></div></div>
         </article>
 
         <article class="card" style="--i:2">
           <div class="top"><span class="no metal num">03</span><div><span class="cat"><span class="fr">Gestion des risques</span><span class="en">Risk management</span> · ENSIAS</span><h3>VaR &amp; TVaR</h3></div><div class="acts"></div></div>
-          <div class="shot"><div class="viz-box"><canvas class="viz" data-viz="var" aria-hidden="true"></canvas></div><div class="info"><p><span class="fr">Perte potentielle annuelle d'un portefeuille de 1 M MAD (actions, ETF) présentée à un comité de risque : VaR paramétrique et TVaR, rendements arithmétiques contre logarithmiques.</span><span class="en">Annual potential loss on a 1M MAD portfolio (equities, ETF) for a risk committee: parametric VaR and TVaR, arithmetic versus log returns.</span></p><ul class="tags"><li>Python</li><li>NumPy</li><li>Pandas</li><li>SciPy</li></ul></div></div>
+          <div class="shot"><div class="viz-box"><canvas class="viz" data-viz="var" aria-hidden="true"></canvas></div><div class="info"><dl class="case"><div><dt><span class="fr">Problème</span><span class="en">Problem</span></dt><dd><span class="fr">Combien un portefeuille de 1 M MAD (actions, ETF) peut-il perdre en un an ?</span><span class="en">How much can a 1M MAD portfolio (equities, ETF) lose in a year?</span></dd></div><div><dt><span class="fr">Approche</span><span class="en">Approach</span></dt><dd><span class="fr">VaR paramétrique et TVaR, en comparant rendements arithmétiques et logarithmiques.</span><span class="en">Parametric VaR and TVaR, comparing arithmetic and log returns.</span></dd></div><div><dt><span class="fr">Résultat</span><span class="en">Result</span></dt><dd><span class="fr">Une mesure annuelle de la perte potentielle, au format attendu par un comité de risque.</span><span class="en">An annual measure of potential loss, in the format a risk committee expects.</span></dd></div></dl><ul class="tags"><li>Python</li><li>NumPy</li><li>Pandas</li><li>SciPy</li></ul></div></div>
         </article>
 
         <article class="card" style="--i:3">
           <div class="top"><span class="no metal num">04</span><div><span class="cat"><span class="fr">Allocation de portefeuille</span><span class="en">Portfolio allocation</span> · ENSIAS</span><h3>Markowitz vs HRP</h3></div><div class="acts"></div></div>
-          <div class="shot"><div class="viz-box"><canvas class="viz" data-viz="frontier" aria-hidden="true"></canvas></div><div class="info"><p><span class="fr">Optimisation moyenne-variance (max Sharpe) face au Hierarchical Risk Parity, qui regroupe les actifs par clustering avant de répartir le risque. Huit grandes capitalisations US, 2020-2023.</span><span class="en">Mean-variance optimisation (max Sharpe) against Hierarchical Risk Parity, which clusters assets before splitting risk. Eight US large caps, 2020-2023.</span></p><ul class="tags"><li>PyPortfolioOpt</li><li>yfinance</li></ul></div></div>
+          <div class="shot"><div class="viz-box"><canvas class="viz" data-viz="frontier" aria-hidden="true"></canvas></div><div class="info"><dl class="case"><div><dt><span class="fr">Problème</span><span class="en">Problem</span></dt><dd><span class="fr">L'optimisation classique concentre le portefeuille et réagit mal aux erreurs d'estimation.</span><span class="en">Classic optimisation concentrates the portfolio and reacts badly to estimation error.</span></dd></div><div><dt><span class="fr">Approche</span><span class="en">Approach</span></dt><dd><span class="fr">Max Sharpe (Markowitz) face au Hierarchical Risk Parity, qui regroupe les actifs par clustering. Huit grandes capitalisations US, 2020-2023.</span><span class="en">Max Sharpe (Markowitz) against Hierarchical Risk Parity, which clusters assets first. Eight US large caps, 2020-2023.</span></dd></div><div><dt><span class="fr">Résultat</span><span class="en">Result</span></dt><dd><span class="fr">Une comparaison des allocations, de la diversification et du couple rendement-risque.</span><span class="en">A comparison of allocations, diversification and risk-return.</span></dd></div></dl><ul class="tags"><li>PyPortfolioOpt</li><li>yfinance</li></ul></div></div>
         </article>
       </div>
 
@@ -489,6 +534,37 @@ decision = p[:, <span class="n">1</span>] &gt; seuil</pre>
         </table>
       </div>
       <p class="mono note"><span class="fr">Visuels illustratifs dessinés pour ce site</span><span class="en">Illustrative visuals drawn for this site</span></p>
+    </div>
+  </section>
+
+  <section class="sec" id="labo" style="padding-top:0">
+    <div class="wrap">
+      <div class="head" data-rise>
+        <h2 class="display metal"><span class="fr">Labo</span><span class="en">Lab</span></h2>
+        <p class="side"><span class="fr">Un simulateur de risque codé pour ce site. Réglez le portefeuille, lancez <b>10 000 scénarios Monte Carlo</b> et regardez où se cache la perte.</span><span class="en">A risk simulator built for this site. Set up the portfolio, run <b>10,000 Monte Carlo scenarios</b> and see where the loss hides.</span></p>
+      </div>
+      <div class="lab" data-rise>
+        <form class="lab-ctrl" id="lab-form" onsubmit="return false">
+          <h3><span class="fr">Paramètres</span><span class="en">Parameters</span></h3>
+          <div class="fld"><label class="lb" for="lab-mu"><span class="fr">Rendement annuel μ</span><span class="en">Annual return μ</span><output id="o-mu"></output></label><input type="range" id="lab-mu" min="-10" max="20" step="1" value="7"></div>
+          <div class="fld"><label class="lb" for="lab-sig"><span class="fr">Volatilité annuelle σ</span><span class="en">Annual volatility σ</span><output id="o-sig"></output></label><input type="range" id="lab-sig" min="5" max="60" step="1" value="20"></div>
+          <div class="fld"><label class="lb" for="lab-h"><span class="fr">Horizon</span><span class="en">Horizon</span><output id="o-h"></output></label><input type="range" id="lab-h" min="1" max="252" step="1" value="10"></div>
+          <div class="fld"><span class="lb"><span class="fr">Niveau de confiance</span><span class="en">Confidence level</span></span><div class="segs" role="group" aria-label="Niveau de confiance"><button type="button" data-a="0.95" aria-pressed="false">95 %</button><button type="button" data-a="0.99" aria-pressed="true">99 %</button></div></div>
+          <div class="fld"><span class="lb"><span class="fr">Loi des rendements</span><span class="en">Return distribution</span></span><div class="segs" role="group" aria-label="Loi des rendements"><button type="button" data-d="n" aria-pressed="false"><span class="fr">Normale</span><span class="en">Normal</span></button><button type="button" data-d="t" aria-pressed="true">Student-t ν=4</button></div></div>
+          <p class="note2"><span class="fr">Portefeuille de 1 000 000 €. La loi de Student a des queues épaisses : les krachs y sont plus probables qu'avec la loi normale.</span><span class="en">€1,000,000 portfolio. Student's t has fat tails: crashes are more likely than under the normal law.</span></p>
+          <button type="button" class="btn blue" id="lab-run"><span class="fr">Nouveau tirage</span><span class="en">New draw</span> <span class="arrow">↻</span></button>
+        </form>
+        <div class="lab-out">
+          <div class="tiles">
+            <div class="tile hl"><span class="k" id="k-var">VaR</span><b class="num" id="t-var">—</b><span class="s"><span class="fr">perte à ne pas dépasser</span><span class="en">loss not exceeded</span></span></div>
+            <div class="tile"><span class="k" id="k-es">Expected Shortfall</span><b class="num" id="t-es">—</b><span class="s"><span class="fr">perte moyenne au-delà</span><span class="en">average loss beyond</span></span></div>
+            <div class="tile"><span class="k"><span class="fr">VaR loi normale</span><span class="en">Normal VaR</span></span><b class="num" id="t-norm">—</b><span class="s" id="t-gap">&nbsp;</span></div>
+            <div class="tile"><span class="k"><span class="fr">Pire scénario</span><span class="en">Worst scenario</span></span><b class="num" id="t-max">—</b><span class="s"><span class="fr">sur 10 000 tirages</span><span class="en">out of 10,000 draws</span></span></div>
+          </div>
+          <div class="lab-plot"><canvas id="lab-cv" role="img" aria-label="Histogramme des profits et pertes simulés, avec la VaR et l'Expected Shortfall."></canvas></div>
+          <div class="lab-foot"><span class="mono">VaR<sub>α</sub> = −q<sub>1−α</sub>(P&amp;L) · ES<sub>α</sub> = −E[P&amp;L | P&amp;L ≤ −VaR<sub>α</sub>]</span><span class="mono" id="lab-meta"></span></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -581,7 +657,7 @@ decision = p[:, <span class="n">1</span>] &gt; seuil</pre>
 <footer>
   <div class="wrap">
     <div class="f-top">
-      <div><p class="f-name" aria-label="f(M)"><span class="f">f</span><span class="metal">(M)</span></p><p class="f-who">François Mansare</p><p class="f-sub"><span class="fr">Data science · Modélisation · Aide à la décision</span><span class="en">Data science · Modelling · Decision-making</span></p></div>
+      <div><p class="f-name" aria-label="f(M)"><span class="f">f</span><span class="metal">(M)</span></p><p class="f-who">François Mansaré</p><p class="f-sub"><span class="fr">Data science · Modélisation · Aide à la décision</span><span class="en">Data science · Modelling · Decision-making</span></p></div>
       <ul class="f-links">
         <li><a href="#apropos"><span class="fr">À propos</span><span class="en">About</span></a></li>
         <li><a href="#projets"><span class="fr">Projets</span><span class="en">Projects</span></a></li>
@@ -590,7 +666,7 @@ decision = p[:, <span class="n">1</span>] &gt; seuil</pre>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
-    <div class="f-bot mono"><span>© 2026 François Mansare · <span class="fr">Tous droits réservés</span><span class="en">All rights reserved</span></span><span><span class="fr">Conçu et développé par François Mansare</span><span class="en">Designed and built by François Mansare</span></span></div>
+    <div class="f-bot mono"><span>© 2026 François Mansaré · <span class="fr">Tous droits réservés</span><span class="en">All rights reserved</span></span><span><span class="fr">Conçu et développé par François Mansaré</span><span class="en">Designed and built by François Mansaré</span></span></div>
   </div>
 </footer>
 
@@ -617,7 +693,7 @@ decision = p[:, <span class="n">1</span>] &gt; seuil</pre>
     root.dataset.lang = l; root.lang = l;
     document.querySelectorAll('.seg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.l === l)));
     try { localStorage.setItem('fm-lang', l); } catch (e) {}
-    armStatement(); drawPath();
+    armStatement(); drawPath(); if (typeof lab !== 'undefined' && lab) lab.relabel();
   }
 
   /* toast + copy */
@@ -689,6 +765,7 @@ decision = p[:, <span class="n">1</span>] &gt; seuil</pre>
     { g: T('Naviguer', 'Navigate'), t: T('À propos', 'About'), k: '#', run: go('apropos') },
     { g: T('Naviguer', 'Navigate'), t: T('Compétences', 'Skills'), k: '#', run: go('competences') },
     { g: T('Naviguer', 'Navigate'), t: T('Projets', 'Projects'), k: '#', run: go('projets') },
+    { g: T('Naviguer', 'Navigate'), t: T('Labo : simulateur de risque', 'Lab: risk simulator'), k: '#', run: go('labo') },
     { g: T('Naviguer', 'Navigate'), t: T('Trajectoire', 'Trajectory'), k: '#', run: go('trajectoire') },
     { g: T('Naviguer', 'Navigate'), t: T('Parcours', 'Experience'), k: '#', run: go('parcours') },
     { g: T('Naviguer', 'Navigate'), t: T('Prise de parole', 'Public speaking'), k: '#', run: go('parole') },
@@ -921,6 +998,94 @@ decision = p[:, <span class="n">1</span>] &gt; seuil</pre>
       [['pos', C.accent], ['neu', C.grey], ['neg', 'rgba(229,72,77,.55)']].forEach(([t, col], i) => { ctx.fillStyle = col; ctx.fillRect(Lp + i * 64, h - 21, 8, 8); ctx.fillStyle = C.dim; ctx.fillText(t, Lp + 13 + i * 64, h - 13); });
     }
   };
+
+  /* ---------- risk lab ---------- */
+  const lab = (() => {
+    const cvL = document.getElementById('lab-cv'); if (!cvL) return null;
+    const $ = id => document.getElementById(id);
+    const st = { mu: 7, sig: 20, h: 10, a: 0.99, d: 't', seed: 11 };
+    const CAP = 1e6, N = 10000, NU = 4;
+    let res = null;
+    const eur = v => new Intl.NumberFormat(L() === 'en' ? 'en-GB' : 'fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(v);
+    const pct = v => new Intl.NumberFormat(L() === 'en' ? 'en-GB' : 'fr-FR', { maximumFractionDigits: 0 }).format(v) + ' %';
+    function chi2(rr, k) { let s = 0; for (let i = 0; i < k; i++) { const z = gauss(rr); s += z * z; } return s; }
+    function simulate() {
+      const rr = rng(st.seed), T = st.h / 252, m = st.mu / 100 * T, sd = st.sig / 100 * Math.sqrt(T), scale = Math.sqrt((NU - 2) / NU);
+      const pnl = new Float64Array(N);
+      for (let i = 0; i < N; i++) {
+        let z = gauss(rr);
+        if (st.d === 't') z = z / Math.sqrt(chi2(rr, NU) / NU) * scale;
+        pnl[i] = CAP * (Math.exp(m - 0.5 * sd * sd + sd * z) - 1);
+      }
+      const sorted = Float64Array.from(pnl).sort();
+      const k = Math.floor((1 - st.a) * N);
+      const varL = -sorted[k];
+      let es = 0; for (let i = 0; i < k; i++) es += sorted[i]; es = -es / Math.max(1, k);
+      const zq = st.a === 0.99 ? 2.3263 : 1.6449;
+      const vn = CAP * (1 - Math.exp(m - 0.5 * sd * sd - zq * sd));
+      res = { sorted, varL, es, vn, worst: -sorted[0] };
+    }
+    function setP(el) { const p = (el.value - el.min) / (el.max - el.min) * 100; el.style.setProperty('--p', p + '%'); }
+    function labels() {
+      $('o-mu').textContent = (st.mu > 0 ? '+' : '') + st.mu + ' %';
+      $('o-sig').textContent = st.sig + ' %';
+      $('o-h').textContent = st.h + (L() === 'en' ? (st.h > 1 ? ' days' : ' day') : (st.h > 1 ? ' jours' : ' jour'));
+      const a = Math.round(st.a * 100);
+      $('k-var').textContent = 'VaR ' + a + ' %'; $('k-es').textContent = 'Expected Shortfall ' + a + ' %';
+      ['lab-mu', 'lab-sig', 'lab-h'].forEach(id => setP($(id)));
+    }
+    function stats() {
+      if (!res) return;
+      $('t-var').textContent = eur(res.varL); $('t-es').textContent = eur(res.es);
+      $('t-norm').textContent = eur(res.vn); $('t-max').textContent = eur(res.worst);
+      const g = (1 - res.vn / res.varL) * 100;
+      $('t-gap').textContent = st.d !== 't' ? (L() === 'en' ? 'closed-form check' : 'contrôle analytique')
+        : g >= 0 ? (L() === 'en' ? 'underestimates by ' : 'sous-estime de ') + pct(g) : (L() === 'en' ? 'overestimates by ' : 'surestime de ') + pct(-g);
+      $('lab-meta').textContent = 'N = 10 000 · seed ' + st.seed;
+    }
+    function draw() {
+      if (!res || !cvL.clientWidth) return;
+      const { ctx, w, h } = fit(cvL), padL = 18, padR = 18, padT = 34, padB = 34;
+      const s = res.sorted, x0 = Math.min(s[Math.floor(N * 0.002)], -res.es * 1.35), x1 = Math.max(s[Math.floor(N * 0.998)], res.varL * 0.6);
+      const B = w < 600 ? 44 : 64, bw = (x1 - x0) / B, bins = new Array(B).fill(0);
+      for (let i = 0; i < N; i++) { const b = Math.floor((s[i] - x0) / bw); if (b >= 0 && b < B) bins[b]++; }
+      const span = Math.max(-x0, x1);
+      const mx = Math.max(...bins), X = v => padL + (v - x0) / (x1 - x0) * (w - padL - padR), Hh = h - padT - padB;
+      ctx.strokeStyle = C.line; ctx.lineWidth = 1;
+      for (let g = 1; g <= 3; g++) { const y = Math.round(padT + Hh * g / 4) + .5; ctx.setLineDash([2, 4]); ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(w - padR, y); ctx.stroke(); }
+      ctx.setLineDash([]);
+      const pw = (w - padL - padR) / B;
+      for (let b = 0; b < B; b++) {
+        const v = x0 + (b + .5) * bw, bh = bins[b] / mx * Hh, tail = v <= -res.varL;
+        ctx.fillStyle = tail ? C.accent : C.grey; alpha(ctx, tail ? .95 : .3, () => ctx.fillRect(padL + b * pw + 1, h - padB - bh, Math.max(1, pw - 2), bh));
+      }
+      ctx.strokeStyle = C.line2; ctx.beginPath(); ctx.moveTo(padL, h - padB + .5); ctx.lineTo(w - padR, h - padB + .5); ctx.stroke();
+      const xz = X(0); ctx.strokeStyle = C.dim; ctx.beginPath(); ctx.moveTo(Math.round(xz) + .5, padT); ctx.lineTo(Math.round(xz) + .5, h - padB); ctx.stroke();
+      const xv = X(-res.varL), xe = X(-res.es);
+      ctx.font = MONO; ctx.lineWidth = 1.2;
+      ctx.strokeStyle = C.fg; ctx.setLineDash([4, 3]); ctx.beginPath(); ctx.moveTo(xv, padT - 8); ctx.lineTo(xv, h - padB); ctx.stroke();
+      ctx.strokeStyle = C.accent; ctx.beginPath(); ctx.moveTo(xe, padT - 8); ctx.lineTo(xe, h - padB); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = C.fg; ctx.textAlign = 'left'; ctx.fillText('VaR', xv + 6, padT - 10);
+      ctx.fillStyle = C.accent; ctx.textAlign = 'right'; ctx.fillText('ES', xe - 6, padT - 10);
+      ctx.fillStyle = C.dim; ctx.textAlign = 'center';
+      const target = (x1 - x0) / (w < 600 ? 3 : 6), mag = Math.pow(10, Math.floor(Math.log10(target)));
+      const step = [1, 2, 5, 10].map(m => m * mag).find(v => v >= target);
+      const ticks = []; for (let v = Math.ceil(x0 / step) * step; v <= x1; v += step) ticks.push(v);
+      const k = v => (Math.abs(v) >= 1000 ? Math.round(v / 1000) + ' k€' : Math.round(v) + ' €');
+      ticks.filter(v => X(v) > padL + 26 && X(v) < w - padR - 26).forEach(v => ctx.fillText((v > 0 ? '+' : '') + k(v), X(v), h - 12));
+      if (xe > padL + 60) { ctx.fillStyle = C.dim; ctx.textAlign = 'left'; ctx.fillText('P&L', padL, padT - 10); }
+    }
+    function run(newSeed) { if (newSeed) st.seed = (st.seed * 48271 + 7) % 2147483647; simulate(); labels(); stats(); draw(); }
+    let t; const soon = () => { clearTimeout(t); t = setTimeout(() => run(false), 30); };
+    $('lab-mu').addEventListener('input', e => { st.mu = +e.target.value; labels(); soon(); });
+    $('lab-sig').addEventListener('input', e => { st.sig = +e.target.value; labels(); soon(); });
+    $('lab-h').addEventListener('input', e => { st.h = +e.target.value; labels(); soon(); });
+    document.querySelectorAll('#lab-form [data-a]').forEach(b => b.addEventListener('click', () => { st.a = +b.dataset.a; document.querySelectorAll('#lab-form [data-a]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); run(false); }));
+    document.querySelectorAll('#lab-form [data-d]').forEach(b => b.addEventListener('click', () => { st.d = b.dataset.d; document.querySelectorAll('#lab-form [data-d]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); run(false); }));
+    $('lab-run').addEventListener('click', () => run(true));
+    return { run, draw, relabel: () => { labels(); stats(); draw(); } };
+  })();
+
   function drawProjects() { document.querySelectorAll('canvas.viz').forEach(el => { const f = viz[el.dataset.viz]; if (!f || !el.clientWidth) return; const { ctx, w, h } = fit(el); try { f(ctx, w, h); } catch (e) {} }); }
 
   let start = 'fr';
@@ -928,9 +1093,9 @@ decision = p[:, <span class="n">1</span>] &gt; seuil</pre>
   setLang(start);
   document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => setLang(b.dataset.l)));
 
-  let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { drawPath(); drawHeroBg(); drawCone(); drawProjects(); stackFx(); }, 120); });
+  let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { drawPath(); drawHeroBg(); drawCone(); drawProjects(); stackFx(); if (lab) lab.draw(); }, 120); });
   const boot = () => {
-    drawProjects(); drawCone(); drawPath(); armStatement(); stackFx(); runHero();
+    drawProjects(); drawCone(); drawPath(); armStatement(); stackFx(); runHero(); if (lab) lab.run(false);
     if (!reduce && 'IntersectionObserver' in window) { const o = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { runPath(); o.disconnect(); } }, { threshold: 0.35 }); o.observe(cv); }
     else runPath();
   };
